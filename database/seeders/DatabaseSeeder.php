@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Comment;
+use App\Models\DonationAmount;
 use App\Models\Post;
 use App\Models\Role;
 use App\Models\User;
@@ -54,6 +55,8 @@ class DatabaseSeeder extends Seeder
         Post::factory(20)->create();
 
         Comment::factory(20)->create();
+
+        DonationAmount::factory(10)->create();
 
 
 

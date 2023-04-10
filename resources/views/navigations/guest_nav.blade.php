@@ -16,13 +16,13 @@
                         {{ __('Home') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
+                    {{-- <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         {{ __('Posts') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('gallery.index')" :active="request()->routeIs('gallery.index')">
                         {{ __('Gallery') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
 
 
 
@@ -39,13 +39,13 @@
                         {{ __('Members') }}
                     </x-nav-link> --}}
 
-                    <x-nav-link :href="route('about-us.index')" :active="request()->routeIs('about-us.index')">
+                    {{-- <x-nav-link :href="route('about-us.index')" :active="request()->routeIs('about-us.index')">
                         {{ __('About Us') }}
-                    </x-nav-link>
-
-                    {{-- <x-nav-link :href="route('donate-us.index')" :active="request()->routeIs('donate-us.index')">
-                        {{ __('Donate Us') }}
                     </x-nav-link> --}}
+
+                    <x-nav-link :href="route('donate-us.index')" :active="request()->routeIs('donate-us.index')">
+                        {{ __('Donate Us') }}
+                    </x-nav-link>
 
 
 
