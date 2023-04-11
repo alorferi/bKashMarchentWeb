@@ -8,6 +8,7 @@ use App\Http\Controllers\DonateUsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PostController ;
+use App\Http\Controllers\SubscriptionController;
 use App\Models\Post;
 
 Route::get('/', function () {
@@ -30,3 +31,6 @@ Route::get('donate-us', [DonateUsController::class,'index'])->name('donate-us.in
 Route::get('books', [BookController::class,'index'])->name('books.index');
 Route::get('members', [MemberController::class,'index'])->name('members.index');
 Route::get('committees', [CommitteeController::class,'index'])->name('committees.index');
+
+Route::get('subscriptions/{mobile}/show-by-mobile', [SubscriptionController::class,'showByMobile'])
+->name('subscriptions.mobile.show');

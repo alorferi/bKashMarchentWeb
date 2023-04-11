@@ -54,6 +54,15 @@ class SubscriptionController extends Controller
         return view('Subscription.show', compact('subscription'));
     }
 
+
+    public function showByMobile($mobile)
+    {
+
+        $subscription = Subscription::with("payments")->where('payer',$mobile)->first();
+
+        return view('Subscription.show_by_mobile', compact('subscription'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
