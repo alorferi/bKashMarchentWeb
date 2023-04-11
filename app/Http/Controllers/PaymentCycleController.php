@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PaymentCycle;
 use Illuminate\Http\Request;
 
 class PaymentCycleController extends Controller
@@ -13,7 +14,10 @@ class PaymentCycleController extends Controller
      */
     public function index()
     {
-        //
+        $paymentCycles = PaymentCycle::paginate();
+
+        return view('PaymentCycle.index', compact('paymentCycles'));
+
     }
 
     /**

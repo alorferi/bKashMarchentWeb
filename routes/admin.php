@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TermController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\PaymentAmountController;
+use App\Http\Controllers\PaymentCycleController;
+use App\Http\Controllers\PaymentSectorController;
 
 Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], function () {
 
@@ -33,6 +36,24 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ])
     ->middleware(['auth']);
 
+
+    Route::resource('payment-cycles', PaymentCycleController::class)
+    ->except([
+       // 'index', 'show'
+    ])
+    ->middleware(['auth']);
+
+    Route::resource('payment-amounts', PaymentAmountController::class)
+    ->except([
+       // 'index', 'show'
+    ])
+    ->middleware(['auth']);
+
+    Route::resource('payment-sectors', PaymentSectorController::class)
+    ->except([
+       // 'index', 'show'
+    ])
+    ->middleware(['auth']);
 
     Route::resource('videos', VideoController::class)
     ->except([

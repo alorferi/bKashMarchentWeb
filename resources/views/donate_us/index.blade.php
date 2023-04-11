@@ -36,7 +36,7 @@
                                                     value="{{ $amount->amount }}" id="choice_1_6_0"
                                                     onchange="gformToggleRadioOther( this )">
                                                 <label for="choice_1_6_0" id="label_1_6_0"
-                                                    class="gform-field-label gform-field-label--type-inline">{{ $amount->name }}</label>
+                                                    class="gform-field-label gform-field-label--type-inline">{{ $amount->amount }} {{ $amount->currency }}</label>
                                             </div>
                                         @endforeach
 

@@ -42,6 +42,20 @@
 
 
 
+
+                    <x-nav-link :href="route('admin.payment-amounts.index')" :active="request()->routeIs('admin.payment-amounts.index')">
+                        {{ __('Payment Amoounts') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('admin.payment-cycles.index')" :active="request()->routeIs('admin.payment-cycles.index')">
+                        {{ __('Payment Cycles') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('admin.payment-sectors.index')" :active="request()->routeIs('admin.payment-sectors.index')">
+                        {{ __('Payment Sectors') }}
+                    </x-nav-link>
+
+
                     @permission('option_create')
                         <x-nav-link :href="route('admin.options.index')" :active="request()->routeIs('admin.options.index')">
                             {{ __('Options') }}

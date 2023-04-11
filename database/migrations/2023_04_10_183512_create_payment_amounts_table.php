@@ -15,8 +15,9 @@ class CreatePaymentAmountsTable extends Migration
     {
         Schema::create('payment_amounts', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->double('amount');
+            $table->double('amount')->unique();
+            $table->string('currency');
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

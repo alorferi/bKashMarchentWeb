@@ -18,11 +18,10 @@ class PaymentAmountFactory extends Factory
     {
 
         // $randomDigit = $this->faker->unique()->randomDigit;
-        $randomDigit = $this->faker->unique()->numberBetween($min = 10, $max = 50);
+        // $randomDigit = $this->faker->unique()->numberBetween($min = 10, $max = 50);
 
         return [
-            'name' => "{$randomDigit} BDT",
-            'amount' =>  $randomDigit,
+            // 'amount' =>  $randomDigit,
         ];
     }
 }

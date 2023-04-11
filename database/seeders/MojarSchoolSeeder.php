@@ -18,14 +18,14 @@ class MojarSchoolSeeder extends Seeder
     {
 
         $paymentAmounts = [
-            [ 'name'=> "16 BDT",  'amount'=>16],
-            [ 'name'=> "21 BDT",  'amount'=>21],
-            [ 'name'=> "52 BDT",  'amount'=>52],
-            [ 'name'=> "71 BDT",  'amount'=>71],
-            [ 'name'=> "100 BDT",  'amount'=>100],
-            [ 'name'=> "1500 BDT",  'amount'=>1500],
-            [ 'name'=> "5000 BDT",  'amount'=>5000],
-            [ 'name'=> "10000 BDT",  'amount'=>10000],
+            [ 'currency'=> "BDT",  'amount'=>16,'is_active' => true],
+            [ 'currency'=> "BDT",  'amount'=>21,'is_active' => true],
+            [ 'currency'=> "BDT",  'amount'=>52,'is_active' => true],
+            [ 'currency'=> "BDT",  'amount'=>71,'is_active' => true],
+            [ 'currency'=> "BDT",  'amount'=>100,'is_active' => true],
+            [ 'currency'=> "BDT",  'amount'=>1500,'is_active' => true],
+            [ 'currency'=> "BDT",  'amount'=>5000,'is_active' => true],
+            [ 'currency'=> "BDT",  'amount'=>10000,'is_active' => true],
         ];
 
         foreach($paymentAmounts as $paymentAmount) {
@@ -74,13 +74,13 @@ class MojarSchoolSeeder extends Seeder
 
 
             $paymentSectors = [
-                [ 'name'=> "General Donation", ],
-                [ 'name'=> "Education Program", ],
-                [ 'name'=> "Sponsor a Child", ],
-                [ 'name'=> "Food Program", ],
-                [ 'name'=> "Health Care", ],
-                [ 'name'=> "Sadakah Fund", ],
-                [ 'name'=> "Zakat Fund", ],
+                [ 'name'=> "General Donation", 'is_active' => true ],
+                [ 'name'=> "Education Program", 'is_active' => true],
+                [ 'name'=> "Sponsor a Child",'is_active' => true ],
+                [ 'name'=> "Food Program", 'is_active' => true],
+                [ 'name'=> "Health Care",'is_active' => true ],
+                [ 'name'=> "Sadakah Fund",'is_active' => true ],
+                [ 'name'=> "Zakat Fund", 'is_active' => true],
             ];
 
 
