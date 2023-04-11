@@ -14,6 +14,7 @@
     <table>
 
         <tr>
+            <th>Actions</th>
             <th>Payer</th>
             <th>Amount</th>
             <th>Start Date</th>
@@ -24,6 +25,10 @@
 
         @forelse($subscriptions as $subscription)
             <tr>
+
+                <td class="px-3">
+                        <a href="{{route('admin.subscriptions.show',$subscription->id)}}"> Show</a>
+                </td>
 
                 <td class="px-3">
                     {{ $subscription->payer }}

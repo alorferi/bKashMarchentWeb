@@ -11,7 +11,7 @@ class Subscription extends Model
 
     public function payments()
     {
-        return $this->hasMany(Payment::class, 'paymentId','id');
+        return $this->hasMany(Payment::class, 'subscriptionId','id');
     }
 
 }

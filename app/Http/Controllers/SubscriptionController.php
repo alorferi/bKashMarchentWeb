@@ -48,7 +48,10 @@ class SubscriptionController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $subscription = Subscription::with("payments")->find($id);
+
+        return view('Subscription.show', compact('subscription'));
     }
 
     /**

@@ -28,7 +28,7 @@
 
 
 
-                <td> {{ $paymentSector->is_active? "True" : "False" }}</td>
+                <td> {{ $paymentSector->is_active ? 'True' : 'False' }}</td>
 
             </tr>
 
