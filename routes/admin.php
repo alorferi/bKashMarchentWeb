@@ -11,8 +11,10 @@ use App\Http\Controllers\Admin\TermController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\PaymentAmountController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentCycleController;
 use App\Http\Controllers\PaymentSectorController;
+use App\Http\Controllers\SubscriptionController;
 
 Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], function () {
 
@@ -50,6 +52,19 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ->middleware(['auth']);
 
     Route::resource('payment-sectors', PaymentSectorController::class)
+    ->except([
+       // 'index', 'show'
+    ])
+    ->middleware(['auth']);
+
+
+    Route::resource('subscriptions', SubscriptionController::class)
+    ->except([
+       // 'index', 'show'
+    ])
+    ->middleware(['auth']);
+
+    Route::resource('payments', PaymentController::class)
     ->except([
        // 'index', 'show'
     ])

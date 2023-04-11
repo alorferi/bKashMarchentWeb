@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Comment;
-use App\Models\PaymentAmount;
-use App\Models\Post;
+use App\Models\Payment;
 use App\Models\Role;
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -26,14 +25,14 @@ class DatabaseSeeder extends Seeder
         $adminRole = Role::where('name', '=', 'ga')->first();
         $saRole = Role::where('name', '=', 'sa')->first();
 
-      $babul =  User::factory()->create(
+        $babul =  User::factory()->create(
             [
-                'name' => "Babul Mirdha",
-                'email' => "babumirdha@gmail.com",
-                'email_verified_at' => now(),
-                'password' => Hash::make('bm@1123'), // password
-                'remember_token' => Str::random(10),
-            ]
+                  'name' => "Babul Mirdha",
+                  'email' => "babumirdha@gmail.com",
+                  'email_verified_at' => now(),
+                  'password' => Hash::make('bm@1123'), // password
+                  'remember_token' => Str::random(10),
+              ]
         );
 
         $babul->attachRole($saRole);
@@ -60,6 +59,17 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PaymentCycleSeeder::class);
         $this->call(MojarSchoolSeeder::class);
+
+        // Subscription::factory(10)->create();
+        Payment::factory(5)->create();
+
+        Subscription::factory()->create(['payer'=>"01717983473"]);
+
+        $subscription = Subscription::where('payer', '01717983473')->first();
+
+        // dd($subscription->id);
+
+        Payment::factory(20)->create(['subscriptionId'=>$subscription->id]);
 
 
     }
