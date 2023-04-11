@@ -18,7 +18,8 @@
 
                     @csrf
 
-                    @include('option.input_fields')
+                    @include("admin.option.input_fields")
+
 
                     <div class="flex items-center justify-end mt-4">
 

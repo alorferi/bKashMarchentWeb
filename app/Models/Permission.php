@@ -97,4 +97,38 @@ class Permission extends LaratrustPermission
 
         return $permissions;
     }
+
+
+    public static function getMerchantPermissionList()
+    {
+        $permissions = [
+            Permission::user_create,
+            Permission::user_edit ,
+
+
+            //Option
+            Permission::option_create,
+            Permission::option_edit ,
+            Permission::option_index ,
+
+
+            //Term
+            Permission::term_create,
+            Permission::term_edit ,
+            Permission::term_index ,
+
+             //Role
+             Permission::role_create ,
+             Permission::role_edit,
+             Permission::role_index ,
+
+            //Permission
+            Permission::permission_create ,
+            Permission::permission_edit ,
+            Permission::permission_index ,
+
+        ];
+
+        return $permissions;
+    }
 }

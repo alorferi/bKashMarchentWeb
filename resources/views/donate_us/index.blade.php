@@ -1,55 +1,7 @@
 <x-guest-layout>
 
     <div class="elementor-widget-container">
-        <style type="text/css">
-            body #gform_wrapper_1 .gform_body .gform_fields .gfield input[type=text],
-            body #gform_wrapper_1 .gform_body .gform_fields .gfield input[type=email],
-            body #gform_wrapper_1 .gform_body .gform_fields .gfield input[type=tel],
-            body #gform_wrapper_1 .gform_body .gform_fields .gfield input[type=url],
-            body #gform_wrapper_1 .gform_body .gform_fields .gfield input[type=password],
-            body #gform_wrapper_1 .gform_body .gform_fields .gfield input[type=number] {
-                color: #ffffff;
-                font-size: 35px;
-                max-width: 100%;
-                border-width: 1px;
-            }
 
-            body #gform_wrapper_1 .gform_body .gform_fields .gfield textarea {
-                border-width: 1px;
-                font-size: 35px;
-                color: #ffffff;
-            }
-
-            body #gform_wrapper_1 .gfield_radio label {
-                font-size: 25px;
-                width: auto;
-            }
-
-            body #gform_wrapper_1 .gfield_checkbox label,
-            body #gform_wrapper_1 .gfield .ginput_container_consent label {
-                font-size: 25px;
-            }
-
-            body #gform_wrapper_1 li .gfield_checkbox label,
-            body #gform_wrapper_1 li.gfield .ginput_container_consent label {
-                width: 100%;
-            }
-
-            body #gform_wrapper_1 .gform_body .gform_fields .gfield .gfield_label {
-                font-weight: normal;
-                font-weight: bold;
-                line-height: 25px;
-                font-size: 25px;
-            }
-
-            /* Styling for Tablets */
-            @media only screen and (max-width: 800px) and (min-width:481px) {}
-
-            /* Styling for phones */
-            @media only screen and (max-width: 480px) {}
-
-            /*Option to add custom CSS */
-        </style>
         <div class="elementor-shortcode">
             <div class="gf_browser_chrome gform_wrapper gravity-theme gform-theme--no-framework"
                 data-form-theme="gravity-theme" data-form-index="0" id="gform_wrapper_1">
@@ -78,7 +30,7 @@
 
 
 
-                                        @foreach ($amounts as $amount)
+                                        @foreach ($paymentAmounts as $amount)
                                             <div class="gchoice gchoice_1_6_0">
                                                 <input class="gfield-choice-input" name="input_6" type="radio"
                                                     value="{{ $amount->amount }}" id="choice_1_6_0"
@@ -97,17 +49,20 @@
                                 data-js-reload="field_1_13"><label class="gfield_label gform-field-label"
                                     for="input_1_13">Select Donation Type:<span class="gfield_required"><span
                                             class="gfield_required gfield_required_text">(Required)</span></span></label>
-                                <div class="ginput_container ginput_container_select"><select name="input_13"
-                                        id="input_1_13" class="large gfield_select" aria-required="true"
-                                        aria-invalid="false">
-                                        <option value="Daily">Daily</option>
-                                        <option value="Weekly">Weekly</option>
-                                        <option value="Monthly">Monthly</option>
-                                        <option value="Quarterly ( 3 Month )">Quarterly ( 3 Month )</option>
-                                        <option value="Half Yearly ( 6&nbsp;Month&nbsp;)">Half Yearly (
-                                            6&nbsp;Month&nbsp;)</option>
-                                        <option value="Yearly">Yearly</option>
-                                    </select></div>
+                                <div class="ginput_container ginput_container_select">
+
+                                    <select name="input_13" id="input_1_13" class="large gfield_select"
+                                        aria-required="true" aria-invalid="false">
+
+                                        @foreach ($paymentCycles as $paymentCycle)
+                                            <option>
+                                                {{ $paymentCycle->merchant_display_name ?? $paymentCycle->display_name }}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
+
+                                </div>
                             </div>
                             <div class="spacer gfield" style="grid-column: span 5;"></div>
                             <fieldset id="field_1_18"
@@ -117,55 +72,22 @@
                                     preferred donation sector :</legend>
                                 <div class="ginput_container ginput_container_checkbox">
                                     <div class="gfield_checkbox" id="input_1_18">
-                                        <div class="gchoice gchoice_1_18_1">
-                                            <input class="gfield-choice-input" name="input_18.1" type="checkbox"
-                                                value="General Donation" id="choice_1_18_1">
-                                            <label for="choice_1_18_1" id="label_1_18_1"
-                                                class="gform-field-label gform-field-label--type-inline">General
-                                                Donation</label>
-                                        </div>
-                                        <div class="gchoice gchoice_1_18_2">
-                                            <input class="gfield-choice-input" name="input_18.2" type="checkbox"
-                                                value="Education Program" id="choice_1_18_2">
-                                            <label for="choice_1_18_2" id="label_1_18_2"
-                                                class="gform-field-label gform-field-label--type-inline">Education
-                                                Program</label>
-                                        </div>
-                                        <div class="gchoice gchoice_1_18_3">
-                                            <input class="gfield-choice-input" name="input_18.3" type="checkbox"
-                                                value="Sponsor a Child" id="choice_1_18_3">
-                                            <label for="choice_1_18_3" id="label_1_18_3"
-                                                class="gform-field-label gform-field-label--type-inline">Sponsor a
-                                                Child</label>
-                                        </div>
-                                        <div class="gchoice gchoice_1_18_4">
-                                            <input class="gfield-choice-input" name="input_18.4" type="checkbox"
-                                                value="Food Program" id="choice_1_18_4">
-                                            <label for="choice_1_18_4" id="label_1_18_4"
-                                                class="gform-field-label gform-field-label--type-inline">Food
-                                                Program</label>
-                                        </div>
-                                        <div class="gchoice gchoice_1_18_5">
-                                            <input class="gfield-choice-input" name="input_18.5" type="checkbox"
-                                                value="Health Care" id="choice_1_18_5">
-                                            <label for="choice_1_18_5" id="label_1_18_5"
-                                                class="gform-field-label gform-field-label--type-inline">Health
-                                                Care</label>
-                                        </div>
-                                        <div class="gchoice gchoice_1_18_6">
-                                            <input class="gfield-choice-input" name="input_18.6" type="checkbox"
-                                                value="Sadakah Fund" id="choice_1_18_6">
-                                            <label for="choice_1_18_6" id="label_1_18_6"
-                                                class="gform-field-label gform-field-label--type-inline">Sadakah
-                                                Fund</label>
-                                        </div>
-                                        <div class="gchoice gchoice_1_18_7">
-                                            <input class="gfield-choice-input" name="input_18.7" type="checkbox"
-                                                value="Zakat Fund" id="choice_1_18_7">
-                                            <label for="choice_1_18_7" id="label_1_18_7"
-                                                class="gform-field-label gform-field-label--type-inline">Zakat
-                                                Fund</label>
-                                        </div>
+
+
+                                        @foreach ($paymentSectors as $paymentSector)
+                                            <div class="gchoice gchoice_1_18_1">
+                                                <input class="gfield-choice-input" name="input_18.1" type="checkbox"
+                                                    value="General Donation" id="choice_1_18_1">
+                                                <label for="choice_1_18_1" id="label_1_18_1"
+                                                    class="gform-field-label gform-field-label--type-inline">
+                                                    {{ $paymentSector->name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+
+
+
+
                                     </div>
                                 </div>
                             </fieldset>
@@ -173,9 +95,8 @@
                                 class="gfield gfield--type-text gfield--width-seven-twelfths field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"
                                 data-js-reload="field_1_4"><label class="gfield_label gform-field-label"
                                     for="input_1_4">Name</label>
-                                <div class="ginput_container ginput_container_text"><input name="input_4"
-                                        id="input_1_4" type="text" value="" class="large"
-                                        aria-invalid="false"> </div>
+                                <div class="ginput_container ginput_container_text"><input name="input_4" id="input_1_4"
+                                        type="text" value="" class="large" aria-invalid="false"> </div>
                             </div>
                             <div class="spacer gfield" style="grid-column: span 5;"></div>
                             <div id="field_1_5"
@@ -184,8 +105,8 @@
                                     for="input_1_5">Email/Phone<span class="gfield_required"><span
                                             class="gfield_required gfield_required_text">(Required)</span></span></label>
                                 <div class="ginput_container ginput_container_email">
-                                    <input name="input_5" id="input_1_5" type="email" value=""
-                                        class="large" aria-required="true" aria-invalid="false">
+                                    <input name="input_5" id="input_1_5" type="email" value="" class="large"
+                                        aria-required="true" aria-invalid="false">
                                 </div>
                             </div>
                             <div class="spacer gfield" style="grid-column: span 5;"></div>
@@ -256,7 +177,8 @@
                                 jQuery('#gform_wrapper_1').removeClass('gform_validation_error');
                             }
                             setTimeout(function() {
-                                /* delay the scroll by 50 milliseconds to fix a bug in chrome */ }, 50);
+                                /* delay the scroll by 50 milliseconds to fix a bug in chrome */
+                            }, 50);
                             if (window['gformInitDatepicker']) {
                                 gformInitDatepicker();
                             }

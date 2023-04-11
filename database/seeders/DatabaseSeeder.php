@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Comment;
-use App\Models\DonationAmount;
+use App\Models\PaymentAmount;
 use App\Models\Post;
 use App\Models\Role;
 use App\Models\User;
@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(OptionsTableSeeder::class);
-        $this->call(RoleTableSeeder::class);
+        $this->call(MerchantTableSeeder::class);
 
         $adminRole = Role::where('name', '=', 'ga')->first();
         $saRole = Role::where('name', '=', 'sa')->first();
@@ -52,13 +52,14 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
 
-        Post::factory(20)->create();
+        // Post::factory(20)->create();
 
-        Comment::factory(20)->create();
+        // Comment::factory(20)->create();
 
-        DonationAmount::factory(10)->create();
+        // PaymentAmount::factory(10)->create();
 
-
+        $this->call(PaymentCycleSeeder::class);
+        $this->call(MojarSchoolSeeder::class);
 
 
     }

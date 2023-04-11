@@ -11,10 +11,15 @@ use App\Http\Controllers\PostController ;
 use App\Models\Post;
 
 Route::get('/', function () {
-    $posts = Post::latest()
-    ->where('post_status', 'publish')
-    ->paginate();
-    return view('welcome', compact('posts'));
+
+
+    $donateUsController = new DonateUsController();
+
+    return  $donateUsController->index();
+    // $posts = Post::latest()
+    // ->where('post_status', 'publish')
+    // ->paginate();
+    // return view('welcome', compact('posts'));
 })->name("/");
 
 Route::get('posts', [PostController::class,'index'])->name('posts.index');

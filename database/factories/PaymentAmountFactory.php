@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\DonationAmount;
+use App\Models\PaymentAmount;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DonationAmountFactory extends Factory
+class PaymentAmountFactory extends Factory
 {
-    protected $model = DonationAmount::class;
+    protected $model = PaymentAmount::class;
 
     /**
      * Define the model's default state.

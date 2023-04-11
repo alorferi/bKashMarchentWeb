@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-red-400 border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -39,13 +39,13 @@
                         {{ __('Members') }}
                     </x-nav-link> --}}
 
-                    {{-- <x-nav-link :href="route('about-us.index')" :active="request()->routeIs('about-us.index')">
+                    <x-nav-link :href="route('about-us.index')" :active="request()->routeIs('about-us.index')">
                         {{ __('About Us') }}
-                    </x-nav-link> --}}
-
-                    <x-nav-link :href="route('donate-us.index')" :active="request()->routeIs('donate-us.index')">
-                        {{ __('Donate Us') }}
                     </x-nav-link>
+
+                    {{-- <x-nav-link :href="route('donate-us.index')" :active="request()->routeIs('donate-us.index')">
+                        {{ __('Donate Us') }}
+                    </x-nav-link> --}}
 
 
 
