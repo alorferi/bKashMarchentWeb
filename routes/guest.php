@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\DonateUsController;
@@ -13,14 +12,9 @@ use App\Models\Post;
 
 Route::get('/', function () {
 
-
     $donateUsController = new DonateUsController();
 
     return  $donateUsController->index();
-    // $posts = Post::latest()
-    // ->where('post_status', 'publish')
-    // ->paginate();
-    // return view('welcome', compact('posts'));
 })->name("/");
 
 Route::get('posts', [PostController::class,'index'])->name('posts.index');
