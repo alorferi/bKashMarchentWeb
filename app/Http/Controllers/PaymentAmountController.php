@@ -46,9 +46,9 @@ class PaymentAmountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(PaymentAmount $paymentAmount)
     {
-        //
+
     }
 
     /**
@@ -57,9 +57,9 @@ class PaymentAmountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(PaymentAmount $paymentAmount)
     {
-        //
+        return view('PaymentAmount.edit', compact('paymentAmount'));
     }
 
     /**

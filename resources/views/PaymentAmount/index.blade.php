@@ -1,7 +1,7 @@
 <x-admin-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Payment Cycles') }}
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+            {{ __('Payment Amounts') }}
         </h2>
     </x-slot>
 
@@ -14,6 +14,7 @@
     <table>
 
         <tr>
+            <th>Actions</th>
             <th>Amount</th>
             <th>Currency</th>
             <th>Is Active</th>
@@ -21,6 +22,10 @@
 
         @forelse($paymentAmounts as $paymentAmount)
             <tr>
+
+                <td>
+                    <a href="{{route('admin.payment-amounts.edit',$paymentAmount->id)}}">Edit</a>
+                </td>
 
                 <td>
                     {{ $paymentAmount->amount }}

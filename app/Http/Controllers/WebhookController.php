@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subscription;
 use Illuminate\Http\Request;
 
-class SubscriptionController extends Controller
+class WebhookController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        $subscriptions = Subscription::paginate();
-
-        return view('Subscription.index', compact('subscriptions'));
+        //
     }
 
     /**
@@ -40,6 +37,11 @@ class SubscriptionController extends Controller
         //
     }
 
+
+    public function bKashHook(Request $request){
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -48,21 +50,7 @@ class SubscriptionController extends Controller
      */
     public function show($id)
     {
-
-        $subscription = Subscription::with("payments")->find($id);
-
-        return view('Subscription.show', compact('subscription'));
-    }
-
-
-    public function showMyPayments(Request $request)
-    {
-
-      $mobile =  $request->mobile;
-
-        $subscription = Subscription::with("payments")->where('payer',$request->mobile)->first();
-
-        return view('Subscription.show_by_payments', compact('subscription','mobile'));
+        //
     }
 
     /**

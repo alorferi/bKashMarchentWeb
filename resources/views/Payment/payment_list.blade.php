@@ -1,3 +1,17 @@
+{{-- <tr>
+
+    <td class="px-3">
+        {{ $subscription->payer }}
+    </td>
+    <td class="px-3"> {{ $subscription->amount }}</td>
+    <td class="px-3"> {{ $subscription->startDate }}</td>
+    <td class="px-3"> {{ $subscription->expiryDate }}</td>
+    <td class="px-3"> {{ $subscription->frequency }}</td>
+    <td class="px-3"> {{ $subscription->status }}</td>
+
+</tr> --}}
+
+
 <table>
 
     <tr>

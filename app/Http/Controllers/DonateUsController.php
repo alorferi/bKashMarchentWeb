@@ -21,4 +21,10 @@ class DonateUsController extends Controller
 
         return view('donate_us.index', compact('paymentAmounts','paymentCycles','paymentSectors'));
     }
+
+
+    public function process()
+    {
+
+    }
 }

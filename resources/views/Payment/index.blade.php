@@ -10,7 +10,7 @@
     </div>
 
 
-    @includeIf('Payment.payment_list')
+    @include('Payment.payment_list')
 
     <div class="p-2">
         {!! $payments->links() !!}
