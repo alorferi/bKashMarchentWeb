@@ -2,8 +2,8 @@
 
 
     <x-slot name="title">
-        <h2 class="gform_title">Become a Regular Donor</h2>
-        <p class="gform_description"></p>
+        <h2 class="">Become a Regular Donor</h2>
+        <p class=""></p>
     </x-slot>
 
     <!-- Validation Errors -->
@@ -14,20 +14,17 @@
 
 
         <div>
-            <fieldset id="field_1_6"
-                class="gfield gfield--type-product gfield--type-choice gfield--input-type-radio gfield--width-full gfield_price gfield_price_1_6 gfield_product_1_6 gfield_contains_required field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"
-                data-js-reload="field_1_6">
-                <legend class="gfield_label gform-field-label">Daily Donation Amount :<span class="gfield_required"><span
-                            class="gfield_required gfield_required_text">(Required)</span></span>
+            <fieldset class="">
+                <legend class="">Daily Donation Amount :<span class=""><span
+                            class="">(Required)</span></span>
                 </legend>
-                <div class=" ginput_container_radio">
-                    <div class="gfield_radio" id="input_1_6">
+                <div class="">
+                    <div class="" id="">
 
                         @foreach ($paymentAmounts as $amount)
-                            <div class=" _1_6_0">
-                                <input class="" name="input_6" type="radio" value="{{ $amount->amount }}">
-                                <label for="choice_1_6_0" id="label_1_6_0"
-                                    class="gform-field-label gform-field-label--type-inline">{{ $amount->amount }}
+                            <div class="">
+                                <input class="" name="" type="radio" value="{{ $amount->amount }}">
+                                <label for="" id="" class="">{{ $amount->amount }}
                                     {{ $amount->currency }}</label>
                             </div>
                         @endforeach
@@ -38,15 +35,11 @@
             </fieldset>
         </div>
 
-        <div id="field_1_13"
-            class="gfield gfield--type-select gfield--width-full gfield_contains_required field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"
-            data-js-reload="field_1_13"><label class="gfield_label gform-field-label" for="input_1_13">Select
-                Donation Type:<span class="gfield_required"><span
-                        class="gfield_required gfield_required_text">(Required)</span></span></label>
-            <div class=" ginput_container_select">
+        <div id="" class=""><label class="" for="">Select
+                Donation Type:<span class=""><span class="">(Required)</span></span></label>
+            <div class="">
 
-                <select name="input_13" id="input_1_13" class="large gfield_select" aria-required="true"
-                    aria-invalid="false">
+                <select name="" id="" class="" aria-required="true" aria-invalid="false">
 
                     @foreach ($paymentCycles as $paymentCycle)
                         <option>
@@ -60,16 +53,14 @@
         </div>
 
 
-        <fieldset id="field_1_18"
-            class="gfield gfield--type-post_custom_field gfield--type-choice gfield--input-type-checkbox gfield--width-full field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"
-            data-js-reload="field_1_18">
-            <legend class="gfield_label gform-field-label gfield_label_before_complex">Choose your
+        <fieldset id="" class="s">
+            <legend class="">Choose your
                 preferred donation sector :</legend>
 
             @foreach ($paymentSectors as $paymentSector)
                 <div class="">
                     <input class="" type="checkbox" value="General Donation">
-                    <label for="choice_1_18_1" class="">
+                    <label for="" class="">
                         {{ $paymentSector->name }}
                     </label>
                 </div>
@@ -81,7 +72,7 @@
         <div>
             <x-label for="name" :value="__('Name')" />
 
-            <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
+            <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required
                 autofocus />
         </div>
 
@@ -90,17 +81,14 @@
         <div class="mt-4">
             <x-label for="email" :value="__('Email')" />
 
-            <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+            <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')"
                 required />
         </div>
 
-        <div id="field_1_9"
-            class="gfield gfield--type-total gfield--width-full gfield_price gfield_price_1_ gfield_total gfield_total_1_ field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"
-            aria-atomic="true" aria-live="polite" data-js-reload="field_1_9"><label
-                class="gfield_label gform-field-label" for="input_1_9">Total</label>
-            <div class=" ginput_container_total">
-                <input type="text" readonly="" name="input_9" id="input_1_9" value="৳ 0.00"
-                    class="gform-text-input-reset ginput_total ginput_total_1">
+        <div id="" class="" aria-atomic="true" aria-live="polite" data-js-reload="field_1_9"><label
+                class="" for="">Total</label>
+            <div class="">
+                <input type="text" readonly="" name="input_9" id="" value="৳ 0.00" class="">
             </div>
         </div>
 
