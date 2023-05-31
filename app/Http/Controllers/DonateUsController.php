@@ -23,6 +23,10 @@ class DonateUsController extends Controller
     }
 
 
+    public function subscribe(Request $request){
+
+    }
+
     public function process()
     {
 

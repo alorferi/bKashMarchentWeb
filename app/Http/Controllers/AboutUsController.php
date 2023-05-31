@@ -10,8 +10,7 @@ class AboutUsController extends Controller
     public function index()
     {
 
-        $images = Image::orderBy('created_at', 'desc')->paginate();
-        return view('about_us.index', compact('images'));
+        return view('about_us.index');
 
     }
 }

@@ -13,33 +13,6 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    {{-- <x-nav-link :href="route('/')" :active="request()->routeIs('/')">
-                        {{ __('Home') }}
-                    </x-nav-link> --}}
-
-                    {{-- <x-nav-link :href="route('admin.posts.index')" :active="request()->routeIs('admin.posts.index')">
-                        {{ __('Posts') }}
-                    </x-nav-link> --}}
-
-{{--
-                    <x-nav-link :href="route('admin.images.index')" :active="request()->routeIs('admin.images.index')">
-                        {{ __('Images') }}
-                    </x-nav-link> --}}
-
-                    {{-- <x-nav-link :href="route('admin.videos.index')" :active="request()->routeIs('admin.videos.index')">
-                        {{ __('Videos') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('admin.tags.index')" :active="request()->routeIs('admin.tags.index')">
-                        {{ __('Tags') }}
-                    </x-nav-link> --}}
-
-                    {{-- @permission('comment_create')
-                        <x-nav-link :href="route('admin.comments.index')" :active="request()->routeIs('comments.index')">
-                            {{ __('Comments') }}
-                        </x-nav-link>
-                    @endpermission --}}
-
 
 
                     <x-nav-link :href="route('admin.payments.index')" :active="request()->routeIs('admin.payments.index')">

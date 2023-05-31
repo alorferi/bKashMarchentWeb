@@ -12,19 +12,18 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-
         <div>
             <fieldset class="">
                 <legend class="">Daily Donation Amount :<span class=""><span
                             class="">(Required)</span></span>
                 </legend>
                 <div class="">
-                    <div class="" id="">
+                    <div class="" >
 
                         @foreach ($paymentAmounts as $amount)
                             <div class="">
-                                <input class="" name="" type="radio" value="{{ $amount->amount }}">
-                                <label for="" id="" class="">{{ $amount->amount }}
+                                <input class="" name="amount" type="radio" value="{{ $amount->amount }}">
+                                <label for=""  class="">{{ $amount->amount }}
                                     {{ $amount->currency }}</label>
                             </div>
                         @endforeach
@@ -35,11 +34,11 @@
             </fieldset>
         </div>
 
-        <div id="" class=""><label class="" for="">Select
+        <div  class=""><label class="" for="">Select
                 Donation Type:<span class=""><span class="">(Required)</span></span></label>
             <div class="">
 
-                <select name="" id="" class="" aria-required="true" aria-invalid="false">
+                <select name="" class="" aria-required="true" aria-invalid="false">
 
                     @foreach ($paymentCycles as $paymentCycle)
                         <option>
@@ -53,13 +52,13 @@
         </div>
 
 
-        <fieldset id="" class="s">
+        <fieldset  class="s">
             <legend class="">Choose your
                 preferred donation sector :</legend>
 
             @foreach ($paymentSectors as $paymentSector)
                 <div class="">
-                    <input class="" type="checkbox" value="General Donation">
+                    <input name="payment_sectors[]" type="checkbox" value="{{$paymentSector->id}}">
                     <label for="" class="">
                         {{ $paymentSector->name }}
                     </label>
@@ -72,8 +71,7 @@
         <div>
             <x-label for="name" :value="__('Name')" />
 
-            <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required
-                autofocus />
+            <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required/>
         </div>
 
 
@@ -85,10 +83,10 @@
                 required />
         </div>
 
-        <div id="" class="" aria-atomic="true" aria-live="polite" data-js-reload="field_1_9"><label
+        <div  class="" aria-atomic="true" aria-live="polite" data-js-reload="field_1_9"><label
                 class="" for="">Total</label>
             <div class="">
-                <input type="text" readonly="" name="input_9" id="" value="৳ 0.00" class="">
+                <input type="text" readonly="" name="input_9"  value="৳ 0.00" class="">
             </div>
         </div>
 
