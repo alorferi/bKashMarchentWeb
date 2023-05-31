@@ -44,9 +44,9 @@ class DonateUsController extends Controller
         $now->setTimezone('UTC');
 
         // Header Params
-        $channelId = "Merchant WEB";
+        $channelId = env("BKASH_CHANNEL_ID");
         $timeStamp = $now->format("Y-m-d")."T".$now->format("H:i:s.u")."Z";
-        $obf_api_key = "QQLymPdRg9oZbxbGMQQkacuUOxpf7rnZ";
+        $obf_api_key =  env("BKASH_API_KEY");
 
         $headers = array(
             'version' => "v1.0",
@@ -73,7 +73,7 @@ class DonateUsController extends Controller
         $endDate = $now->addYears(1)->format('Y-m-d');
 
         $bodyData =  [
-              "amount" => 1,
+              "amount" => $request->amount,
               "amountQueryUrl"=> null,
               "firstPaymentAmount"=> null,
               "firstPaymentIncludedInCycle"=> true,
@@ -127,11 +127,6 @@ class DonateUsController extends Controller
 
 
         // return redirect(route('donate-us.index'));
-
-    }
-
-    public function process()
-    {
 
     }
 }

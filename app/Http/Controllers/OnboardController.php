@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Onboard;
 use Illuminate\Http\Request;
 
-class WebhookController extends Controller
+class OnboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,18 +38,13 @@ class WebhookController extends Controller
         //
     }
 
-
-    public function bKashHook(Request $request){
-
-    }
-
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Onboard  $onboard
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Onboard $onboard)
     {
         //
     }
@@ -56,10 +52,10 @@ class WebhookController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Onboard  $onboard
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Onboard $onboard)
     {
         //
     }
@@ -68,10 +64,10 @@ class WebhookController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Onboard  $onboard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Onboard $onboard)
     {
         //
     }
@@ -79,10 +75,10 @@ class WebhookController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Onboard  $onboard
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Onboard $onboard)
     {
         //
     }
