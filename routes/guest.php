@@ -14,8 +14,6 @@ Route::get('/', function () {
 Route::get('about-us', [AboutUsController::class,'index'])->name('about-us.index');
 Route::get('donate-us', [DonateUsController::class,'index'])->name('donate-us.index');
 
-Route::get('donate-us/process', [DonateUsController::class,'process'])->name('donate-us.process');
-
 Route::post('donate-us/subscribe', [DonateUsController::class,'subscribe'])->name('donate-us.subscribe');
 
 Route::get('subscriptions/my-payments', [SubscriptionController::class,'showMyPayments'])

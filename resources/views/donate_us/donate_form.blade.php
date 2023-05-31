@@ -9,7 +9,7 @@
     <!-- Validation Errors -->
     <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('donate-us.subscribe') }}">
         @csrf
 
         <div>
@@ -38,10 +38,10 @@
                 Donation Type:<span class=""><span class="">(Required)</span></span></label>
             <div class="">
 
-                <select name="" class="" aria-required="true" aria-invalid="false">
+                <select name="payment_cycle" class="" aria-required="true" aria-invalid="false">
 
                     @foreach ($paymentCycles as $paymentCycle)
-                        <option>
+                        <option value="{{ $paymentCycle->name }}">
                             {{ $paymentCycle->merchant_display_name ?? $paymentCycle->display_name }}
                         </option>
                     @endforeach
@@ -71,7 +71,9 @@
         <div>
             <x-label for="name" :value="__('Name')" />
 
-            <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required/>
+            <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required
+            value="Md Babul Mirdha"
+            />
         </div>
 
 
@@ -80,13 +82,14 @@
             <x-label for="email" :value="__('Email')" />
 
             <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')"
-                required />
+            value="babul.mirdha@gmail.com"
+            required />
         </div>
 
         <div  class="" aria-atomic="true" aria-live="polite" data-js-reload="field_1_9"><label
                 class="" for="">Total</label>
             <div class="">
-                <input type="text" readonly="" name="input_9"  value="৳ 0.00" class="">
+                <input type="text" readonly  value="৳ 0.00" class="">
             </div>
         </div>
 
