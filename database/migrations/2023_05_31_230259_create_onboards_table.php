@@ -16,11 +16,13 @@ class CreateOnboardsTable extends Migration
         Schema::create('onboards', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('email');
+            $table->string('email');
             $table->decimal('amount');
-            $table->dateTime('startDate');
-            $table->dateTime('expiryDate');
             $table->string('frequency');
+            $table->dateTime('startDate')->nullable();
+            $table->dateTime('expiryDate')->nullable();
+            $table->string('subscriptionRequestId')->nullable();
+            $table->dateTime('expirationTime')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

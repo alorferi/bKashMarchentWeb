@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
+use App\Models\Onboard;
 use App\Models\PaymentAmount;
 use App\Models\PaymentCycle;
 use App\Models\PaymentSector;
+use App\Utils\bKashUtils;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
-use Illuminate\Support\Str;
+use Redirect;
 
 class DonateUsController extends Controller
 {
@@ -37,16 +40,24 @@ class DonateUsController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
 
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__);
 
+        $onboard = Onboard::create(
+            [
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'frequency'=>$request->payment_cycle,
+            'amount'=>$request->amount]
+        );
 
 
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
         // Header Params
-        $channelId = env("BKASH_CHANNEL_ID");
+        $channelId = bKashUtils::channelId();
         $timeStamp = $now->format("Y-m-d")."T".$now->format("H:i:s.u")."Z";
-        $obf_api_key =  env("BKASH_API_KEY");
+        $obf_api_key =  bKashUtils::apiKey();
 
         $headers = array(
             'version' => "v1.0",
@@ -56,17 +67,16 @@ class DonateUsController extends Controller
             'Content-Type' => "application/json"
         );
 
-        $request_url = 'https://gateway.sbrecurring.pay.bka.sh/gateway/api/subscription';
+        $request_url = bKashUtils::serverUrl().'/api/subscription';
 
         $client = new \GuzzleHttp\Client();
 
-
         //Body Params
-        $obf_service_id = 100001;
-        $obf_m_short_code = 50022;
-        $obf_web_hook_endpoint = "https://odommo-dev.babulmirdha.com/api/web-hook/bkash";
+        $obf_service_id = bKashUtils::serviceId();
 
-        $subscriptionRequestId = Str::uuid()->toString();
+        $obf_m_short_code = bKashUtils::mShortCode();
+
+        $obf_web_hook_endpoint = bKashUtils::webhookUrl();
 
         $startDate =  $now->addDays(1)->format('Y-m-d');
 
@@ -90,7 +100,7 @@ class DonateUsController extends Controller
               "payerType"=> "CUSTOMER",
               "paymentType"=> "FIXED",
               "redirectUrl"=> "{$obf_web_hook_endpoint}",
-              "subscriptionRequestId"=> "obf-{$subscriptionRequestId}",
+              "subscriptionRequestId"=>"obf-{$onboard->id}",
               "subscriptionReference"=> "MSMSR2",
               "extraParams"=> null
         ];
@@ -106,18 +116,33 @@ class DonateUsController extends Controller
 
             $statusCode = $response->getStatusCode();
             $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent);
 
-            dump($responseContent, $statusCode);
+            if($statusCode!=200) {
+                ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__);
+                return Redirect::to(route('books.create'))
+                ->withInput($request)->with('message', $responseContent->reason);
+            }
 
 
-           $response = json_decode($responseContent);
+            // dd($responseContent, $statusCode);
 
-            return redirect($response->redirectURL);
+            $onboard->subscriptionRequestId = $responseContent->subscriptionRequestId;
+            $onboard->expirationTime =  new Carbon($responseContent->expirationTime);
+            $onboard->save();
+
+            return redirect()->to($responseContent->redirectURL);
 
         } catch(ClientException $e) {
-            dump($e->getMessage());
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return Redirect::to(route('donate-us.index'))
+            ->withInput($request->all())->with('message', $e->getMessage());
+            // dump(__LINE__, $e->getMessage());
         } catch(Exception $e) {
-            dump($e->getMessage());
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return Redirect::to(route('donate-us.index'))
+            ->withInput($request->all())->with('message', $e->getMessage());
+            // dump(__LINE__, $e->getMessage());
         }
 
 

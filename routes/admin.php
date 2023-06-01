@@ -119,4 +119,11 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
       //  'index', 'show'
     ])
     ->middleware(['auth']);
+
+
+    Route::get('activity-logs', [ActivityLogController::class,'index'])->name('activity-logs.index');
+    Route::get('activity-ips', [ActivityIpController::class,'index'])->name('activity-ips.index');
+    // Route::get('activity-ip-lookups',  [ActivityIpLookupController::class,'index'])->name('activity-ip-lookups.index');
+    Route::get('audits', [AuditController::class,'index'])->name('audits.index');
+
 });
