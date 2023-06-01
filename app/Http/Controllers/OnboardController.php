@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Onboard;
+use App\Models\OnBoard;
 use Illuminate\Http\Request;
 
-class OnboardController extends Controller
+class OnBoardController extends Controller
 {
-    /**
+   /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $onboards = OnBoard::paginate();
+
+        return view('OnBoard.index', compact('onboards'));
     }
 
     /**
@@ -41,21 +43,27 @@ class OnboardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Onboard  $onboard
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Onboard $onboard)
+    public function show($id)
     {
-        //
+
+    }
+
+
+    public function showMyPayments(Request $request)
+    {
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Onboard  $onboard
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Onboard $onboard)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +72,10 @@ class OnboardController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Onboard  $onboard
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Onboard $onboard)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +83,10 @@ class OnboardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Onboard  $onboard
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Onboard $onboard)
+    public function destroy($id)
     {
         //
     }

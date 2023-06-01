@@ -1,6 +1,6 @@
 <x-guest-layout>
 
-            @include('post.post_list_view')
+           Welcome
 
 </x-guest-layout>
 

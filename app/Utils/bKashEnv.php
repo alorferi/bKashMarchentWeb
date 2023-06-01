@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-class bKashUtils
+class bKashEnv
 {
     public static function channelId()
     {

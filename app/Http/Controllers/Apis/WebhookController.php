@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apis;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 
 class WebhookController extends Controller
@@ -40,13 +41,10 @@ class WebhookController extends Controller
 
     public function bKashHookGet(Request $request)
     {
-        // dump($request->all());
 
-        // "reference" => "CLZA4386"
-//   "status" => "SUCCEEDED"
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($request->all()));
 
-
-        return view('Webhook.bkash_hook')->with('message',"reference: {$request->reference}, status: {$request->status}");
+        return view('Webhook.bkash_hook')->with('message', "reference: {$request->reference}, status: {$request->status}");
     }
 
 

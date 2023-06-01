@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\AutoUuid;
 use App\Models\User;
+use ErrorException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,7 +45,11 @@ class ActivityLog extends Model
             $activityLog =	ActivityLog::create($log);
 
             return $activityLog;
+        } catch(ErrorException $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return null;
         } catch(Exception $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
             return null;
         }
     }

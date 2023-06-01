@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ActivityIpController;
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\OptionController;
@@ -10,11 +12,14 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TermController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\AuditController;
+use App\Http\Controllers\OnBoardController;
 use App\Http\Controllers\PaymentAmountController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentCycleController;
 use App\Http\Controllers\PaymentSectorController;
 use App\Http\Controllers\SubscriptionController;
+use App\Models\OnBoard;
 
 Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], function () {
 
@@ -115,6 +120,13 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ->middleware(['auth']);
 
     Route::resource('permissions', PermissionController::class)
+    ->except([
+      //  'index', 'show'
+    ])
+    ->middleware(['auth']);
+
+
+    Route::resource('on-boards', OnBoardController::class)
     ->except([
       //  'index', 'show'
     ])

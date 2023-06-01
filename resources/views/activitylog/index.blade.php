@@ -1,6 +1,9 @@
-@extends('layouts.admin')
-@section('content')
-    <h1> Activity Logs</h1>
+<x-admin-layout>
+    <x-slot name="header">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+            {{ __('Activity Logs') }}
+        </h2>
+    </x-slot>
 
     @if (Session::has('message'))
         <div class="alert alert-info">{{ session('message') }}</div>
@@ -25,7 +28,8 @@
                 <input name="to_date" type="date" value="{{ $to_date }}" />
             </div>
             <div class="p-2">
-                <input name="term" type="text" value="{{ $term }}" placeholder="User Name or IP adddress" />
+                <input name="term" type="text" value="{{ $term }}"
+                    placeholder="User Name or IP adddress" />
             </div>
 
             <div class="pt-2 pb-2">
@@ -52,7 +56,7 @@
             <div class="card-body">
 
 
-                <div class="d-flex justify-content-between justify-content-between">
+                <div class="d-flex justify-content-between">
 
 
                     <div>
@@ -66,7 +70,8 @@
                                 height="64" />
 
 
-                            <a href="{{ route('users.show', $user->id) }}">{{ $user->first_name }} {{ $user->surname }}</a>
+                            <a href="{{ route('users.show', $user->id) }}">{{ $user->first_name }}
+                                {{ $user->surname }}</a>
                         @else
                             Not Available
                         @endif
@@ -151,4 +156,4 @@
 
         });
     </script>
-@endsection
+</x-admin-layout>
