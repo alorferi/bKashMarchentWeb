@@ -9,7 +9,6 @@ use App\Models\PaymentAmount;
 use App\Models\PaymentCycle;
 use App\Models\PaymentSector;
 use Illuminate\Http\Request;
-use Redirect;
 use Carbon\Carbon;
 
 class DonateUsController extends Controller
