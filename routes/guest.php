@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\Apis\WebhookController;
 use App\Http\Controllers\DonateUsController;
 use App\Http\Controllers\SubscriptionController;
 
@@ -21,6 +20,5 @@ Route::get('subscriptions/my-payments', [SubscriptionController::class,'showMyPa
 ->name('subscriptions.show.my-payments');
 
 
-// Route::get('api/web-hook/bkash', [WebhookController::class,'bKashHookGet']);
 Route::get('donate-us/finish', [DonateUsController::class,'finish']);
 

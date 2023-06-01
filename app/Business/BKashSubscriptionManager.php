@@ -106,7 +106,8 @@ class BKashSubscriptionManager
 
     }
 
-    public function show($requestId){
+    public function show($requestId)
+    {
         $headers = $this->getRequestHeaders();
 
         $now = Carbon::now();
@@ -126,6 +127,8 @@ class BKashSubscriptionManager
             // $responseContent = json_decode($responseContent);
 
             // dd($responseContent);
+
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $response->getBody()->getContents());
 
             return $response;
 

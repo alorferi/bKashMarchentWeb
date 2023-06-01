@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\AutoUuid;
 use App\Models\User;
 use ErrorException;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

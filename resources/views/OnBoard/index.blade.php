@@ -16,7 +16,6 @@
         <tr>
             <th>Actions</th>
             <th>Name</th>
-            <th>Email</th>
             <th>Amount</th>
             <th>Frequency</th>
             <th>Start Date</th>
@@ -31,22 +30,26 @@
             <tr>
 
                 <td class="px-3">
-                    <a href="{{route("admin.on-boards.show",$onBoard->id)}}">Show</a>
+                    <a href="{{ route('admin.on-boards.show', $onBoard->id) }}">Show</a>
+
                 </td>
 
                 <td class="px-3">
                     {{ $onBoard->name }}
-                </td>
-                <td class="px-3">
+
+                    <br>
                     {{ $onBoard->email }}
+                    <br>
+                    {{ $onBoard->created_at->diffForHumans() }}
                 </td>
+
 
                 <td class="px-3"> {{ $onBoard->amount }}</td>
                 <td class="px-3"> {{ $onBoard->frequency }}</td>
                 <td class="px-3"> {{ $onBoard->startDate }}</td>
                 <td class="px-3"> {{ $onBoard->expiryDate }}</td>
 
-                <td class="px-3"> {{ $onBoard->expirationTime }}</td>
+                <td class="px-3"> {{ $onBoard->expirationTime->diffForHumans() }}</td>
             </tr>
 
 

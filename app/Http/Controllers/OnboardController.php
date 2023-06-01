@@ -15,7 +15,7 @@ class OnBoardController extends Controller
       */
     public function index()
     {
-        $onBoards = OnBoard::paginate();
+        $onBoards = OnBoard::orderBy('created_at','desc')->paginate();
 
         return view('OnBoard.index', compact('onBoards'));
     }

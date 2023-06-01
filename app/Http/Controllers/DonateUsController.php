@@ -48,11 +48,7 @@ class DonateUsController extends Controller
         $responseContent = $response->getBody()->getContents();
         $responseContent = json_decode($responseContent);
 
-        if($statusCode!=200) {
-            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__);
-            return Redirect::to(route('donate_us.index'))
-            ->withInput($request)->with('message', $responseContent->reason);
-        }
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($responseContent) );
 
         // dd($responseContent, $statusCode);
 
