@@ -21,4 +21,6 @@ Route::get('subscriptions/my-payments', [SubscriptionController::class,'showMyPa
 ->name('subscriptions.show.my-payments');
 
 
-Route::get('api/web-hook/bkash', [WebhookController::class,'bKashHookGet']);
+// Route::get('api/web-hook/bkash', [WebhookController::class,'bKashHookGet']);
+Route::get('donate-us/finish', [DonateUsController::class,'finish']);
+

@@ -39,18 +39,19 @@ class WebhookController extends Controller
         //
     }
 
-    public function bKashHookGet(Request $request)
-    {
+    // public function bKashHookGet(Request $request)
+    // {
 
-        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($request->all()));
+    //     ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($request->all()));
 
-        return view('Webhook.bkash_hook')->with('message', "reference: {$request->reference}, status: {$request->status}");
-    }
+    //     return view('Webhook.bkash_hook')->with('message', "reference: {$request->reference}, status: {$request->status}");
+    // }
 
 
     public function bKashHookPost(Request $request)
     {
-        dump($request->all());
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($request->all()));
+        // dump($request->all());
     }
 
     /**

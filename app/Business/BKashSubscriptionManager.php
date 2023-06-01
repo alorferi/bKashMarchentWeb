@@ -33,7 +33,7 @@ class BKashSubscriptionManager
 
         return $headers;
     }
-    public function createSubscription(Request $request)
+    public function create(Request $request)
     {
 
         $headers = $this->getRequestHeaders();
@@ -50,12 +50,11 @@ class BKashSubscriptionManager
 
         $obf_m_short_code = bKashEnv::mShortCode();
 
-        $obf_web_hook_endpoint = bKashEnv::webhookUrl();
+        $obf_redirect_url = bKashEnv::redirectUrl();
 
         $startDate =  $now->addDays(1)->format('Y-m-d');
 
         $endDate = $now->addYears(1)->format('Y-m-d');
-
 
         $uuid = Str::uuid()->toString();
 
@@ -76,7 +75,7 @@ class BKashSubscriptionManager
               "payer"=> null,
               "payerType"=> "CUSTOMER",
               "paymentType"=> "FIXED",
-              "redirectUrl"=> "{$obf_web_hook_endpoint}",
+              "redirectUrl"=> "{$obf_redirect_url}",
               "subscriptionRequestId"=>$uuid,
               "subscriptionReference"=> "MSMSR2",
               "extraParams"=> null
@@ -106,4 +105,40 @@ class BKashSubscriptionManager
         }
 
     }
+
+    public function show($requestId){
+        $headers = $this->getRequestHeaders();
+
+        $now = Carbon::now();
+        $now->setTimezone('UTC');
+
+        $request_url = bKashEnv::serverUrl()."/api/subscriptions/request-id/{$requestId}";
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('GET', $request_url, [
+                'headers' => $headers,
+            ]);
+
+            // $statusCode = $response->getStatusCode();
+            // $responseContent = $response->getBody()->getContents();
+            // $responseContent = json_decode($responseContent);
+
+            // dd($responseContent);
+
+            return $response;
+
+        } catch(ClientException $e) {
+
+            // dd($e->getResponse());
+
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        } catch(Exception $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        }
+    }
+
 }

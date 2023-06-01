@@ -24,6 +24,10 @@ class bKashEnv
     {
         return env("APP_URL").env("BKASH_WEBHOOK_ENDPOINT");
     }
+    public static function redirectUrl()
+    {
+        return env("APP_URL").env("BKASH_REDIRECT_ENDPOINT");
+    }
 
     public static function serviceId()
     {

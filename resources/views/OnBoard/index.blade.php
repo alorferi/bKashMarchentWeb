@@ -14,7 +14,7 @@
     <table>
 
         <tr>
-            <th>ID</th>
+            <th>Actions</th>
             <th>Name</th>
             <th>Email</th>
             <th>Amount</th>
@@ -30,10 +30,8 @@
         @forelse($onBoards as $onBoard)
             <tr>
 
-
-
                 <td class="px-3">
-                    {{ $onBoard->id }}
+                    <a href="{{route("admin.on-boards.show",$onBoard->id)}}">Show</a>
                 </td>
 
                 <td class="px-3">

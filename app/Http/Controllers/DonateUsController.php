@@ -42,7 +42,7 @@ class DonateUsController extends Controller
 
         $bKashSubscriptionMgr = new BKashSubscriptionManager();
 
-        $response = $bKashSubscriptionMgr->createSubscription($request);
+        $response = $bKashSubscriptionMgr->create($request);
 
         $statusCode = $response->getStatusCode();
         $responseContent = $response->getBody()->getContents();
@@ -69,5 +69,12 @@ class DonateUsController extends Controller
 
         return redirect()->to($responseContent->redirectURL);
 
+    }
+
+    public function finish(Request $request)
+    {
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($request->all()));
+
+        return view('donate_us.bkash_finish')->with('message', "reference: {$request->reference}, status: {$request->status}");
     }
 }

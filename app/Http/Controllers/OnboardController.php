@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Business\BKashSubscriptionManager;
 use App\Models\OnBoard;
 use Illuminate\Http\Request;
 
 class OnBoardController extends Controller
 {
-   /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /**
+      * Display a listing of the resource.
+      *
+      * @return \Illuminate\Http\Response
+      */
     public function index()
     {
         $onBoards = OnBoard::paginate();
@@ -48,12 +49,17 @@ class OnBoardController extends Controller
      */
     public function show($id)
     {
+        $bKashSubscriptionMgr = new BKashSubscriptionManager();
 
-    }
+        $response = $bKashSubscriptionMgr->show($id);
 
-
-    public function showMyPayments(Request $request)
-    {
+        if($response) {
+            $statusCode = $response->getStatusCode();
+            $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent);
+            dd($responseContent, $statusCode);
+        }
+        return view("OnBoard.show");
 
     }
 
