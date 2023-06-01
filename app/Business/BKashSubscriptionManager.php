@@ -13,9 +13,8 @@ use Illuminate\Support\Str;
 
 class BKashSubscriptionManager
 {
-    public function createSubscription(Request $request)
+    public function getRequestHeaders()
     {
-
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
@@ -31,6 +30,16 @@ class BKashSubscriptionManager
             'x-api-key' => $obf_api_key,
             'Content-Type' => "application/json"
         );
+
+        return $headers;
+    }
+    public function createSubscription(Request $request)
+    {
+
+        $headers = $this->getRequestHeaders();
+
+        $now = Carbon::now();
+        $now->setTimezone('UTC');
 
         $request_url = bKashEnv::serverUrl().'/api/subscription';
 
@@ -93,15 +102,8 @@ class BKashSubscriptionManager
             return false;
         } catch(Exception $e) {
             ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
-           return false;
+            return false;
         }
 
-
-
-
-        // dump($request->all());
-
-
-        // return redirect(route('donate-us.index'));
     }
 }
