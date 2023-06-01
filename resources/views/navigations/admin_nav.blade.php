@@ -14,13 +14,12 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
 
+                    <x-nav-link :href="route('admin.on-boards.index')" :active="request()->routeIs('admin.onboards.index')">
+                        {{ __('OnBoarrds') }}
+                    </x-nav-link>
 
                     <x-nav-link :href="route('admin.payments.index')" :active="request()->routeIs('admin.payments.index')">
                         {{ __('Payments') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('admin.on-boards.index')" :active="request()->routeIs('admin.onboards.index')">
-                        {{ __('OnBoarrds') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('admin.subscriptions.index')" :active="request()->routeIs('admin.subscriptions.index')">
@@ -28,6 +27,42 @@
                     </x-nav-link>
 
 
+
+
+                </div>
+            </div>
+
+            <!-- Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
+
+
+                @guest
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                            {{ __('Login') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                            {{ __('Register') }}
+                        </x-nav-link>
+                    </div>
+                @else
+
+
+
+                @permission('option_create')
+                    <x-nav-link :href="route('admin.options.index')" :active="request()->routeIs('admin.options.index')">
+                        {{ __('Options') }}
+                    </x-nav-link>
+                @endpermission
+
+
+
+                @permission('term_create')
+                    <x-nav-link :href="route('admin.terms.index')" :active="request()->routeIs('terms.index')">
+                        {{ __('Terms') }}
+                    </x-nav-link>
+                @endpermission
 
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <x-dropdown align="right" width="48">
@@ -49,8 +84,6 @@
 
 
                             <x-slot name="content">
-
-
                                 <x-dropdown-link :href="route('admin.payment-amounts.index')">
                                     {{ __('Payment Amoounts') }}
                                 </x-dropdown-link>
@@ -112,40 +145,7 @@
                         </x-dropdown>
                     </div>
 
-                </div>
-            </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-
-
-
-                @permission('option_create')
-                    <x-nav-link :href="route('admin.options.index')" :active="request()->routeIs('admin.options.index')">
-                        {{ __('Options') }}
-                    </x-nav-link>
-                @endpermission
-
-
-
-                @permission('term_create')
-                    <x-nav-link :href="route('admin.terms.index')" :active="request()->routeIs('terms.index')">
-                        {{ __('Terms') }}
-                    </x-nav-link>
-                @endpermission
-
-
-                @guest
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
-                            {{ __('Login') }}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                            {{ __('Register') }}
-                        </x-nav-link>
-                    </div>
-                @else
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
