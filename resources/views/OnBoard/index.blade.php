@@ -1,12 +1,12 @@
 <x-admin-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('OnBoards') }}
+            {{ __('onBoards') }}
         </h2>
     </x-slot>
 
     <div class="p-2">
-        {!! $onboards->links() !!}
+        {!! $onBoards->links() !!}
     </div>
 
 
@@ -27,28 +27,28 @@
 
         </tr>
 
-        @forelse($onboards as $onboard)
+        @forelse($onBoards as $onBoard)
             <tr>
 
 
 
                 <td class="px-3">
-                    {{ $onboard->id }}
+                    {{ $onBoard->id }}
                 </td>
 
                 <td class="px-3">
-                    {{ $onboard->name }}
+                    {{ $onBoard->name }}
                 </td>
                 <td class="px-3">
-                    {{ $onboard->email }}
+                    {{ $onBoard->email }}
                 </td>
 
-                <td class="px-3"> {{ $onboard->amount }}</td>
-                <td class="px-3"> {{ $onboard->frequency }}</td>
-                <td class="px-3"> {{ $onboard->startDate }}</td>
-                <td class="px-3"> {{ $onboard->expiryDate }}</td>
+                <td class="px-3"> {{ $onBoard->amount }}</td>
+                <td class="px-3"> {{ $onBoard->frequency }}</td>
+                <td class="px-3"> {{ $onBoard->startDate }}</td>
+                <td class="px-3"> {{ $onBoard->expiryDate }}</td>
 
-                <td class="px-3"> {{ $onboard->expirationTime }}</td>
+                <td class="px-3"> {{ $onBoard->expirationTime }}</td>
             </tr>
 
 
@@ -62,7 +62,7 @@
     </table>
 
     <div class="p-2">
-        {!! $onboards->links() !!}
+        {!! $onBoards->links() !!}
     </div>
 
 

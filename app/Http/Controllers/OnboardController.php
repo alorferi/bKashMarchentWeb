@@ -14,9 +14,9 @@ class OnBoardController extends Controller
      */
     public function index()
     {
-        $onboards = OnBoard::paginate();
+        $onBoards = OnBoard::paginate();
 
-        return view('OnBoard.index', compact('onboards'));
+        return view('OnBoard.index', compact('onBoards'));
     }
 
     /**
