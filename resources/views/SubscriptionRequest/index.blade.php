@@ -18,6 +18,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Time</th>
+            <th>Subscribed</th>
 
         </tr>
 
@@ -36,14 +37,22 @@
                 <td class="px-3">   {{ $subscriptionRequest->email }} </td>
 
                 <td class="px-3">  {{ $subscriptionRequest->created_at->diffForHumans() }} </td>
-            </tr>
+                <td>
 
+                    @if($subscriptionRequest->subscription)
+                    Yes
+                    @else
+                    No
+                    @endif
+
+                </td>
+            </tr>
 
 
 
         @empty
             <tr>
-                <td>No Posts</td>
+                <td>No Requests</td>
             </tr>
         @endforelse
     </table>

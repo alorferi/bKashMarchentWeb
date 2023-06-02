@@ -6,6 +6,7 @@ use App\Business\BKashSubscriptionManager;
 use App\Models\Subscription;
 use App\Models\SubscriptionRequest;
 use App\Utils\ArrayUtils;
+use Exception;
 use Illuminate\Http\Request;
 
 class SubscriptionRequestController extends Controller
@@ -17,7 +18,7 @@ class SubscriptionRequestController extends Controller
      */
     public function index()
     {
-        $subscriptionRequests = SubscriptionRequest::orderBy('created_at','desc')->paginate();
+        $subscriptionRequests = SubscriptionRequest::orderBy('created_at', 'desc')->paginate();
 
         return view('SubscriptionRequest.index', compact('subscriptionRequests'));
     }
@@ -51,6 +52,13 @@ class SubscriptionRequestController extends Controller
      */
     public function show(SubscriptionRequest $subscriptionRequest)
     {
+
+        $subscription = Subscription::where('subscriptionRequestId', $subscriptionRequest->id)->first();
+
+        if($subscription){
+            return view("Subscription.show",compact('subscription'));
+        }
+
         $bKashSubscriptionMgr = new BKashSubscriptionManager();
 
         $response = $bKashSubscriptionMgr->show($subscriptionRequest->id);
@@ -60,14 +68,13 @@ class SubscriptionRequestController extends Controller
             $responseContent = $response->getBody()->getContents();
             $responseContent = json_decode($responseContent, true);
 
-            Subscription::create(ArrayUtils::arrayExclude($responseContent,[
-            // 'createdAt','modifiedAt','requesterId',
-            // 'serviceId','paymentType','subscriptionType',
-            // 'amountQueryUrl','firstPaymentAmount','maxCapRequired',
-            // 'maxCapAmount','payerType','currency',
-            // 'nextPaymentDate','subscriptionReference','extraParams',
-            // "enabled",'expired','rrule','active'
-        ]));
+
+            try{
+                Subscription::create($responseContent);
+            }catch(Exception $e){
+                dd($e->getMessage());
+            }
+
 
             // dd($responseContent, $statusCode);
         }
