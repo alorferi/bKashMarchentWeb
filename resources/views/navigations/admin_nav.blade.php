@@ -14,9 +14,9 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
 
-                    {{-- <x-nav-link :href="route('admin.on-boards.index')" :active="request()->routeIs('admin.onboards.index')">
-                        {{ __('OnBoarrds') }}
-                    </x-nav-link> --}}
+                    <x-nav-link :href="route('admin.subscription-requests.index')" :active="request()->routeIs('admin.subscription-requests.index')">
+                        {{ __('Requests') }}
+                    </x-nav-link>
 
                     <x-nav-link :href="route('admin.subscriptions.index')" :active="request()->routeIs('admin.subscriptions.index')">
                         {{ __('Subscriptions') }}

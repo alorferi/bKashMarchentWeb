@@ -55,40 +55,6 @@ class SubscriptionController extends Controller
         return view('Subscription.show', compact('subscription'));
     }
 
-
-    public function showByRequestId($id)
-    {
-
-        $bKashSubscriptionMgr = new BKashSubscriptionManager();
-
-        $response = $bKashSubscriptionMgr->show($id);
-
-        if($response) {
-            $statusCode = $response->getStatusCode();
-            $responseContent = $response->getBody()->getContents();
-            $responseContent = json_decode($responseContent, true);
-
-            $subscription = Subscription::where("subscriptionRequestId", $id)->first();
-
-            $subscription->update($this->arrayExclude($responseContent,['createdAt','modifiedAt','requesterId',
-            'serviceId','paymentType','subscriptionType','amountQueryUrl','firstPaymentAmount','maxCapRequired','maxCapAmount','payerType','currency'
-            ,'nextPaymentDate','subscriptionReference','extraParams',"enabled",'expired','rrule','active'
-        ]));
-
-            dd($responseContent, $statusCode);
-        }
-
-        return view('Subscription.show_by_request_id', compact('subscription'));
-    }
-
-
-    function arrayExclude($array, Array $excludeKeys){
-        foreach($excludeKeys as $key){
-            unset($array[$key]);
-        }
-        return $array;
-    }
-
     public function showMyPayments(Request $request)
     {
 

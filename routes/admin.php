@@ -19,6 +19,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentCycleController;
 use App\Http\Controllers\PaymentSectorController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\SubscriptionRequestController;
 use App\Models\OnBoard;
 
 Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], function () {
@@ -69,8 +70,6 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ])
     ->middleware(['auth']);
 
-    Route::get('subscriptions/show-by-request-id/{id}', [SubscriptionController::class,'showByRequestId'])->name("subscriptions.show-by-request-id");
-
     Route::resource('payments', PaymentController::class)
     ->except([
        // 'index', 'show'
@@ -90,9 +89,9 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ->middleware(['auth']);
 
 
-    Route::resource('comments', CommentController::class)
+    Route::resource('subscription-requests', SubscriptionRequestController::class)
     ->except([
-       // 'index', 'show'
+      //  'index', 'show'
     ])
     ->middleware(['auth']);
 

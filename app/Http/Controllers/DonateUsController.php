@@ -9,6 +9,7 @@ use App\Models\PaymentAmount;
 use App\Models\PaymentCycle;
 use App\Models\PaymentSector;
 use App\Models\Subscription;
+use App\Models\SubscriptionRequest;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -57,15 +58,15 @@ class DonateUsController extends Controller
         Session::put("expirationTime", new Carbon($responseContent->expirationTime));
 
         try {
-            $subscription = Subscription::create(
+            $subscriptionRequest = SubscriptionRequest::create(
                 [
-                   'subscriptionRequestId'=>$responseContent->subscriptionRequestId,
+                   'id'=>$responseContent->subscriptionRequestId,
                    'name'=>$request->name,
                    'email'=>$request->email,
                    ]
             );
 
-            dd($subscription);
+            dump($subscriptionRequest);
         } catch(Exception $e) {
             dd($e->getMessage());
         }

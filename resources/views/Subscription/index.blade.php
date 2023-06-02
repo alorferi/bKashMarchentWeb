@@ -28,21 +28,16 @@
             <tr>
 
                 <td class="px-3">
-                        <a href="{{route('admin.subscriptions.show',$subscription->id)}}"> Show</a> |
-                        <a href="{{route('admin.subscriptions.show-by-request-id',$subscription->subscriptionRequestId)}}"> By Req Id</a>
+                        <a href="{{route('admin.subscriptions.show',$subscription->id)}}"> Show</a>
 
                 </td>
 
-                {{-- <td class="px-3">
-                    <a href="{{ route('admin.on-boards.show', $onBoard->id) }}">Show</a>
-
-                </td> --}}
 
                 <td class="px-3">
-                    {{ $subscription->name }}
+                    {{ $subscription->subscriptionRequest->name }}
 
                     <br>
-                    {{ $subscription->email }}
+                    {{ $subscription->subscriptionRequest->email }}
                     <br>
                     {{ $subscription->created_at->diffForHumans() }}
                 </td>
