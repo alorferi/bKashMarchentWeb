@@ -89,6 +89,42 @@ class BKashSubscriptionManager extends BKashManager
 
     }
 
+    public function fetchBySubscriptionList($page, $size,  ?bool $associative = null)
+    {
+        $headers = $this->getRequestHeaders();
+
+        $now = Carbon::now();
+        $now->setTimezone('UTC');
+
+        $request_url = bKashEnv::serverUrl()."api/subscriptions/{$page}/{$size}";
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('GET', $request_url, [
+                'headers' => $headers,
+            ]);
+
+            // $statusCode = $response->getStatusCode();
+            $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent,$associative);
+
+            // dd($responseContent);
+
+            return $responseContent;
+
+        } catch(ClientException $e) {
+
+            // dd($e->getResponse());
+
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        } catch(Exception $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        }
+    }
+
     public function fetchBySubscriptionRequestId($subscriptionRequestId, ?bool $associative = null)
     {
         $headers = $this->getRequestHeaders();
@@ -138,6 +174,40 @@ class BKashSubscriptionManager extends BKashManager
 
         try {
             $response = $client->request('GET', $request_url, [
+                'headers' => $headers,
+            ]);
+
+            // $statusCode = $response->getStatusCode();
+            $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent,$associative);
+
+            // dd($responseContent);
+
+            return $responseContent;
+
+        } catch(ClientException $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        } catch(Exception $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        }
+    }
+
+
+    public function cancelSubscription($subscriptionId, $reason, ?bool $associative = null)
+    {
+        $headers = $this->getRequestHeaders();
+
+        $now = Carbon::now();
+        $now->setTimezone('UTC');
+
+        $request_url = bKashEnv::serverUrl()."/api/subscriptions/{$subscriptionId}?reason={$reason}";
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('DELETE', $request_url, [
                 'headers' => $headers,
             ]);
 
