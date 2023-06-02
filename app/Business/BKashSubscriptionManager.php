@@ -228,4 +228,37 @@ class BKashSubscriptionManager extends BKashManager
         }
     }
 
+    public function fetchPaymentSchedule($frequency, $startDate, $expiryDate, ?bool $associative = null)
+    {
+        $headers = $this->getRequestHeaders();
+
+        $now = Carbon::now();
+        $now->setTimezone('UTC');
+
+        $request_url = bKashEnv::serverUrl()."/api/subscription/payment/schedule?frequency={$frequency}&startDate={$startDate}&expiryDate={$expiryDate}";
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('GET', $request_url, [
+                'headers' => $headers,
+            ]);
+
+            // $statusCode = $response->getStatusCode();
+            $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent,$associative);
+
+            // dd($responseContent);
+
+            return $responseContent;
+
+        } catch(ClientException $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        } catch(Exception $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        }
+    }
+
 }
