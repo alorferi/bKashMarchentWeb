@@ -11,28 +11,8 @@ use GuzzleHttp\Exception\ClientException;
 use Redirect;
 use Illuminate\Support\Str;
 
-class BKashSubscriptionManager
+class BKashSubscriptionManager extends BKashManager
 {
-    public function getRequestHeaders()
-    {
-        $now = Carbon::now();
-        $now->setTimezone('UTC');
-
-        // Header Params
-        $channelId = bKashEnv::channelId();
-        $timeStamp = $now->format("Y-m-d")."T".$now->format("H:i:s.u")."Z";
-        $obf_api_key =  bKashEnv::apiKey();
-
-        $headers = array(
-            'version' => "v1.0",
-            'channelId' => $channelId,
-            'timeStamp' => $timeStamp,
-            'x-api-key' => $obf_api_key,
-            'Content-Type' => "application/json"
-        );
-
-        return $headers;
-    }
     public function create(Request $request)
     {
 
@@ -94,7 +74,10 @@ class BKashSubscriptionManager
 
             // dd($responseContent);
 
-            return $response;
+            $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent);
+
+            return $responseContent;
 
         } catch(ClientException $e) {
             ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
@@ -106,7 +89,7 @@ class BKashSubscriptionManager
 
     }
 
-    public function fetchBySubscriptionRequestId($subscriptionRequestId, ?bool $associative = null,)
+    public function fetchBySubscriptionRequestId($subscriptionRequestId, ?bool $associative = null)
     {
         $headers = $this->getRequestHeaders();
 

@@ -65,27 +65,23 @@ class SubscriptionController extends Controller
 
         $bKashSubscriptionMgr = new BKashSubscriptionManager();
 
-        $response = $bKashSubscriptionMgr->create($request);
+        $responseObject = $bKashSubscriptionMgr->create($request);
 
-        if(!$response) {
+        if(!$responseObject) {
             return redirect()->to(route("subscriptions.create"));
         }
 
-        $statusCode = $response->getStatusCode();
-        $responseContent = $response->getBody()->getContents();
-        $responseContent = json_decode($responseContent);
-
-        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($responseContent));
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($responseObject));
 
         // dd($responseContent, $statusCode);
 
-        Session::put("subscriptionRequestId", $responseContent->subscriptionRequestId);
-        Session::put("expirationTime", new Carbon($responseContent->expirationTime));
+        Session::put("subscriptionRequestId", $responseObject->subscriptionRequestId);
+        Session::put("expirationTime", new Carbon($responseObject->expirationTime));
 
         try {
             $subscriptionRequest = SubscriptionRequest::create(
                 [
-                   'id'=>$responseContent->subscriptionRequestId,
+                   'id'=>$responseObject->subscriptionRequestId,
                    'name'=>$request->name,
                    'email'=>$request->email,
                    ]
@@ -96,9 +92,7 @@ class SubscriptionController extends Controller
             ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
         }
 
-
-
-        return redirect()->to($responseContent->redirectURL);
+        return redirect()->to($responseObject->redirectURL);
     }
 
     /**
