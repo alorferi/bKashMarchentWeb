@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Business\BKashSubscriptionManager;
 use App\Models\ActivityLog;
+use App\Models\PaymentAmount;
+use App\Models\PaymentCycle;
+use App\Models\PaymentSector;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionRequest;
@@ -31,7 +34,13 @@ class SubscriptionController extends Controller
      */
     public function create()
     {
-        //
+        $paymentSectors = PaymentSector::get();
+        $paymentAmounts = PaymentAmount::orderBy('amount')->get();
+        $paymentCycles = PaymentCycle::where('is_active', true)
+        ->orderBy('display_serial')
+        ->get();
+
+        return view('Subscription.create', compact('paymentAmounts', 'paymentCycles', 'paymentSectors'));
     }
 
     /**
@@ -47,7 +56,9 @@ class SubscriptionController extends Controller
             'amount' => ['required', 'integer'],
             'payment_cycle' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255',
+            //'unique:subscription_requests'
+        ],
         ]);
 
         ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__);
@@ -55,6 +66,10 @@ class SubscriptionController extends Controller
         $bKashSubscriptionMgr = new BKashSubscriptionManager();
 
         $response = $bKashSubscriptionMgr->create($request);
+
+        if(!$response) {
+            return redirect()->to(route("subscriptions.create"));
+        }
 
         $statusCode = $response->getStatusCode();
         $responseContent = $response->getBody()->getContents();
@@ -131,6 +146,14 @@ class SubscriptionController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+
+    public function finish(Request $request)
+    {
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($request->all()));
+
+        return view('donate_us.bkash_finish')->with('message', "reference: {$request->reference}, status: {$request->status}");
     }
 
     /**

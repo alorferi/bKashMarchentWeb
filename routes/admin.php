@@ -2,48 +2,24 @@
 
 use App\Http\Controllers\ActivityIpController;
 use App\Http\Controllers\ActivityLogController;
-use App\Http\Controllers\Admin\CommentController;
-use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TermController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\AuditController;
-use App\Http\Controllers\OnBoardController;
 use App\Http\Controllers\PaymentAmountController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentCycleController;
 use App\Http\Controllers\PaymentSectorController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubscriptionRequestController;
-use App\Models\OnBoard;
 
 Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], function () {
 
     Route::get('/', function () {
         return view('dashboard');
     })->middleware(['auth'])->name('dashboard');
-
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->middleware(['auth'])->name('dashboard');
-
-    Route::resource('posts', PostController::class)
-    ->except([
-       // 'index', 'show'
-    ])
-    ->middleware(['auth']);
-
-    Route::resource('images', ImageController::class)
-    ->except([
-       // 'index', 'show'
-    ])
-    ->middleware(['auth']);
-
 
     Route::resource('payment-cycles', PaymentCycleController::class)
     ->except([
@@ -75,19 +51,6 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
        // 'index', 'show'
     ])
     ->middleware(['auth']);
-
-    Route::resource('videos', VideoController::class)
-    ->except([
-       // 'index', 'show'
-    ])
-    ->middleware(['auth']);
-
-    Route::resource('tags', TagController::class)
-    ->except([
-       // 'index', 'show'
-    ])
-    ->middleware(['auth']);
-
 
     Route::resource('subscription-requests', SubscriptionRequestController::class)
     ->except([
