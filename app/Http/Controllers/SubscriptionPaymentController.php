@@ -16,9 +16,10 @@ class SubscriptionPaymentController extends Controller
     {
         $manager = new BKashPaymentManager();
 
-        $responseObject = $manager->fetchPaymentListBySubscriptionId($subscriptionId);
+        $payments = $manager->fetchPaymentListBySubscriptionId($subscriptionId);
 
-        dd($responseObject);
+        // dd($responseObject);
+        return view("SubscriptionPayment.index", compact('payments'));
     }
 
     /**

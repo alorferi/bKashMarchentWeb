@@ -38,12 +38,15 @@
 
 
                 <td class="px-3">
-                    {{ $subscription->subscriptionRequest->name }}
 
-                    <br>
-                    {{ $subscription->subscriptionRequest->email }}
-                    <br>
-                    {{ $subscription->created_at->diffForHumans() }}
+                    @if ($subscription->subscriptionRequest)
+                        {{ $subscription->subscriptionRequest->name }}
+                        <br>
+                        {{ $subscription->subscriptionRequest->email }}
+                        <br>
+                        {{ $subscription->created_at->diffForHumans() }}
+                    @endif
+
                 </td>
 
 

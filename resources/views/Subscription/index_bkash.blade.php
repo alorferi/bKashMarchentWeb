@@ -8,10 +8,6 @@
 
 @include("Subscription.index_form")
 
-    {{-- <div class="p-2">
-        {!! $subscriptions->links() !!}
-    </div> --}}
-
 
 @include("Subscription.paging")
 
@@ -63,9 +59,7 @@
         @endforelse
     </table>
 
-    {{-- <div class="p-2">
-        {!! $subscriptions->links() !!}
-    </div> --}}
+    @include("Subscription.paging")
 
 
 </x-admin-layout>

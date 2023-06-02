@@ -24,7 +24,7 @@ class SubscriptionController extends Controller
     {
 
         if(!$request->has("source")) {
-            $request= $request->merge(["source"=>"local"]);
+            $request= $request->merge(["source"=>"bkash"]);
         }
 
         $source =  $request->source;
@@ -133,6 +133,18 @@ class SubscriptionController extends Controller
     {
 
         $subscription = Subscription::with("payments")->find($id);
+
+        if($subscription==null) {
+            $bKashSubscriptionMgr = new BKashSubscriptionManager();
+
+            $responseObject = $bKashSubscriptionMgr->fetchBySubscriptionId($id,true);
+
+            if( $responseObject){
+                $subscription =  Subscription::create($responseObject);
+            }
+
+
+        }
 
         return view('Subscription.show', compact('subscription'));
     }
