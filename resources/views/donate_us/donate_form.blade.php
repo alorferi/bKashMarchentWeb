@@ -17,7 +17,7 @@
     <!-- Validation Errors -->
     <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-    <form method="POST" action="{{ route('donate-us.subscribe') }}">
+    <form method="POST" action="{{ route('subscriptions.store') }}">
         @csrf
 
         <div>

@@ -33,7 +33,7 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('merchantId');
             $table->string('merchantShortCode')->nullable();
             $table->string('payerType');
-            $table->string('payer');
+            $table->string('payer')->nullable();
             $table->string('currency');
             $table->string('nextPaymentDate');
             $table->string('status');
