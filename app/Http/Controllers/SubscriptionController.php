@@ -20,11 +20,39 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $subscriptions = Subscription::paginate();
 
-        return view('Subscription.index', compact('subscriptions'));
+        if(!$request->has("source")) {
+            $request= $request->merge(["source"=>"local"]);
+        }
+
+        $source =  $request->source;
+
+
+        if($source=="local") {
+            $subscriptions = Subscription::paginate();
+
+            return view('Subscription.index_local', compact('subscriptions', "source"));
+        } else {
+
+
+            if(!$request->has("page")) {
+                $request= $request->merge(["page"=>0]);
+            }
+
+            $page =  $request->page;
+            $size = 25;
+
+            $bKashSubscriptionMgr = new BKashSubscriptionManager();
+
+            $subscriptions = $bKashSubscriptionMgr->fetchBySubscriptionList($page, $size);
+
+            return view('Subscription.index_bkash', compact('subscriptions', "source", 'page'));
+
+        }
+
+
     }
 
     /**

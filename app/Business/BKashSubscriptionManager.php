@@ -21,7 +21,7 @@ class BKashSubscriptionManager extends BKashManager
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
-        $request_url = bKashEnv::serverUrl().'/api/subscription';
+        $bkash_srv_url = bKashEnv::serverUrl().'/api/subscription';
 
         $client = new \GuzzleHttp\Client();
 
@@ -63,7 +63,7 @@ class BKashSubscriptionManager extends BKashManager
 
 
         try {
-            $response = $client->request('POST', $request_url, [
+            $response = $client->request('POST', $bkash_srv_url, [
                 'headers' => $headers,
                 'json' => $bodyData
             ]);
@@ -96,12 +96,12 @@ class BKashSubscriptionManager extends BKashManager
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
-        $request_url = bKashEnv::serverUrl()."api/subscriptions/{$page}/{$size}";
+        $bkash_srv_url = bKashEnv::serverUrl()."/api/subscriptions/{$page}/{$size}";
 
         $client = new \GuzzleHttp\Client();
 
         try {
-            $response = $client->request('GET', $request_url, [
+            $response = $client->request('GET', $bkash_srv_url, [
                 'headers' => $headers,
             ]);
 
@@ -132,12 +132,12 @@ class BKashSubscriptionManager extends BKashManager
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
-        $request_url = bKashEnv::serverUrl()."/api/subscriptions/request-id/{$subscriptionRequestId}";
+        $bkash_srv_url = bKashEnv::serverUrl()."/api/subscriptions/request-id/{$subscriptionRequestId}";
 
         $client = new \GuzzleHttp\Client();
 
         try {
-            $response = $client->request('GET', $request_url, [
+            $response = $client->request('GET', $bkash_srv_url, [
                 'headers' => $headers,
             ]);
 
@@ -168,12 +168,12 @@ class BKashSubscriptionManager extends BKashManager
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
-        $request_url = bKashEnv::serverUrl()."/api/subscriptions/{$subscriptionId}";
+        $bkash_srv_url = bKashEnv::serverUrl()."/api/subscriptions/{$subscriptionId}";
 
         $client = new \GuzzleHttp\Client();
 
         try {
-            $response = $client->request('GET', $request_url, [
+            $response = $client->request('GET', $bkash_srv_url, [
                 'headers' => $headers,
             ]);
 
@@ -202,12 +202,12 @@ class BKashSubscriptionManager extends BKashManager
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
-        $request_url = bKashEnv::serverUrl()."/api/subscriptions/{$subscriptionId}?reason={$reason}";
+        $bkash_srv_url = bKashEnv::serverUrl()."/api/subscriptions/{$subscriptionId}?reason={$reason}";
 
         $client = new \GuzzleHttp\Client();
 
         try {
-            $response = $client->request('DELETE', $request_url, [
+            $response = $client->request('DELETE', $bkash_srv_url, [
                 'headers' => $headers,
             ]);
 
@@ -235,12 +235,12 @@ class BKashSubscriptionManager extends BKashManager
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
-        $request_url = bKashEnv::serverUrl()."/api/subscription/payment/schedule?frequency={$frequency}&startDate={$startDate}&expiryDate={$expiryDate}";
+        $bkash_srv_url = bKashEnv::serverUrl()."/api/subscription/payment/schedule?frequency={$frequency}&startDate={$startDate}&expiryDate={$expiryDate}";
 
         $client = new \GuzzleHttp\Client();
 
         try {
-            $response = $client->request('GET', $request_url, [
+            $response = $client->request('GET', $bkash_srv_url, [
                 'headers' => $headers,
             ]);
 

@@ -13,6 +13,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentCycleController;
 use App\Http\Controllers\PaymentSectorController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\SubscriptionPaymentController;
 use App\Http\Controllers\SubscriptionRequestController;
 
 Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], function () {
@@ -90,6 +91,8 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ->middleware(['auth']);
 
 
+
+    Route::get('subscription-payments/{subscriptionId}', [SubscriptionPaymentController::class,'index'])->name('subscription-payments.index');
 
     Route::get('activity-logs', [ActivityLogController::class,'index'])->name('activity-logs.index');
     Route::get('activity-ips', [ActivityIpController::class,'index'])->name('activity-ips.index');

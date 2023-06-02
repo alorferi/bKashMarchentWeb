@@ -5,17 +5,22 @@
         </h2>
     </x-slot>
 
-    <div class="p-2">
-        {!! $subscriptions->links() !!}
-    </div>
 
+@include("Subscription.index_form")
+
+    {{-- <div class="p-2">
+        {!! $subscriptions->links() !!}
+    </div> --}}
+
+
+@include("Subscription.paging")
 
 
     <table>
 
         <tr>
             <th>Actions</th>
-            <th>Name & Email</th>
+
             <th>Payer</th>
             <th>Amount</th>
             <th>Start Date</th>
@@ -24,23 +29,17 @@
             <th>Status</th>
         </tr>
 
-        @forelse($subscriptions as $subscription)
+        @forelse($subscriptions->content as $subscription)
             <tr>
 
                 <td class="px-3">
-                        <a href="{{route('admin.subscriptions.show',$subscription->id)}}"> Show</a>
-
+                    <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Show</a>
+                    <br>
+                    <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a>
                 </td>
 
 
-                <td class="px-3">
-                    {{ $subscription->subscriptionRequest->name }}
 
-                    <br>
-                    {{ $subscription->subscriptionRequest->email }}
-                    <br>
-                    {{ $subscription->created_at->diffForHumans() }}
-                </td>
 
 
                 <td class="px-3">
@@ -64,9 +63,9 @@
         @endforelse
     </table>
 
-    <div class="p-2">
+    {{-- <div class="p-2">
         {!! $subscriptions->links() !!}
-    </div>
+    </div> --}}
 
 
 </x-admin-layout>
