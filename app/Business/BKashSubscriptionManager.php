@@ -128,8 +128,6 @@ class BKashSubscriptionManager
 
             // dd($responseContent);
 
-            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $response->getBody()->getContents());
-
             return $response;
 
         } catch(ClientException $e) {
