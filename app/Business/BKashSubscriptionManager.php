@@ -32,7 +32,7 @@ class BKashSubscriptionManager extends BKashManager
 
         $obf_redirect_url = bKashEnv::redirectUrl();
 
-        $startDate =  $now->addDays(1)->format('Y-m-d');
+        $startDate =  $now->addHours(1)->format('Y-m-d');
 
         $endDate = $now->addYears(1)->format('Y-m-d');
 
@@ -117,6 +117,39 @@ class BKashSubscriptionManager extends BKashManager
 
             // dd($e->getResponse());
 
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        } catch(Exception $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            return false;
+        }
+    }
+
+    public function fetchBySubscriptionId($subscriptionId, ?bool $associative = null)
+    {
+        $headers = $this->getRequestHeaders();
+
+        $now = Carbon::now();
+        $now->setTimezone('UTC');
+
+        $request_url = bKashEnv::serverUrl()."/api/subscriptions/{$subscriptionId}";
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('GET', $request_url, [
+                'headers' => $headers,
+            ]);
+
+            // $statusCode = $response->getStatusCode();
+            $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent,$associative);
+
+            // dd($responseContent);
+
+            return $responseContent;
+
+        } catch(ClientException $e) {
             ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
             return false;
         } catch(Exception $e) {
