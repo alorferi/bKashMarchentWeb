@@ -14,16 +14,18 @@ class CreateSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('subscriptions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->string('email');
             $table->string('subscriptionRequestId');
-            $table->integer('merchantId');
+            $table->integer('merchantId')->nullable();
             $table->string('merchantShortCode')->nullable();
-            $table->string('payer');
-            $table->decimal('amount');
-            $table->dateTime('startDate');
-            $table->dateTime('expiryDate');
-            $table->string('frequency');
-            $table->string('status');
+            $table->string('payer')->nullable();
+            $table->decimal('amount')->nullable();
+            $table->dateTime('startDate')->nullable();
+            $table->dateTime('expiryDate')->nullable();
+            $table->string('frequency')->nullable();
+            $table->string('status')->nullable();
             $table->string('cancelledBy')->nullable();
             $table->dateTime('cancelledTime')->nullable();
             $table->timestamps();

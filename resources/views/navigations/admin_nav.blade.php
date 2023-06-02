@@ -14,17 +14,19 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
 
-                    <x-nav-link :href="route('admin.on-boards.index')" :active="request()->routeIs('admin.onboards.index')">
+                    {{-- <x-nav-link :href="route('admin.on-boards.index')" :active="request()->routeIs('admin.onboards.index')">
                         {{ __('OnBoarrds') }}
+                    </x-nav-link> --}}
+
+                    <x-nav-link :href="route('admin.subscriptions.index')" :active="request()->routeIs('admin.subscriptions.index')">
+                        {{ __('Subscriptions') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('admin.payments.index')" :active="request()->routeIs('admin.payments.index')">
                         {{ __('Payments') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('admin.subscriptions.index')" :active="request()->routeIs('admin.subscriptions.index')">
-                        {{ __('Subscriptions') }}
-                    </x-nav-link>
+
 
 
 

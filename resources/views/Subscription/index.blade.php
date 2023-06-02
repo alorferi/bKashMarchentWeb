@@ -1,6 +1,6 @@
 <x-admin-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Subscriptiopns') }}
         </h2>
     </x-slot>
@@ -15,6 +15,7 @@
 
         <tr>
             <th>Actions</th>
+            <th>Name & Email</th>
             <th>Payer</th>
             <th>Amount</th>
             <th>Start Date</th>
@@ -27,8 +28,25 @@
             <tr>
 
                 <td class="px-3">
-                        <a href="{{route('admin.subscriptions.show',$subscription->id)}}"> Show</a>
+                        <a href="{{route('admin.subscriptions.show',$subscription->id)}}"> Show</a> |
+                        <a href="{{route('admin.subscriptions.show-by-request-id',$subscription->subscriptionRequestId)}}"> By Req Id</a>
+
                 </td>
+
+                {{-- <td class="px-3">
+                    <a href="{{ route('admin.on-boards.show', $onBoard->id) }}">Show</a>
+
+                </td> --}}
+
+                <td class="px-3">
+                    {{ $subscription->name }}
+
+                    <br>
+                    {{ $subscription->email }}
+                    <br>
+                    {{ $subscription->created_at->diffForHumans() }}
+                </td>
+
 
                 <td class="px-3">
                     {{ $subscription->payer }}

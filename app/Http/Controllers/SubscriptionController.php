@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Business\BKashSubscriptionManager;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 
@@ -55,14 +56,47 @@ class SubscriptionController extends Controller
     }
 
 
+    public function showByRequestId($id)
+    {
+
+        $bKashSubscriptionMgr = new BKashSubscriptionManager();
+
+        $response = $bKashSubscriptionMgr->show($id);
+
+        if($response) {
+            $statusCode = $response->getStatusCode();
+            $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent, true);
+
+            $subscription = Subscription::where("subscriptionRequestId", $id)->first();
+
+            $subscription->update($this->arrayExclude($responseContent,['createdAt','modifiedAt','requesterId',
+            'serviceId','paymentType','subscriptionType','amountQueryUrl','firstPaymentAmount','maxCapRequired','maxCapAmount','payerType','currency'
+            ,'nextPaymentDate','subscriptionReference','extraParams',"enabled",'expired','rrule','active'
+        ]));
+
+            dd($responseContent, $statusCode);
+        }
+
+        return view('Subscription.show_by_request_id', compact('subscription'));
+    }
+
+
+    function arrayExclude($array, Array $excludeKeys){
+        foreach($excludeKeys as $key){
+            unset($array[$key]);
+        }
+        return $array;
+    }
+
     public function showMyPayments(Request $request)
     {
 
-      $mobile =  $request->mobile;
+        $mobile =  $request->mobile;
 
-        $subscription = Subscription::with("payments")->where('payer',$request->mobile)->first();
+        $subscription = Subscription::with("payments")->where('payer', $request->mobile)->first();
 
-        return view('Subscription.show_by_payments', compact('subscription','mobile'));
+        return view('Subscription.show_by_payments', compact('subscription', 'mobile'));
     }
 
     /**

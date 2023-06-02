@@ -69,6 +69,8 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ])
     ->middleware(['auth']);
 
+    Route::get('subscriptions/show-by-request-id/{id}', [SubscriptionController::class,'showByRequestId'])->name("subscriptions.show-by-request-id");
+
     Route::resource('payments', PaymentController::class)
     ->except([
        // 'index', 'show'
@@ -125,12 +127,6 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ])
     ->middleware(['auth']);
 
-
-    Route::resource('on-boards', OnBoardController::class)
-    ->except([
-      //  'index', 'show'
-    ])
-    ->middleware(['auth']);
 
 
     Route::get('activity-logs', [ActivityLogController::class,'index'])->name('activity-logs.index');

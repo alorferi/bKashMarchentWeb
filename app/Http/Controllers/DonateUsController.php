@@ -8,8 +8,10 @@ use App\Models\OnBoard;
 use App\Models\PaymentAmount;
 use App\Models\PaymentCycle;
 use App\Models\PaymentSector;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class DonateUsController extends Controller
 {
@@ -47,20 +49,28 @@ class DonateUsController extends Controller
         $responseContent = $response->getBody()->getContents();
         $responseContent = json_decode($responseContent);
 
-        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($responseContent) );
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($responseContent));
 
         // dd($responseContent, $statusCode);
 
-        OnBoard::create(
-            [
-              'id'=>$responseContent->subscriptionRequestId,
-              'name'=>$request->name,
-              'email'=>$request->email,
-              'frequency'=>$request->payment_cycle,
-              'amount'=>$request->amount,
-              'expirationTime'=> new Carbon($responseContent->expirationTime)
-              ]
-        );
+        Session::put("subscriptionRequestId", $responseContent->subscriptionRequestId);
+        Session::put("expirationTime", new Carbon($responseContent->expirationTime));
+
+        try {
+            $subscription = Subscription::create(
+                [
+                   'subscriptionRequestId'=>$responseContent->subscriptionRequestId,
+                   'name'=>$request->name,
+                   'email'=>$request->email,
+                   ]
+            );
+
+            dd($subscription);
+        } catch(Exception $e) {
+            dd($e->getMessage());
+        }
+
+
 
         return redirect()->to($responseContent->redirectURL);
 
