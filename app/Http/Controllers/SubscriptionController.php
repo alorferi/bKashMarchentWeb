@@ -91,9 +91,9 @@ class SubscriptionController extends Controller
                    ]
             );
 
-            dump($subscriptionRequest);
         } catch(Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
         }
 
 
@@ -151,7 +151,33 @@ class SubscriptionController extends Controller
 
     public function finish(Request $request)
     {
+
         ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($request->all()));
+
+
+        $subscriptionRequestId = session('subscriptionRequestId');
+
+        $subscriptionRequest =  SubscriptionRequest::find($subscriptionRequestId);
+        $subscriptionRequest->update([
+             'reference' => $request->reference,
+             'status' => $request->status,
+        ]);
+
+        $bKashSubscriptionMgr = new BKashSubscriptionManager();
+
+        $subscriptionObject = $bKashSubscriptionMgr->fetchBySubscriptionRequestId($subscriptionRequest->id, true);
+
+        if($subscriptionObject) {
+
+            try {
+                Subscription::create($subscriptionObject);
+            } catch(Exception $e) {
+                ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+            }
+
+
+        }
+
 
         return view('donate_us.bkash_finish')->with('message', "reference: {$request->reference}, status: {$request->status}");
     }

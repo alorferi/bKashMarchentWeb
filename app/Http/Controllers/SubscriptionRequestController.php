@@ -61,22 +61,17 @@ class SubscriptionRequestController extends Controller
 
         $bKashSubscriptionMgr = new BKashSubscriptionManager();
 
-        $response = $bKashSubscriptionMgr->show($subscriptionRequest->id);
+        $subscriptionObject = $bKashSubscriptionMgr->fetchBySubscriptionRequestId($subscriptionRequest->id,true);
 
-        if($response) {
-            $statusCode = $response->getStatusCode();
-            $responseContent = $response->getBody()->getContents();
-            $responseContent = json_decode($responseContent, true);
-
+        if($subscriptionObject) {
 
             try{
-                Subscription::create($responseContent);
+                Subscription::create($subscriptionObject);
             }catch(Exception $e){
-                dd($e->getMessage());
+                ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
             }
 
 
-            // dd($responseContent, $statusCode);
         }
         return view("SubscriptionRequest.show");
     }

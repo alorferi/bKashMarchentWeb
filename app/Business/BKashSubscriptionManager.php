@@ -106,14 +106,14 @@ class BKashSubscriptionManager
 
     }
 
-    public function show($requestId)
+    public function fetchBySubscriptionRequestId($subscriptionRequestId, ?bool $associative = null,)
     {
         $headers = $this->getRequestHeaders();
 
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
-        $request_url = bKashEnv::serverUrl()."/api/subscriptions/request-id/{$requestId}";
+        $request_url = bKashEnv::serverUrl()."/api/subscriptions/request-id/{$subscriptionRequestId}";
 
         $client = new \GuzzleHttp\Client();
 
@@ -123,12 +123,12 @@ class BKashSubscriptionManager
             ]);
 
             // $statusCode = $response->getStatusCode();
-            // $responseContent = $response->getBody()->getContents();
-            // $responseContent = json_decode($responseContent);
+            $responseContent = $response->getBody()->getContents();
+            $responseContent = json_decode($responseContent,$associative);
 
             // dd($responseContent);
 
-            return $response;
+            return $responseContent;
 
         } catch(ClientException $e) {
 
