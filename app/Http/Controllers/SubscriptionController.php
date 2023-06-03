@@ -11,6 +11,7 @@ use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionRequest;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Session;
 
 class SubscriptionController extends Controller
@@ -135,13 +136,28 @@ class SubscriptionController extends Controller
         $subscription = Subscription::with("payments")->find($id);
 
         if($subscription==null) {
-            $bKashSubscriptionMgr = new BKashSubscriptionManager();
 
-            $responseObject = $bKashSubscriptionMgr->fetchBySubscriptionId($id,true);
+            try {
 
-            if( $responseObject){
-                $subscription =  Subscription::create($responseObject);
+                $bKashSubscriptionMgr = new BKashSubscriptionManager();
+
+                $responseObject = $bKashSubscriptionMgr->fetchBySubscriptionId($id, true);
+
+                if($responseObject) {
+
+                    if($responseObject['extraParams']){
+                        $responseObject['extraParams'] = json_encode($responseObject['extraParams']);
+                    }
+
+                    $subscription =  Subscription::create($responseObject);
+                }
+
+            } catch(Exception $e) {
+                //  dd($e->getMessage());
+                ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
             }
+
+
 
 
         }
@@ -161,21 +177,21 @@ class SubscriptionController extends Controller
 
 
   public function showMySubscriptions(Request $request)
-    {
+  {
 
-        $payer =  $request->payer;
+      $payer =  $request->payer;
 
-        $subscriptions = Subscription::with("payments")->where('payer', $request->payer)->get();
+      $subscriptions = Subscription::with("payments")->where('payer', $request->payer)->get();
 
-        return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer'));
-    }
+      return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer'));
+  }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
     public function edit($id)
     {
         //
