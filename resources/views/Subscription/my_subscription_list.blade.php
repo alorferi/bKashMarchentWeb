@@ -15,32 +15,42 @@
 <table>
 
     <tr>
+        <th>Name & Email</th>
         <th>Payer</th>
-        <th>Due Date</th>
-        <th>Status</th>
-        <th>trx Id</th>
-        <th>Trx Time</th>
         <th>Amount</th>
-        {{-- <th> reverseTrxAmount</th>
-        <th> reverseTrxId </th>
-        <th> reverseTrxTime </th> --}}
+        <th>startDate</th>
+        <th>expiryDate</th>
+        <th>frequency</th>
+        <th>Status</th>
+
     </tr>
 
     @forelse($subscriptions as $subscription)
         <tr>
 
+
+
+            <td class="px-3">
+
+                @if ($subscription->subscriptionRequest)
+                    {{ $subscription->subscriptionRequest->name }}
+                    <br>
+                    {{ $subscription->subscriptionRequest->email }}
+                @else
+                    None
+                @endif
+
+            </td>
+
             <td class="px-3">
                 {{ $subscription->payer }}
             </td>
 
-            <td class="px-3"> {{ $subscription->dueDate }}</td>
-            <td class="px-3"> {{ $subscription->status }}</td>
-            <td class="px-3"> {{ $subscription->trxId }}</td>
-            <td class="px-3"> {{ $subscription->trxTime }}</td>
             <td class="px-3"> {{ $subscription->amount }}</td>
-            {{-- <td> {{ $subscription->reverseTrxAmount }}</td>
-            <td> {{ $subscription->reverseTrxId }}</td>
-            <td> {{ $subscription->reverseTrxTime }}</td> --}}
+            <td class="px-3">  {{ $subscription->startDate->format('d-m-Y') }}</td>
+            <td class="px-3"> {{ $subscription->expiryDate->format('d-m-Y') }}</td>
+            <td class="px-3"> {{ $subscription->frequency }}</td>
+            <td class="px-3"> {{ $subscription->status }}</td>
 
         </tr>
 

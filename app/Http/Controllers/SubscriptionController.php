@@ -49,6 +49,7 @@ class SubscriptionController extends Controller
 
             $subscriptions = $bKashSubscriptionMgr->fetchBySubscriptionList($page, $size);
 
+
             return view('Subscription.index_bkash', compact('subscriptions', "source", 'page'));
 
         }

@@ -12,17 +12,19 @@ class Subscription extends Model
     use SoftDeletes;
 
     protected $guarded = [];
-    protected $dates = ['created_at', 'updated_at', 'deleted_at','expirationTime'];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at',
+                        'startDate',
+                    'expiryDate'];
 
     public function payments()
     {
-        return $this->hasMany(Payment::class, 'subscriptionId','id');
+        return $this->hasMany(Payment::class, 'subscriptionId', 'id');
     }
 
 
     public function subscriptionRequest()
     {
-        return $this->belongsTo(SubscriptionRequest::class,"subscriptionRequestId","id");
+        return $this->belongsTo(SubscriptionRequest::class, "subscriptionRequestId", "id");
     }
 
 }

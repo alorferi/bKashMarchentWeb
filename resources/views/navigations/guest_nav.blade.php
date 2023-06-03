@@ -21,10 +21,6 @@
                             {{ __('My Subscriptions') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('subscriptions.show.my-payments')" :active="request()->routeIs('subscriptions.show.my-payments')">
-                            {{ __('My Payments') }}
-                        </x-nav-link>
-
                         <x-nav-link :href="route('about-us.index')" :active="request()->routeIs('about-us.index')">
                             {{ __('About Us') }}
                         </x-nav-link>

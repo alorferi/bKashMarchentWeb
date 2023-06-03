@@ -54,8 +54,8 @@
                     {{ $subscription->payer }}
                 </td>
                 <td class="px-3"> {{ $subscription->amount }}</td>
-                <td class="px-3"> {{ $subscription->startDate }}</td>
-                <td class="px-3"> {{ $subscription->expiryDate }}</td>
+                <td class="px-3"> {{ $subscription->startDate->format('d-m-Y') }}</td>
+                <td class="px-3"> {{ $subscription->expiryDate->format('d-m-Y') }}</td>
                 <td class="px-3"> {{ $subscription->frequency }}</td>
                 <td class="px-3"> {{ $subscription->status }}</td>
 
