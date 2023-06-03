@@ -47,10 +47,13 @@
                     <td class="px-3">
 
                         @php
-                            $expiryDate = date_create($subscription->expiryDate);
+                            $expiryDate =  new \Carbon\Carbon($subscription->expiryDate);
+
                         @endphp
 
                         {{ $expiryDate->format('d-m-Y') }}
+
+                        ({{ $expiryDate->diffForHumans() }})
                     </td>
                     <td class="px-3"> {{ $subscription->frequency }}</td>
                     <td class="px-3"> {{ $subscription->status }}</td>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\SubscriptionPaymentController;
 
 Route::get('/', function () {
 
@@ -25,3 +26,4 @@ Route::get('subscriptions/my-subscriptions', [SubscriptionController::class,'sho
 
 Route::get('subscriptions/finish', [SubscriptionController::class,'finish'])->name('subscriptions.finish');
 
+Route::get('subscription-payments/my-payments-by-subscription-id/{subscriptionId}', [SubscriptionPaymentController::class,'showMyPaymentsBySubscriptionId'])->name('subscription-payments.my-payments-by-subscription-id');

@@ -166,17 +166,6 @@ class SubscriptionController extends Controller
         return view('Subscription.show', compact('subscription'));
     }
 
-    public function showMyPayments(Request $request)
-    {
-
-        $mobile =  $request->mobile;
-
-        $subscription = Subscription::with("payments")->where('payer', $request->mobile)->first();
-
-        return view('Subscription.show_by_payments', compact('subscription', 'mobile'));
-    }
-
-
   public function showMySubscriptions(Request $request)
   {
 

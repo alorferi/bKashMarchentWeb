@@ -30,9 +30,7 @@
         <tr>
 
             <td class="px-3">
-                <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Show</a>
-                <br>
-                <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a>
+                <a href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}"> Payments</a>
             </td>
 
             <td class="px-3">
@@ -53,7 +51,9 @@
 
             <td class="px-3"> {{ $subscription->amount }}</td>
             <td class="px-3">  {{ $subscription->startDate->format('d-m-Y') }}</td>
-            <td class="px-3"> {{ $subscription->expiryDate->format('d-m-Y') }}</td>
+            <td class="px-3"> {{ $subscription->expiryDate->format('d-m-Y') }}
+                ({{ $subscription->expiryDate->diffForHumans() }})
+            </td>
             <td class="px-3"> {{ $subscription->frequency }}</td>
             <td class="px-3"> {{ $subscription->status }}</td>
 
