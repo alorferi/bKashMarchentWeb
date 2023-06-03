@@ -15,6 +15,7 @@
 <table>
 
     <tr>
+        <th>Actions</th>
         <th>Name & Email</th>
         <th>Payer</th>
         <th>Amount</th>
@@ -28,7 +29,11 @@
     @forelse($subscriptions as $subscription)
         <tr>
 
-
+            <td class="px-3">
+                <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Show</a>
+                <br>
+                <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a>
+            </td>
 
             <td class="px-3">
 
