@@ -159,6 +159,17 @@ class SubscriptionController extends Controller
         return view('Subscription.show_by_payments', compact('subscription', 'mobile'));
     }
 
+
+  public function showMySubscriptions(Request $request)
+    {
+
+        $payer =  $request->payer;
+
+        $subscriptions = Subscription::with("payments")->where('payer', $request->payer)->get();
+
+        return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

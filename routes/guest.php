@@ -19,5 +19,9 @@ Route::get('subscriptions/my-payments', [SubscriptionController::class,'showMyPa
 ->name('subscriptions.show.my-payments');
 
 
+Route::get('subscriptions/my-subscriptions', [SubscriptionController::class,'showMySubscriptions'])
+->name('subscriptions.show.my-subscriptions');
+
+
 Route::get('subscriptions/finish', [SubscriptionController::class,'finish'])->name('subscriptions.finish');
 
