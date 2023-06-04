@@ -5,7 +5,7 @@ namespace App\Business;
 use App\Utils\bKashEnv;
 use Carbon\Carbon;
 
-class BKashManager
+class BkashManager
 {
     public function getRequestHeaders()
     {

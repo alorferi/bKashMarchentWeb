@@ -160,6 +160,10 @@
 
                             <x-slot name="content">
 
+                                <x-dropdown-link :href="route('admin.otcs.index')">
+                                    {{ __('Otc Logs') }}
+                                </x-dropdown-link>
+
                                 <x-dropdown-link :href="route('admin.activity-logs.index')">
                                     {{ __('Activity Logs') }}
                                 </x-dropdown-link>

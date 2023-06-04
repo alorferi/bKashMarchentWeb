@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TermController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuditController;
+use App\Http\Controllers\OtcController;
 use App\Http\Controllers\PaymentAmountController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentFrequencyController;
@@ -91,7 +92,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ->middleware(['auth']);
 
 
-
+    Route::get('otcs', [OtcController::class,'index'])->name("otcs.index");
     Route::get('subscription-payments/{subscriptionId}', [SubscriptionPaymentController::class,'index'])->name('subscription-payments.index');
 
     Route::get('activity-logs', [ActivityLogController::class,'index'])->name('activity-logs.index');

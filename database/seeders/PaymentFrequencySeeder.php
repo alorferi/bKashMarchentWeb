@@ -14,7 +14,7 @@ class PaymentFrequencySeeder extends Seeder
      */
     public function run()
     {
-        $PaymentFrequencys = [
+        $paymentFrequencies = [
             [ 'name'=> "DAILY",  'display_name'=>"Daily"
             ,'pre_notification_day'=>null
             , 'no_of_retrial'=>null
@@ -67,7 +67,7 @@ class PaymentFrequencySeeder extends Seeder
             ,'display_serial'=>null],
         ];
 
-        foreach($PaymentFrequencys as $PaymentFrequency) {
+        foreach($paymentFrequencies as $PaymentFrequency) {
             PaymentFrequency::factory()->create($PaymentFrequency);
         }
     }

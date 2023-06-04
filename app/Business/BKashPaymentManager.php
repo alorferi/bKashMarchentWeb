@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
 
-class BKashPaymentManager extends BKashManager
+class BkashPaymentManager extends BkashManager
 {
     public function fetchPaymentListBySubscriptionId($subscriptionId, ?bool $associative = null)
     {

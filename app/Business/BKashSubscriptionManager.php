@@ -11,7 +11,7 @@ use GuzzleHttp\Exception\ClientException;
 use Redirect;
 use Illuminate\Support\Str;
 
-class BKashSubscriptionManager extends BKashManager
+class BkashSubscriptionManager extends BkashManager
 {
     public function create(Request $request)
     {
