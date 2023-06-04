@@ -17,6 +17,7 @@
             <th>Actions</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Sector</th>
             <th>Time</th>
             <th>Subscribed</th>
 
@@ -35,6 +36,8 @@
                 </td>
 
                 <td class="px-3">   {{ $subscriptionRequest->email }} </td>
+
+                <td class="px-3">   {{ $subscriptionRequest->donationSector->name }} </td>
 
                 <td class="px-3">  {{ $subscriptionRequest->created_at->diffForHumans() }} </td>
                 <td>

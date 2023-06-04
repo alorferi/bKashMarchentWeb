@@ -30,7 +30,6 @@ class ActivityLog extends Model
             $data = $data==null ? json_encode(request()->except('password')) : $data;
 
             $log = [
-                'data' => $data,
                 'method' => Request::method(),
                 'url' => Request::fullUrl(),
                 'class' => $class,
@@ -40,6 +39,7 @@ class ActivityLog extends Model
                 'agent' =>  Request::header('user-agent'),
                 'user_id' => auth()->check() ? auth()->user()->id : null,
                 'tags' => $tags,
+                'data' => $data,
             ];
 
 

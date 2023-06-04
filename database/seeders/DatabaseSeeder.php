@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Payment;
 use App\Models\Role;
 use App\Models\Subscription;
 use App\Models\User;
@@ -58,7 +57,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentFrequencySeeder::class);
         $this->call(MojarSchoolSeeder::class);
 
-        // Subscription::factory(5)->create();
+        Subscription::factory(5)->create();
         // Payment::factory(5)->create();
 
         // Subscription::factory()->create(['payer'=>"01717983473"]);

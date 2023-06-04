@@ -41,6 +41,17 @@
                     {{ $subscription->subscriptionRequest->email }}
 
                 </x-list-item-prop>
+
+                <x-list-item-prop>
+
+                    <x-slot name="label">
+                        Donaion Sector
+                    </x-slot>
+
+                    {{ $subscription->subscriptionRequest->donationSector->name }}
+
+                </x-list-item-prop>
+
             @endif
             <x-list-item-prop>
                 <x-slot name="label">

@@ -17,11 +17,9 @@ class BkashSubscriptionManager extends BkashManager
     {
 
         $now = Carbon::now();
+        $now->setTimezone('UTC');
 
         $headers = $this->getRequestHeaders( $now );
-
-
-        $now->setTimezone('UTC');
 
         $bkash_srv_url = bKashEnv::serverUrl().'/api/subscription';
 
@@ -34,7 +32,7 @@ class BkashSubscriptionManager extends BkashManager
 
         $obf_redirect_url = bKashEnv::redirectUrl();
 
-        $startDate =  $now->addHours(1)->format('Y-m-d');
+        $startDate =  $now->addDays(1)->format('Y-m-d');
 
         $expiryDate = $now->addYears(1)->format('Y-m-d');
 
@@ -66,7 +64,9 @@ class BkashSubscriptionManager extends BkashManager
         ];
 
 
-        dd( $headers, $bodyData);
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null,  json_encode($headers));
+
+        ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, json_encode($bodyData) );
 
 
         try {
@@ -87,10 +87,11 @@ class BkashSubscriptionManager extends BkashManager
             return $responseContent;
 
         } catch(ClientException $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
             return false;
         } catch(Exception $e) {
+             // dd($e->getMessage());
             ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
             return false;
         }

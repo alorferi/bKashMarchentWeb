@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Business\BKashSubscriptionManager;
+use App\Business\BkashSubscriptionManager;
 use App\Models\ActivityLog;
 use App\Models\PaymentAmount;
 use App\Models\PaymentFrequency;
@@ -45,7 +45,7 @@ class SubscriptionController extends Controller
             $page =  $request->page;
             $size = 25;
 
-            $bKashSubscriptionMgr = new BKashSubscriptionManager();
+            $bKashSubscriptionMgr = new BkashSubscriptionManager();
 
             $subscriptions = $bKashSubscriptionMgr->fetchBySubscriptionList($page, $size);
 
@@ -93,7 +93,7 @@ class SubscriptionController extends Controller
 
         ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__);
 
-        $bKashSubscriptionMgr = new BKashSubscriptionManager();
+        $bKashSubscriptionMgr = new BkashSubscriptionManager();
 
         $responseObject = $bKashSubscriptionMgr->create($request);
 
@@ -141,7 +141,7 @@ class SubscriptionController extends Controller
 
             try {
 
-                $bKashSubscriptionMgr = new BKashSubscriptionManager();
+                $bKashSubscriptionMgr = new BkashSubscriptionManager();
 
                 $responseObject = $bKashSubscriptionMgr->fetchBySubscriptionId($id, true);
 
@@ -239,25 +239,29 @@ class SubscriptionController extends Controller
                 'reference' => $request->reference,
                 'status' => $request->status,
            ]);
+
+
+           $bKashSubscriptionMgr = new BkashSubscriptionManager();
+
+           $subscriptionObject = $bKashSubscriptionMgr->fetchBySubscriptionRequestId($subscriptionRequest->id, true);
+
+           if($subscriptionObject) {
+
+               try {
+                   Subscription::create($subscriptionObject);
+               } catch(Exception $e) {
+                   ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+               }
+
+
+           }
+
         }
 
-        $bKashSubscriptionMgr = new BKashSubscriptionManager();
-
-        $subscriptionObject = $bKashSubscriptionMgr->fetchBySubscriptionRequestId($subscriptionRequest->id, true);
-
-        if($subscriptionObject) {
-
-            try {
-                Subscription::create($subscriptionObject);
-            } catch(Exception $e) {
-                ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
-            }
 
 
-        }
 
-
-        return view('donate_us.bkash_finish')->with('message', "reference: {$request->reference}, status: {$request->status}");
+        return view('Subscription.finish')->with('message', "reference: {$request->reference}, status: {$request->status}");
     }
 
     /**

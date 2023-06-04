@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Business\BKashSubscriptionManager;
+use App\Business\BkashSubscriptionManager;
 use App\Models\Subscription;
 use App\Models\SubscriptionRequest;
 use App\Utils\ArrayUtils;
@@ -59,7 +59,7 @@ class SubscriptionRequestController extends Controller
             return view("Subscription.show",compact('subscription'));
         }
 
-        $bKashSubscriptionMgr = new BKashSubscriptionManager();
+        $bKashSubscriptionMgr = new BkashSubscriptionManager();
 
         $subscriptionObject = $bKashSubscriptionMgr->fetchBySubscriptionRequestId($subscriptionRequest->id,true);
 
