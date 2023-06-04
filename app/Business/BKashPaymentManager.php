@@ -12,10 +12,10 @@ class BkashPaymentManager extends BkashManager
 {
     public function fetchPaymentListBySubscriptionId($subscriptionId, ?bool $associative = null)
     {
-        $headers = $this->getRequestHeaders();
-
         $now = Carbon::now();
         $now->setTimezone('UTC');
+
+        $headers = $this->getRequestHeaders($now);
 
         $request_url = bKashEnv::serverUrl()."/api/subscription/payment/bySubscriptionId/{$subscriptionId}";
 
@@ -46,10 +46,11 @@ class BkashPaymentManager extends BkashManager
 
     public function fetchPaymentByPaymentId($paymentId, ?bool $associative = null)
     {
-        $headers = $this->getRequestHeaders();
-
         $now = Carbon::now();
         $now->setTimezone('UTC');
+
+        $headers = $this->getRequestHeaders($now);
+
 
         $request_url = bKashEnv::serverUrl()."/api/subscription/payment/{$paymentId}";
 
@@ -81,10 +82,11 @@ class BkashPaymentManager extends BkashManager
 
     public function refundPayment($paymentId, $amount, ?bool $associative = null)
     {
-        $headers = $this->getRequestHeaders();
 
         $now = Carbon::now();
         $now->setTimezone('UTC');
+
+        $headers = $this->getRequestHeaders($now);
 
         $request_url = bKashEnv::serverUrl()."/api/subscription/payment/refund";
 
@@ -103,8 +105,6 @@ class BkashPaymentManager extends BkashManager
             // $statusCode = $response->getStatusCode();
             $responseContent = $response->getBody()->getContents();
             $responseContent = json_decode($responseContent, $associative);
-
-            // dd($responseContent);
 
             return $responseContent;
 

@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="p-2">
-        {!! $paymentSectors->links() !!}
+        {!! $donationSectors->links() !!}
     </div>
 
 
@@ -18,17 +18,17 @@
             <th>Is Active</th>
         </tr>
 
-        @forelse($paymentSectors as $paymentSector)
+        @forelse($donationSectors as $donationSector)
             <tr>
 
                 <td>
-                    {{ $paymentSector->name }}
+                    {{ $donationSector->name }}
                 </td>
 
 
 
 
-                <td> {{ $paymentSector->is_active ? 'True' : 'False' }}</td>
+                <td> {{ $donationSector->is_active ? 'True' : 'False' }}</td>
 
             </tr>
 
@@ -43,7 +43,7 @@
     </table>
 
     <div class="p-2">
-        {!! $paymentSectors->links() !!}
+        {!! $donationSectors->links() !!}
     </div>
 
 

@@ -12,7 +12,7 @@ use App\Http\Controllers\OtcController;
 use App\Http\Controllers\PaymentAmountController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentFrequencyController;
-use App\Http\Controllers\PaymentSectorController;
+use App\Http\Controllers\DonationSectorController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubscriptionPaymentController;
 use App\Http\Controllers\SubscriptionRequestController;
@@ -35,7 +35,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ])
     ->middleware(['auth']);
 
-    Route::resource('payment-sectors', PaymentSectorController::class)
+    Route::resource('payment-sectors', DonationSectorController::class)
     ->except([
        // 'index', 'show'
     ])

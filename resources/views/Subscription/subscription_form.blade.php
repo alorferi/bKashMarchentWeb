@@ -9,9 +9,6 @@
             @endif
         </p>
 
-
-
-
     </x-slot>
 
     <!-- Validation Errors -->
@@ -44,10 +41,10 @@
         </div>
 
         <div class=""><label class="" for="">Select
-                Donation Type:<span class=""><span class="">(Required)</span></span></label>
+                Donation Frequecy:<span class=""><span class="">(Required)</span></span></label>
             <div class="">
 
-                <select name="payment_cycle" class="" aria-required="true" aria-invalid="false">
+                <select name="payment_frequency" class="" aria-required="true" aria-invalid="false">
 
                     @foreach ($PaymentFrequencys as $PaymentFrequency)
                         <option value="{{ $PaymentFrequency->name }}">
@@ -62,14 +59,13 @@
 
 
         <fieldset class="s">
-            <legend class="">Choose your
-                preferred donation sector :</legend>
+            <legend class="">Choose your preferred donation sector :</legend>
 
-            @foreach ($paymentSectors as $paymentSector)
+            @foreach ($donationSectors as $donationSector)
                 <div class="">
-                    <input name="payment_sectors[]" type="checkbox" value="{{ $paymentSector->id }}">
+                    <input name="donation_sector_id" type="radio" value="{{ $donationSector->id }}">
                     <label for="" class="">
-                        {{ $paymentSector->name }}
+                        {{ $donationSector->name }}
                     </label>
                 </div>
             @endforeach

@@ -6,7 +6,7 @@ use App\Business\BKashSubscriptionManager;
 use App\Models\ActivityLog;
 use App\Models\PaymentAmount;
 use App\Models\PaymentFrequency;
-use App\Models\PaymentSector;
+use App\Models\DonationSector;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionRequest;
@@ -64,13 +64,13 @@ class SubscriptionController extends Controller
      */
     public function create()
     {
-        $paymentSectors = PaymentSector::get();
+        $donationSectors = DonationSector::get();
         $paymentAmounts = PaymentAmount::orderBy('amount')->get();
         $PaymentFrequencys = PaymentFrequency::where('is_active', true)
         ->orderBy('display_serial')
         ->get();
 
-        return view('Subscription.create', compact('paymentAmounts', 'PaymentFrequencys', 'paymentSectors'));
+        return view('Subscription.create', compact('paymentAmounts', 'PaymentFrequencys', 'donationSectors'));
     }
 
     /**
@@ -82,9 +82,9 @@ class SubscriptionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'payment_sectors' => ['required'],
+            'donation_sector_id' => ['required'],
             'amount' => ['required', 'integer'],
-            'payment_cycle' => ['required', 'string'],
+            'payment_frequency' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255',
             //'unique:subscription_requests'
@@ -114,6 +114,7 @@ class SubscriptionController extends Controller
                    'id'=>$responseObject->subscriptionRequestId,
                    'name'=>$request->name,
                    'email'=>$request->email,
+                   'donation_sector_id'=>$request->donation_sector_id,
                    ]
             );
 
@@ -146,7 +147,7 @@ class SubscriptionController extends Controller
 
                 if($responseObject) {
 
-                    if($responseObject['extraParams']){
+                    if($responseObject['extraParams']) {
                         $responseObject['extraParams'] = json_encode($responseObject['extraParams']);
                     }
 
@@ -170,10 +171,33 @@ class SubscriptionController extends Controller
   {
 
       $payer =  $request->payer;
+      $ot_code =  $request->ot_code;
 
-      $subscriptions = Subscription::with("payments")->where('payer', $request->payer)->get();
+      if($payer && !$ot_code) {
 
-      return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer'));
+          $cnt = Subscription::where('payer', $request->payer)->count();
+
+          if($cnt==0) {
+
+              $subscriptions = null;
+
+              return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', 'ot_code', ))
+              ->with("message", "You have no subscription");
+          } else {
+              //Generae OTP
+
+
+          }
+
+      } elseif($payer && $ot_code) {
+          $subscriptions = null;
+          //Verify Otc here
+      } else {
+          $subscriptions = null;
+      }
+
+
+      return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', 'ot_code'));
   }
 
     /**
@@ -209,10 +233,13 @@ class SubscriptionController extends Controller
         $subscriptionRequestId = session('subscriptionRequestId');
 
         $subscriptionRequest =  SubscriptionRequest::find($subscriptionRequestId);
-        $subscriptionRequest->update([
-             'reference' => $request->reference,
-             'status' => $request->status,
-        ]);
+
+        if($subscriptionRequest) {
+            $subscriptionRequest->update([
+                'reference' => $request->reference,
+                'status' => $request->status,
+           ]);
+        }
 
         $bKashSubscriptionMgr = new BKashSubscriptionManager();
 

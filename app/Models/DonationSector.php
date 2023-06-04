@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PaymentSector extends Model
+class DonationSector extends Model
 {
     use HasFactory;
-
     use SoftDeletes;
 
     protected $guarded = [];
@@ -17,5 +16,10 @@ class PaymentSector extends Model
     protected $casts = [
       'is_active' => 'boolean',
     ];
+
+    public function subscriptionRequest()
+    {
+        return $this->hasOne(SubscriptionRequest::class, "donationRequestId", 'id');
+    }
 
 }

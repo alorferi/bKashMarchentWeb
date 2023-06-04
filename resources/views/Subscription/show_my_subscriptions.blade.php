@@ -15,34 +15,46 @@
         </x-slot>
 
 
-    <form action="">
 
-        @csrf
-
-        <!-- Payer -->
-        <div class="flex mt-4">
-
-            <x-input id="payer" class="w-full mt-1" type="tel" name="payer" value="{{$payer}}" required
-            placeholder="bKash Wellet Number"
-            />
-
-            <x-button class="ml-4">
-                {{ __('Submit') }}
-            </x-button>
-
-        </div>
+        <p class="">
+            @if (!empty($message))
+                <div class=""> {{ $message }}</div>
+            @endif
+        </p>
 
 
 
+        <form action="">
 
-    </form>
+            @csrf
+
+            <!-- Payer -->
+            <div class="flex mt-4">
+
+                <x-input class="w-full mt-1" type="tel" name="payer" value="{{ $payer }}" required
+                    placeholder="bKash Wellet Number" />
+
+
+                <x-input class="w-full mt-1" type="number" name="ot_code" value="{{ $ot_code }}"
+                    placeholder="Type One time code here" />
+
+                <x-button class="ml-4">
+                    {{ __('Submit') }}
+                </x-button>
+
+            </div>
 
 
 
-    @if ($subscriptions)
-        @include('Subscription.my_subscription_list', ['subscriptions' => $subscriptions])
-    @endif
 
-</x-list-card>
+        </form>
+
+
+
+        @if ($subscriptions)
+            @include('Subscription.my_subscription_list', ['subscriptions' => $subscriptions])
+        @endif
+
+    </x-list-card>
 
 </x-guest-layout>

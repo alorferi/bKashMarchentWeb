@@ -7,10 +7,8 @@ use Carbon\Carbon;
 
 class BkashManager
 {
-    public function getRequestHeaders()
+    public function getRequestHeaders($now)
     {
-        $now = Carbon::now();
-        $now->setTimezone('UTC');
 
         // Header Params
         $channelId = bKashEnv::channelId();

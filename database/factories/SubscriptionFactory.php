@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\SubscriptionRequest;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SubscriptionFactory extends Factory
@@ -14,7 +16,7 @@ class SubscriptionFactory extends Factory
     public function definition()
     {
         return [
-            'subscriptionRequestId' => "NonTragg".$this->faker->unique()->numberBetween($min = 10, $max = 50),
+            'subscriptionRequestId' => SubscriptionRequest::factory(),
             'merchantId' => 9,
             'merchantShortCode' => null,
             'payer' => $this->faker->unique()->phoneNumber,
@@ -25,6 +27,21 @@ class SubscriptionFactory extends Factory
             'status' => "SUCCESS",
             'cancelledBy' => null,
             'cancelledTime' => null,
+            'createdAt' => \Carbon\Carbon::now(),
+            'modifiedAt' => \Carbon\Carbon::now(),
+            'requesterId' => 2,
+            'serviceId' => 1001,
+            "payerType" =>  "CUSTOMER",
+            "paymentType" =>  "FIXED",
+            "subscriptionType" =>  "BASIC",
+            "maxCapRequired" => false,
+            "currency" => "BDT",
+            "nextPaymentDate" => \Carbon\Carbon::now(),
+            "subscriptionReference" => "",
+            "enabled" => true,
+            "expired" => false,
+            "rrule" => "",
+            "active" => true,
 
         ];
     }

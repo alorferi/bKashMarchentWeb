@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PaymentSector;
+use App\Models\DonationSector;
 use Illuminate\Http\Request;
 
-class PaymentSectorController extends Controller
+class DonationSectorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class PaymentSectorController extends Controller
      */
     public function index()
     {
-        $paymentSectors = PaymentSector::paginate();
+        $donationSectors = DonationSector::paginate();
 
-        return view('PaymentSector.index', compact('paymentSectors'));
+        return view('DonationSector.index', compact('donationSectors'));
     }
 
     /**

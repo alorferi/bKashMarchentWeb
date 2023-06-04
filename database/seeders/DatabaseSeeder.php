@@ -51,23 +51,19 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
 
-        // Post::factory(20)->create();
 
-        // Comment::factory(20)->create();
 
         // PaymentAmount::factory(10)->create();
 
         $this->call(PaymentFrequencySeeder::class);
         $this->call(MojarSchoolSeeder::class);
 
-        // Subscription::factory(10)->create();
+        // Subscription::factory(5)->create();
         // Payment::factory(5)->create();
 
         // Subscription::factory()->create(['payer'=>"01717983473"]);
 
         // $subscription = Subscription::where('payer', '01717983473')->first();
-
-        // dd($subscription->id);
 
         // Payment::factory(20)->create(['subscriptionId'=>$subscription->id]);
 

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\PaymentAmount;
 use App\Models\PaymentFrequency;
-use App\Models\PaymentSector;
+use App\Models\DonationSector;
 use Illuminate\Database\Seeder;
 
 class MojarSchoolSeeder extends Seeder
@@ -73,7 +73,7 @@ class MojarSchoolSeeder extends Seeder
 
 
 
-            $paymentSectors = [
+            $donationSectors = [
                 [ 'name'=> "General Donation", 'is_active' => true ],
                 [ 'name'=> "Education Program", 'is_active' => true],
                 [ 'name'=> "Sponsor a Child",'is_active' => true ],
@@ -84,8 +84,8 @@ class MojarSchoolSeeder extends Seeder
             ];
 
 
-            foreach($paymentSectors as $paymentSector) {
-                PaymentSector::factory()->create($paymentSector);
+            foreach($donationSectors as $donationSector) {
+                DonationSector::factory()->create($donationSector);
             }
 
 

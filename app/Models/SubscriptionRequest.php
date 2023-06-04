@@ -16,10 +16,14 @@ class SubscriptionRequest extends Model
     protected $guarded = [];
     protected $dates = ['created_at', 'updated_at', 'deleted_at','expirationTime'];
 
+    public function donationSector()
+    {
+        return $this->belongsTo(DonationSector::class, "donationSectorId", "id");
+    }
 
     public function subscription()
     {
-        return $this->hasOne(Subscription::class,"subscriptionRequestID",'id');
+        return $this->hasOne(Subscription::class,"subscriptionRequestId",'id');
     }
 
 }

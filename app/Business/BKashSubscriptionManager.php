@@ -16,9 +16,11 @@ class BkashSubscriptionManager extends BkashManager
     public function create(Request $request)
     {
 
-        $headers = $this->getRequestHeaders();
-
         $now = Carbon::now();
+
+        $headers = $this->getRequestHeaders( $now );
+
+
         $now->setTimezone('UTC');
 
         $bkash_srv_url = bKashEnv::serverUrl().'/api/subscription';
@@ -34,7 +36,9 @@ class BkashSubscriptionManager extends BkashManager
 
         $startDate =  $now->addHours(1)->format('Y-m-d');
 
-        $endDate = $now->addYears(1)->format('Y-m-d');
+        $expiryDate = $now->addYears(1)->format('Y-m-d');
+
+        // dd( $startDate,  $expiryDate);
 
         $uuid = Str::uuid()->toString();
 
@@ -46,8 +50,8 @@ class BkashSubscriptionManager extends BkashManager
               "serviceId"=> $obf_service_id,
               "currency"=> "BDT",
               "startDate"=> $startDate,
-              "expiryDate"=>  $endDate,
-              "frequency"=> $request->payment_cycle,
+              "expiryDate"=>  $expiryDate,
+              "frequency"=> $request->payment_frequency,
               "subscriptionType"=> "BASIC",
               "maxCapAmount"=> null,
               "maxCapRequired"=> false,
@@ -60,6 +64,9 @@ class BkashSubscriptionManager extends BkashManager
               "subscriptionReference"=> "MSMSR2",
               "extraParams"=> null
         ];
+
+
+        dd( $headers, $bodyData);
 
 
         try {
@@ -80,6 +87,7 @@ class BkashSubscriptionManager extends BkashManager
             return $responseContent;
 
         } catch(ClientException $e) {
+            dd($e->getMessage());
             ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
             return false;
         } catch(Exception $e) {
@@ -89,13 +97,13 @@ class BkashSubscriptionManager extends BkashManager
 
     }
 
-    public function fetchBySubscriptionList($page, $size,  ?bool $associative = null)
+    public function fetchBySubscriptionList($page, $size, ?bool $associative = null)
     {
-        $headers = $this->getRequestHeaders();
 
         $now = Carbon::now();
         $now->setTimezone('UTC');
 
+        $headers = $this->getRequestHeaders($now);
         $bkash_srv_url = bKashEnv::serverUrl()."/api/subscriptions/{$page}/{$size}";
 
         $client = new \GuzzleHttp\Client();
@@ -107,7 +115,7 @@ class BkashSubscriptionManager extends BkashManager
 
             // $statusCode = $response->getStatusCode();
             $responseContent = $response->getBody()->getContents();
-            $responseContent = json_decode($responseContent,$associative);
+            $responseContent = json_decode($responseContent, $associative);
 
             // dd($responseContent);
 
@@ -127,10 +135,12 @@ class BkashSubscriptionManager extends BkashManager
 
     public function fetchBySubscriptionRequestId($subscriptionRequestId, ?bool $associative = null)
     {
-        $headers = $this->getRequestHeaders();
-
         $now = Carbon::now();
         $now->setTimezone('UTC');
+
+        $headers = $this->getRequestHeaders($now);
+
+
 
         $bkash_srv_url = bKashEnv::serverUrl()."/api/subscriptions/request-id/{$subscriptionRequestId}";
 
@@ -143,7 +153,7 @@ class BkashSubscriptionManager extends BkashManager
 
             // $statusCode = $response->getStatusCode();
             $responseContent = $response->getBody()->getContents();
-            $responseContent = json_decode($responseContent,$associative);
+            $responseContent = json_decode($responseContent, $associative);
 
             // dd($responseContent);
 
@@ -163,10 +173,10 @@ class BkashSubscriptionManager extends BkashManager
 
     public function fetchBySubscriptionId($subscriptionId, ?bool $associative = null)
     {
-        $headers = $this->getRequestHeaders();
-
         $now = Carbon::now();
         $now->setTimezone('UTC');
+
+        $headers = $this->getRequestHeaders($now);
 
         $bkash_srv_url = bKashEnv::serverUrl()."/api/subscriptions/{$subscriptionId}";
 
@@ -179,7 +189,7 @@ class BkashSubscriptionManager extends BkashManager
 
             // $statusCode = $response->getStatusCode();
             $responseContent = $response->getBody()->getContents();
-            $responseContent = json_decode($responseContent,$associative);
+            $responseContent = json_decode($responseContent, $associative);
 
             // dd($responseContent);
 
@@ -197,10 +207,11 @@ class BkashSubscriptionManager extends BkashManager
 
     public function cancelSubscription($subscriptionId, $reason, ?bool $associative = null)
     {
-        $headers = $this->getRequestHeaders();
-
         $now = Carbon::now();
         $now->setTimezone('UTC');
+
+        $headers = $this->getRequestHeaders($now);
+
 
         $bkash_srv_url = bKashEnv::serverUrl()."/api/subscriptions/{$subscriptionId}?reason={$reason}";
 
@@ -213,7 +224,7 @@ class BkashSubscriptionManager extends BkashManager
 
             // $statusCode = $response->getStatusCode();
             $responseContent = $response->getBody()->getContents();
-            $responseContent = json_decode($responseContent,$associative);
+            $responseContent = json_decode($responseContent, $associative);
 
             // dd($responseContent);
 
@@ -230,10 +241,10 @@ class BkashSubscriptionManager extends BkashManager
 
     public function fetchPaymentSchedule($frequency, $startDate, $expiryDate, ?bool $associative = null)
     {
-        $headers = $this->getRequestHeaders();
-
         $now = Carbon::now();
         $now->setTimezone('UTC');
+
+        $headers = $this->getRequestHeaders($now);
 
         $bkash_srv_url = bKashEnv::serverUrl()."/api/subscription/payment/schedule?frequency={$frequency}&startDate={$startDate}&expiryDate={$expiryDate}";
 
@@ -246,7 +257,7 @@ class BkashSubscriptionManager extends BkashManager
 
             // $statusCode = $response->getStatusCode();
             $responseContent = $response->getBody()->getContents();
-            $responseContent = json_decode($responseContent,$associative);
+            $responseContent = json_decode($responseContent, $associative);
 
             // dd($responseContent);
 

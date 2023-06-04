@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentSectorsTable extends Migration
+class CreateDonationSectorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePaymentSectorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_sectors', function (Blueprint $table) {
+        Schema::create('donation_sectors', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->boolean('is_active')->default(false);

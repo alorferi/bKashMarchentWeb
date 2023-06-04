@@ -17,6 +17,7 @@ class CreateSubscriptionRequestsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email');
+            $table->unsignedBigInteger('donationSectorId');
             $table->string('reference')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
