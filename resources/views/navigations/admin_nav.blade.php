@@ -22,15 +22,6 @@
                         {{ __('Subscriptions') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('admin.payments.index')" :active="request()->routeIs('admin.payments.index')">
-                        {{ __('Payments') }}
-                    </x-nav-link>
-
-
-
-
-
-
                 </div>
             </div>
 

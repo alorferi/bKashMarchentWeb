@@ -1,70 +1,92 @@
-{{-- <tr>
+@forelse($subscriptions as $subscription)
+    <x-list-item-card>
 
-    <td class="px-3">
-        {{ $subscription->payer }}
-    </td>
-    <td class="px-3"> {{ $subscription->amount }}</td>
-    <td class="px-3"> {{ $subscription->startDate }}</td>
-    <td class="px-3"> {{ $subscription->expiryDate }}</td>
-    <td class="px-3"> {{ $subscription->frequency }}</td>
-    <td class="px-3"> {{ $subscription->status }}</td>
+        <x-slot name="title">
+            {{ $subscription->payer }}
+        </x-slot>
 
-</tr> --}}
+        @if ($subscription->subscriptionRequest)
+                <x-list-item-prop>
 
-
-<table>
-
-    <tr>
-        <th>Actions</th>
-        <th>Name & Email</th>
-        <th>Payer</th>
-        <th>Amount</th>
-        <th>startDate</th>
-        <th>expiryDate</th>
-        <th>frequency</th>
-        <th>Status</th>
-
-    </tr>
-
-    @forelse($subscriptions as $subscription)
-        <tr>
-
-            <td class="px-3">
-                <a href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}"> Payments</a>
-            </td>
-
-            <td class="px-3">
-
-                @if ($subscription->subscriptionRequest)
+                    <x-slot name="label">
+                        Name
+                    </x-slot>
                     {{ $subscription->subscriptionRequest->name }}
-                    <br>
+
+                </x-list-item-prop>
+
+                <x-list-item-prop>
+
+                    <x-slot name="label">
+                        Email
+                    </x-slot>
+
                     {{ $subscription->subscriptionRequest->email }}
-                @else
-                    None
-                @endif
 
-            </td>
+                </x-list-item-prop>
+            @endif
 
-            <td class="px-3">
-                {{ $subscription->payer }}
-            </td>
+        <x-list-item-prop>
+            <x-slot name="label">
+                Amount
+            </x-slot>
 
-            <td class="px-3"> {{ $subscription->amount }}</td>
-            <td class="px-3">  {{ $subscription->startDate->format('d-m-Y') }}</td>
-            <td class="px-3"> {{ $subscription->expiryDate->format('d-m-Y') }}
-                ({{ $subscription->expiryDate->diffForHumans() }})
-            </td>
-            <td class="px-3"> {{ $subscription->frequency }}</td>
-            <td class="px-3"> {{ $subscription->status }}</td>
-
-        </tr>
+            {{ $subscription->amount }}
+        </x-list-item-prop>
 
 
 
+        <x-list-item-prop>
+            <x-slot name="label">
+                Start Date
+            </x-slot>
 
-    @empty
-        <tr>
-            <td>No Posts</td>
-        </tr>
-    @endforelse
+            {{ $subscription->startDate->format('d-m-Y') }}
+
+        </x-list-item-prop>
+
+
+        <x-list-item-prop>
+            <x-slot name="label">
+                ExpiryDate Date
+            </x-slot>
+
+            {{ $subscription->expiryDate->format('d-m-Y') }}
+            ({{ $subscription->expiryDate->diffForHumans() }})
+        </x-list-item-prop>
+
+        <x-list-item-prop>
+            <x-slot name="label">
+                Frequency
+            </x-slot>
+
+            {{ $subscription->frequency }}
+
+        </x-list-item-prop>
+
+        <x-list-item-prop>
+            <x-slot name="label">
+                Status
+            </x-slot>
+
+            {{ $subscription->status }}
+
+        </x-list-item-prop>
+
+        <x-slot name="footer">
+            <a href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}">
+                Payments</a>
+        </x-slot>
+
+    </x-list-item-card>
+
+
+
+
+
+
+
+@empty
+
+@endforelse
 </table>

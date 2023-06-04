@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentCyclesTable extends Migration
+class CreatePaymentFrequenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePaymentCyclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_cycles', function (Blueprint $table) {
+        Schema::create('payment_frequencies', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('display_name')->unique();
@@ -35,6 +35,6 @@ class CreatePaymentCyclesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_cycles');
+        Schema::dropIfExists('payment_frequencies');
     }
 }

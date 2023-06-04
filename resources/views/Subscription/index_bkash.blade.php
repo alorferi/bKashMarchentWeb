@@ -13,62 +13,84 @@
         @include('Subscription.paging')
 
 
-        <table>
-            <tr>
-                <th>Actions</th>
-                <th>Payer</th>
-                <th>Amount</th>
-                <th>Start Date</th>
-                <th>Expiry Date</th>
-                <th>Frequency</th>
-                <th>Status</th>
-            </tr>
 
-            @forelse($subscriptions->content as $subscription)
-                <tr>
+        @forelse($subscriptions->content as $subscription)
+            <x-list-item-card>
 
-                    <td class="px-3">
-                        <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Show</a>
-                        <br>
-                        <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a>
-                    </td>
-                    <td class="px-3">
-                        {{ $subscription->payer }}
-                    </td>
-                    <td class="px-3"> {{ $subscription->amount }}</td>
-                    <td class="px-3">
+                <x-slot name="title">
+                    {{ $subscription->payer }}
+                </x-slot>
 
-                        @php
-                            $startDate = date_create($subscription->startDate);
+                <x-list-item-prop>
+                    <x-slot name="label">
+                        Amount
+                    </x-slot>
 
-                        @endphp
-
-                        {{ $startDate->format('d-m-Y') }}</td>
-                    <td class="px-3">
-
-                        @php
-                            $expiryDate =  new \Carbon\Carbon($subscription->expiryDate);
-
-                        @endphp
-
-                        {{ $expiryDate->format('d-m-Y') }}
-
-                        ({{ $expiryDate->diffForHumans() }})
-                    </td>
-                    <td class="px-3"> {{ $subscription->frequency }}</td>
-                    <td class="px-3"> {{ $subscription->status }}</td>
-
-                </tr>
+                    {{ $subscription->amount }}
+                </x-list-item-prop>
 
 
 
+                <x-list-item-prop>
+                    <x-slot name="label">
+                        Start Date
+                    </x-slot>
 
-            @empty
-                <tr>
-                    <td>No Posts</td>
-                </tr>
-            @endforelse
-        </table>
+                    @php
+                        $startDate = date_create($subscription->startDate);
+
+                    @endphp
+
+                    {{ $startDate->format('d-m-Y') }}</td>
+
+                </x-list-item-prop>
+
+
+                <x-list-item-prop>
+                    <x-slot name="label">
+                        End Date
+                    </x-slot>
+
+                    @php
+                        $expiryDate = new \Carbon\Carbon($subscription->expiryDate);
+                    @endphp
+
+                    {{ $expiryDate->format('d-m-Y') }}
+
+                    ({{ $expiryDate->diffForHumans() }})
+                </x-list-item-prop>
+
+                <x-list-item-prop>
+                    <x-slot name="label">
+                        Frequency
+                    </x-slot>
+
+                    {{ $subscription->frequency }}
+
+                </x-list-item-prop>
+
+                <x-list-item-prop>
+                    <x-slot name="label">
+                        Status
+                    </x-slot>
+
+                    {{ $subscription->status }}
+
+                </x-list-item-prop>
+
+                <x-slot name="footer">
+
+                    <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Show</a>
+                    |
+                    <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a>
+
+                </x-slot>
+
+            </x-list-item-card>
+
+
+        @empty
+        @endforelse
 
         @include('Subscription.paging')
 

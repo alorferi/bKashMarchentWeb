@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
 
         // PaymentAmount::factory(10)->create();
 
-        $this->call(PaymentCycleSeeder::class);
+        $this->call(PaymentFrequencySeeder::class);
         $this->call(MojarSchoolSeeder::class);
 
         // Subscription::factory(10)->create();

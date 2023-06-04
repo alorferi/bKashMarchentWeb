@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Business\BKashSubscriptionManager;
 use App\Models\ActivityLog;
 use App\Models\PaymentAmount;
-use App\Models\PaymentCycle;
+use App\Models\PaymentFrequency;
 use App\Models\PaymentSector;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
@@ -25,7 +25,7 @@ class SubscriptionController extends Controller
     {
 
         if(!$request->has("source")) {
-            $request= $request->merge(["source"=>"bkash"]);
+            $request= $request->merge(["source"=>"local"]);
         }
 
         $source =  $request->source;
@@ -66,11 +66,11 @@ class SubscriptionController extends Controller
     {
         $paymentSectors = PaymentSector::get();
         $paymentAmounts = PaymentAmount::orderBy('amount')->get();
-        $paymentCycles = PaymentCycle::where('is_active', true)
+        $PaymentFrequencys = PaymentFrequency::where('is_active', true)
         ->orderBy('display_serial')
         ->get();
 
-        return view('Subscription.create', compact('paymentAmounts', 'paymentCycles', 'paymentSectors'));
+        return view('Subscription.create', compact('paymentAmounts', 'PaymentFrequencys', 'paymentSectors'));
     }
 
     /**

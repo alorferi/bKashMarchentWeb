@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PaymentCycle;
+use App\Models\PaymentFrequency;
 use Illuminate\Http\Request;
 
-class PaymentCycleController extends Controller
+class PaymentFrequencyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class PaymentCycleController extends Controller
      */
     public function index()
     {
-        $paymentCycles = PaymentCycle::paginate();
+        $PaymentFrequencies = PaymentFrequency::paginate();
 
-        return view('PaymentCycle.index', compact('paymentCycles'));
+        return view('PaymentFrequency.index', compact('PaymentFrequencies'));
 
     }
 

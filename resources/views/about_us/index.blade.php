@@ -1,5 +1,11 @@
 <x-guest-layout>
 
+    <x-list-card>
+
+        <x-slot name="title">
+
+        </x-slot>
+
     Know As মজার ইশকুল :: Mojar School
     About
     Odommo Bangladesh Foundation
@@ -32,6 +38,6 @@
     বিকাশের মাধ্যমে ডোনেট করা যাবে – https://cutt.ly/bKash
 
     Donate via Paypal – paypal.me/mojarschoolpaypal
-
+</x-list-card>
 
 </x-guest-layout>

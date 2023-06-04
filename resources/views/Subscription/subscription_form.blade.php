@@ -30,7 +30,8 @@
 
                         @foreach ($paymentAmounts as $amount)
                             <div class="">
-                                <input class="" name="amount" type="radio" value="{{ $amount->amount }}">
+                                <input class="payment_amount" name="amount" type="radio"
+                                    value="{{ $amount->amount }}">
                                 <label for="" class="">{{ $amount->amount }}
                                     {{ $amount->currency }}</label>
                             </div>
@@ -48,9 +49,9 @@
 
                 <select name="payment_cycle" class="" aria-required="true" aria-invalid="false">
 
-                    @foreach ($paymentCycles as $paymentCycle)
-                        <option value="{{ $paymentCycle->name }}">
-                            {{ $paymentCycle->merchant_display_name ?? $paymentCycle->display_name }}
+                    @foreach ($PaymentFrequencys as $PaymentFrequency)
+                        <option value="{{ $PaymentFrequency->name }}">
+                            {{ $PaymentFrequency->merchant_display_name ?? $PaymentFrequency->display_name }}
                         </option>
                     @endforeach
 
@@ -79,7 +80,7 @@
         <div>
             <x-label for="name" :value="__('Name')" />
 
-            <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required
+            <x-input  class="block w-full mt-1" type="text" name="name" :value="old('name')" required
                 value="Md Babul Mirdha" />
         </div>
 
@@ -88,14 +89,19 @@
         <div class="mt-4">
             <x-label for="email" :value="__('Email')" />
 
-            <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')"
+            <x-input  class="block w-full mt-1" type="email" name="email" :value="old('email')"
                 value="babul.mirdha@gmail.com" required />
         </div>
 
         <div class="" aria-atomic="true" aria-live="polite" data-js-reload="field_1_9"><label class=""
-                for="">Total</label>
+                for="">Amount</label>
             <div class="">
-                <input type="text" readonly value="৳ 0.00" class="">
+
+                {{-- <input type="text" readonly value="৳ 0.00" class="selected_amount"> --}}
+
+                <x-input  class="block w-full mt-1 selected_amount" type="text" readonly disabled name="email" :value="old('email')"
+                value="৳ 0.00" required />
+
             </div>
         </div>
 
@@ -107,4 +113,19 @@
             </x-button>
         </div>
     </form>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('.payment_amount').click(function() {
+
+                const amont = "৳" + $(this).val() + ".00"
+                $('.selected_amount').val(amont)
+
+            });
+
+        });
+    </script>
+
 </x-form-card>

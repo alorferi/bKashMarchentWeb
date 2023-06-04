@@ -4,6 +4,10 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-C48T62CFEM"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -37,7 +41,7 @@
 
         <!-- Page Heading -->
         <header class="bg-red-400 shadow">
-            <div class="max-w-screen-xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
                 {{-- {{ $header }} --}}
                 <h1>{{ $blogname->option_value }} - {{ $blogdescription->option_value }} </h1>
             </div>

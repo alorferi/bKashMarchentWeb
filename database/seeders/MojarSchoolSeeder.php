@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\PaymentAmount;
-use App\Models\PaymentCycle;
+use App\Models\PaymentFrequency;
 use App\Models\PaymentSector;
 use Illuminate\Database\Seeder;
 
@@ -33,39 +33,39 @@ class MojarSchoolSeeder extends Seeder
         }
 
 
-            PaymentCycle::where('name','DAILY')->update([
+            PaymentFrequency::where('name','DAILY')->update([
                 'merchant_display_name'=>"Daily",
                 'display_serial'=>1,
                 'is_active'=>true,
             ]);
 
-            PaymentCycle::where('name','WEEKLY')->update([
+            PaymentFrequency::where('name','WEEKLY')->update([
                 'merchant_display_name'=>"Weekly",
                 'display_serial'=>2,
                 'is_active'=>true,
             ]);
 
-            PaymentCycle::where('name','CALENDAR_MONTH')->update([
+            PaymentFrequency::where('name','CALENDAR_MONTH')->update([
                 'merchant_display_name'=>"Monthly",
                 'display_serial'=>3,
                 'is_active'=>true,
             ]);
 
 
-            PaymentCycle::where('name','NINETY_DAYS')->update([
+            PaymentFrequency::where('name','NINETY_DAYS')->update([
                 'merchant_display_name'=>"Quarterly (3 Months)",
                 'display_serial'=>4,
                 'is_active'=>true,
             ]);
 
 
-            PaymentCycle::where('name','ONE_EIGHTY_DAYS')->update([
+            PaymentFrequency::where('name','ONE_EIGHTY_DAYS')->update([
                 'merchant_display_name'=>"Half Yearly (6 Months)",
                 'display_serial'=>5,
                 'is_active'=>true,
             ]);
 
-            PaymentCycle::where('name','CALENDAR_YEAR')->update([
+            PaymentFrequency::where('name','CALENDAR_YEAR')->update([
                 'merchant_display_name'=>"Yearly",
                 'display_serial'=>6,
                 'is_active'=>true,

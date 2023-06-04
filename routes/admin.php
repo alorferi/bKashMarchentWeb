@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\PaymentAmountController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentCycleController;
+use App\Http\Controllers\PaymentFrequencyController;
 use App\Http\Controllers\PaymentSectorController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubscriptionPaymentController;
@@ -22,7 +22,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
         return view('dashboard');
     })->middleware(['auth'])->name('dashboard');
 
-    Route::resource('payment-cycles', PaymentCycleController::class)
+    Route::resource('payment-cycles', PaymentFrequencyController::class)
     ->except([
        // 'index', 'show'
     ])

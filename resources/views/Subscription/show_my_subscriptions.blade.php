@@ -21,7 +21,6 @@
 
         <!-- Payer -->
         <div class="flex mt-4">
-            {{-- <x-label for="payer" :value="__('payer')" /> --}}
 
             <x-input id="payer" class="w-full mt-1" type="tel" name="payer" value="{{$payer}}" required
             placeholder="bKash Wellet Number"
@@ -31,7 +30,6 @@
                 {{ __('Submit') }}
             </x-button>
 
-            {{-- <input type="submit" value="show"> --}}
         </div>
 
 

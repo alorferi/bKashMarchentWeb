@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="p-2">
-        {!! $paymentCycles->links() !!}
+        {!! $PaymentFrequencys->links() !!}
     </div>
 
 
@@ -24,22 +24,22 @@
             <th>is_active</th>
         </tr>
 
-        @forelse($paymentCycles as $paymentCycle)
+        @forelse($PaymentFrequencys as $PaymentFrequency)
             <tr>
 
                 <td>
-                    {{ $paymentCycle->name }}
+                    {{ $PaymentFrequency->name }}
                 </td>
 
 
 
-                <td> {{ $paymentCycle->display_name }}</td>
-                <td> {{ $paymentCycle->merchant_display_name }}</td>
-                <td> {{ $paymentCycle->pre_notification_day }}</td>
-                <td> {{ $paymentCycle->no_of_retrial }}</td>
-                <td> {{ $paymentCycle->retrial_period }}</td>
-                <td> {{ $paymentCycle->display_serial }}</td>
-                <td> {{ $paymentCycle->is_active? "True" : "False" }}</td>
+                <td> {{ $PaymentFrequency->display_name }}</td>
+                <td> {{ $PaymentFrequency->merchant_display_name }}</td>
+                <td> {{ $PaymentFrequency->pre_notification_day }}</td>
+                <td> {{ $PaymentFrequency->no_of_retrial }}</td>
+                <td> {{ $PaymentFrequency->retrial_period }}</td>
+                <td> {{ $PaymentFrequency->display_serial }}</td>
+                <td> {{ $PaymentFrequency->is_active? "True" : "False" }}</td>
 
             </tr>
 
@@ -54,7 +54,7 @@
     </table>
 
     <div class="p-2">
-        {!! $paymentCycles->links() !!}
+        {!! $PaymentFrequencys->links() !!}
     </div>
 
 

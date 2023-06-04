@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\PaymentCycle;
+use App\Models\PaymentFrequency;
 use Illuminate\Database\Seeder;
 
-class PaymentCycleSeeder extends Seeder
+class PaymentFrequencySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class PaymentCycleSeeder extends Seeder
      */
     public function run()
     {
-        $paymentCycles = [
+        $PaymentFrequencys = [
             [ 'name'=> "DAILY",  'display_name'=>"Daily"
             ,'pre_notification_day'=>null
             , 'no_of_retrial'=>null
@@ -67,8 +67,8 @@ class PaymentCycleSeeder extends Seeder
             ,'display_serial'=>null],
         ];
 
-        foreach($paymentCycles as $paymentCycle) {
-            PaymentCycle::factory()->create($paymentCycle);
+        foreach($PaymentFrequencys as $PaymentFrequency) {
+            PaymentFrequency::factory()->create($PaymentFrequency);
         }
     }
 }
