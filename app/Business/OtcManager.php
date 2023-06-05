@@ -31,8 +31,7 @@ class OtcManager
         ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__);
 
         $otc = Otc::where(function ($query) use ($username) {
-            $query->where('mobile', $username)
-            ->orWhere('email', $username);
+            $query->where('username', $username);
         })
             ->where('expired_at', '>', Carbon::now())
             ->whereNull('verified_at')
@@ -44,18 +43,18 @@ class OtcManager
         $expireObject = ['otc_expired_after_in_seconds' => $otc_expired_after_in_minutes * 60];
 
         if (MobileNumberUtils::isValidMobileNumber($username, "BD")) {
-            $expireObject = array_merge($expireObject, ['mobile' => $username]);
+            $expireObject = array_merge($expireObject, ['username' => $username]);
         } else {
-            $expireObject = array_merge($expireObject, ['email' => $username]);
+            $expireObject = array_merge($expireObject, ['username' => $username]);
         }
 
         if ($otc == null) {
             $otc = new Otc();
 
             if (MobileNumberUtils::isValidMobileNumber($username, "BD")) {
-                $otc->mobile = $username;
+                $otc->username = $username;
             } else {
-                $otc->email = $username;
+                $otc->username = $username;
             }
 
             $otc->ot_code = mt_rand(100000, 999999);
@@ -225,8 +224,7 @@ class OtcManager
         }
 
         $otc = Otc::where(function ($query) use ($username) {
-            $query->where('mobile', $username)
-            ->orWhere('email', $username);
+            $query->where('username', $username);
         }) ->whereHas("otcType", function ($query) use ($otcTypeName) {
             $query->where("otc_types.name", $otcTypeName);
         })

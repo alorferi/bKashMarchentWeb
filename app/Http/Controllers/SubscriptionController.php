@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Business\BkashSubscriptionManager;
-use App\Business\OtcManager;
 use App\Models\ActivityLog;
 use App\Models\PaymentAmount;
 use App\Models\PaymentFrequency;
@@ -11,7 +10,6 @@ use App\Models\DonationSector;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionRequest;
-use App\Utils\ResponseUtils;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Session;
@@ -27,7 +25,6 @@ class SubscriptionController extends Controller
     {
 
         if(!$request->has("source")) {
-
             $request= $request->merge(["source"=>"local"]);
         }
 
@@ -171,89 +168,7 @@ class SubscriptionController extends Controller
         return view('Subscription.show', compact('subscription'));
     }
 
-  public function showMySubscriptions(Request $request)
-  {
 
-      $payer =  $request->payer;
-      $ot_code =  $request->ot_code;
-
-      $show_otc_dialog = false;
-
-      $otcObject = null;
-      $otcTypeName = "SHOW_MY_SUBSCRIPTIONS";
-      $subscriptions = null;
-      $message = null;
-      $otcManager = new OtcManager();
-      if($payer && !$ot_code) {
-
-          $cnt = Subscription::where('payer', $request->payer)->count();
-
-          if($cnt==0) {
-              $message = "You have no subscription";
-          } else {
-
-              //Generate OTP
-              $otcResponse = $otcManager->generateOtc($payer, $otcTypeName);
-
-              // $responseContent = $otcResponse->getContents();
-              // $responseContent = json_decode($responseContent, $responseContent);
-
-              // dd( json_decode($otcResponse->content()) ,$otcResponse->status(),$otcResponse->statusText());
-              // dd( $otcResponse['content'] );
-
-              $show_otc_dialog = true;
-
-              $otcObject = json_decode($otcResponse->content());
-
-              dump(__LINE__, $otcObject);
-
-
-          }
-
-      } elseif($payer && $ot_code) {
-          //Verify Otc here
-
-          $otcVerifyResult = $otcManager->verifyOtc($payer, $ot_code, $otcTypeName);
-
-          $otcObject = json_decode(json_encode($otcVerifyResult));
-
-          dump(__LINE__, $otcVerifyResult);
-
-
-
-          switch ($otcVerifyResult['status']) {
-              case ResponseUtils::MSG_STATUS_OK:
-                  dump(__LINE__, $otcVerifyResult);
-                  $show_otc_dialog = false;
-                  $subscriptions =  Subscription::where('payer', $request->payer)->paginate();
-
-                  //   return ResponseUtils::ok(['token' => $otcVerifyResult['data']], "Verification Success.", $otcVerifyResult['status']);
-                  break;
-
-              case ResponseUtils::MSG_STATUS_OTC_REJECTED:
-                  dump(__LINE__, $otcVerifyResult);
-                  $show_otc_dialog = true;
-                  //   return ResponseUtils::ok($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
-                  break;
-
-              case ResponseUtils::MSG_STATUS_FAILED:
-                  dump(__LINE__, $otcVerifyResult);
-                  $show_otc_dialog = true;
-                  //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
-                  break;
-
-              default:
-                  dump(__LINE__, $otcVerifyResult);
-                  $show_otc_dialog = true;
-                  //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status'], );
-                  break;
-          }
-      } else {
-      }
-
-
-      return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', "message", 'show_otc_dialog', "otcObject", "ot_code"));
-  }
 
     /**
    * Show the form for editing the specified resource.

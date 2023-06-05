@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\MySubscriptionController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubscriptionPaymentController;
 
@@ -20,8 +21,8 @@ Route::post('subscriptions', [SubscriptionController::class,'store'])->name('sub
 // ->name('subscriptions.show.my-payments');
 
 
-Route::get('subscriptions/my-subscriptions', [SubscriptionController::class,'showMySubscriptions'])
-->name('subscriptions.show.my-subscriptions');
+Route::get('my-subscriptions', [MySubscriptionController::class,'index'])
+->name('my-subscriptions.index');
 
 
 Route::get('subscriptions/finish', [SubscriptionController::class,'finish'])->name('subscriptions.finish');

@@ -13,9 +13,7 @@
     @foreach ($otcs as $item)
         <div class="row">
             <div class="col-sm-2">
-
-                <br> {{ $item->email }}
-                <br> {{ $item->mobile }}
+                {{ $item->username }}
                 <br>
                 {{ $item->otcType->name }}
             </div>
