@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('user_nicename',50)->default('');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('mobile', 25)->unique()->nullable();
+            $table->timestamp('mobile_verified_at')->nullable();
             $table->string('user_url',100)->default('');
             $table->timestamp('user_registered')->useCurrent = true;
             $table->string('user_activation_key')->default('');

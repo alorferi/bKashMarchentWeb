@@ -14,6 +14,17 @@ class OtcTypesTableSeeder extends Seeder
      */
     public function run()
     {
+
+        OtcType::create(
+            [
+                'name' => "SHOW_MY_SUBSCRIPTIONS",
+                'sms_template' => "Use # for two factor authentication to registration on Alor Feri.",
+                'email_subject_template' => "Use OTC for two factor authentication on Alor Feri.",
+                'email_body_template' => "<p>Use <b>#</b> for two factor authentication on Alor Feri.</p>"
+            ]
+
+        );
+
         OtcType::create(
             [
                 'name' => "REGISTER_USER",

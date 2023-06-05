@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Business\BkashSubscriptionManager;
+use App\Business\OtcManager;
 use App\Models\ActivityLog;
 use App\Models\PaymentAmount;
 use App\Models\PaymentFrequency;
@@ -10,6 +11,7 @@ use App\Models\DonationSector;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionRequest;
+use App\Utils\ResponseUtils;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Session;
@@ -25,6 +27,7 @@ class SubscriptionController extends Controller
     {
 
         if(!$request->has("source")) {
+
             $request= $request->merge(["source"=>"local"]);
         }
 
@@ -35,6 +38,7 @@ class SubscriptionController extends Controller
             $subscriptions = Subscription::paginate();
 
             return view('Subscription.index_local', compact('subscriptions', "source"));
+
         } else {
 
 
@@ -109,12 +113,12 @@ class SubscriptionController extends Controller
         Session::put("expirationTime", new Carbon($responseObject->expirationTime));
 
         try {
-            $subscriptionRequest = SubscriptionRequest::create(
+            SubscriptionRequest::create(
                 [
                    'id'=>$responseObject->subscriptionRequestId,
                    'name'=>$request->name,
                    'email'=>$request->email,
-                   'donation_sector_id'=>$request->donation_sector_id,
+                   'donationSectorId'=>$request->donation_sector_id,
                    ]
             );
 
@@ -173,31 +177,81 @@ class SubscriptionController extends Controller
       $payer =  $request->payer;
       $ot_code =  $request->ot_code;
 
+      $show_otc_dialog = false;
+
+      $otcObject = null;
+      $otcTypeName = "SHOW_MY_SUBSCRIPTIONS";
+      $subscriptions = null;
+      $message = null;
+      $otcManager = new OtcManager();
       if($payer && !$ot_code) {
 
           $cnt = Subscription::where('payer', $request->payer)->count();
 
           if($cnt==0) {
-
-              $subscriptions = null;
-
-              return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', 'ot_code', ))
-              ->with("message", "You have no subscription");
+              $message = "You have no subscription";
           } else {
-              //Generae OTP
+
+              //Generate OTP
+              $otcResponse = $otcManager->generateOtc($payer, $otcTypeName);
+
+              // $responseContent = $otcResponse->getContents();
+              // $responseContent = json_decode($responseContent, $responseContent);
+
+              // dd( json_decode($otcResponse->content()) ,$otcResponse->status(),$otcResponse->statusText());
+              // dd( $otcResponse['content'] );
+
+              $show_otc_dialog = true;
+
+              $otcObject = json_decode($otcResponse->content());
+
+              dump(__LINE__,$otcObject);
 
 
           }
 
       } elseif($payer && $ot_code) {
-          $subscriptions = null;
           //Verify Otc here
+
+          $otcVerifyResult = $otcManager->verifyOtc($payer, $ot_code, $otcTypeName);
+
+          $otcObject = json_decode(json_encode($otcVerifyResult));
+
+          dump(__LINE__,$otcVerifyResult );
+
+        //   $otcObject = json_decode($otcVerifyResult->content());
+
+        //   dd($otcVerifyResult);
+
+          switch ($otcVerifyResult['status']) {
+              case ResponseUtils::MSG_STATUS_OK:
+                dump(__LINE__,$otcVerifyResult );
+                //   return ResponseUtils::ok(['token' => $otcVerifyResult['data']], "Verification Success.", $otcVerifyResult['status']);
+                  break;
+
+              case ResponseUtils::MSG_STATUS_OTC_REJECTED:
+                dump(__LINE__,$otcVerifyResult );
+                $show_otc_dialog = true;
+                //   return ResponseUtils::ok($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
+                  break;
+
+              case ResponseUtils::MSG_STATUS_FAILED:
+                dump(__LINE__,$otcVerifyResult );
+                $show_otc_dialog = true;
+                //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
+                  break;
+
+              default:
+              dump(__LINE__,$otcVerifyResult );
+              $show_otc_dialog = true;
+                //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status'], );
+                  break;
+          }
       } else {
-          $subscriptions = null;
       }
 
 
-      return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', 'ot_code'));
+      return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', "message", 'show_otc_dialog', "otcObject", "ot_code"));
   }
 
     /**
@@ -241,20 +295,20 @@ class SubscriptionController extends Controller
            ]);
 
 
-           $bKashSubscriptionMgr = new BkashSubscriptionManager();
+            $bKashSubscriptionMgr = new BkashSubscriptionManager();
 
-           $subscriptionObject = $bKashSubscriptionMgr->fetchBySubscriptionRequestId($subscriptionRequest->id, true);
+            $subscriptionObject = $bKashSubscriptionMgr->fetchBySubscriptionRequestId($subscriptionRequest->id, true);
 
-           if($subscriptionObject) {
+            if($subscriptionObject) {
 
-               try {
-                   Subscription::create($subscriptionObject);
-               } catch(Exception $e) {
-                   ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
-               }
+                try {
+                    Subscription::create($subscriptionObject);
+                } catch(Exception $e) {
+                    ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+                }
 
 
-           }
+            }
 
         }
 

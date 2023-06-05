@@ -27,13 +27,10 @@ class CreateOtcsTable extends Migration
 
         Schema::create('otcs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('username', 100)->unique()->nullable();
             $table->string('mobile', 25)->nullable();
             $table->string('email', 100)->nullable();
             $table->string('ot_code', 10)->nullable();
             $table->uuid('for_whom')->nullable();
-
-            $table->foreign('for_whom')->references('id')->on('users')->onUpdate('cascade');
 
             $table->uuid('otc_type_id')->nullable();
             $table->foreign('otc_type_id')->references('id')->on('otc_types')->onUpdate('cascade');

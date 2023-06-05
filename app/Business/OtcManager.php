@@ -7,6 +7,7 @@ use App\Models\Otc;
 use App\Models\OtcType;
 use App\Models\User;
 use App\Utils\MobileNumberUtils;
+use App\Utils\OtcEnv;
 use App\Utils\ResponseUtils;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,9 @@ class OtcManager
 
     public function __construct()
     {
-        $username = config('app.ssl_wireless_username');
-        $password = config('app.ssl_wireless_password');
-        $sid = config('app.ssl_wireless_sid_bn');
+        $username = OtcEnv::sslWirelessUsername();
+        $password = OtcEnv::sslWirelessPassword();
+        $sid = OtcEnv::sslWirelessSidBn();
 
         $this->smsManager = new SmsManager($username, $password, $sid, 'bn');
     }
@@ -31,15 +32,14 @@ class OtcManager
 
         $otc = Otc::where(function ($query) use ($username) {
             $query->where('mobile', $username)
-            ->orWhere('email', $username)
-            ->orWhere('username', $username);
+            ->orWhere('email', $username);
         })
             ->where('expired_at', '>', Carbon::now())
             ->whereNull('verified_at')
             ->orderBy("created_at", "DESC")
             ->first();
 
-        $otc_expired_after_in_minutes = config('app.otc_expired_after_in_minutes'); // in minutes
+        $otc_expired_after_in_minutes = OtcEnv::otcExpiredAfterInMinutes();
 
         $expireObject = ['otc_expired_after_in_seconds' => $otc_expired_after_in_minutes * 60];
 
@@ -56,10 +56,8 @@ class OtcManager
 
             if (MobileNumberUtils::isValidMobileNumber($username, "BD")) {
                 $otc->mobile = $username;
-                $otc->username = $username;
             } else {
                 $otc->email = $username;
-                $otc->username = $username;
             }
 
             $otc->ot_code = mt_rand(100000, 999999);
@@ -120,7 +118,7 @@ class OtcManager
             ->orderBy("created_at", "DESC")
             ->first();
 
-        $otc_expired_after_in_minutes = config('app.otc_expired_after_in_minutes'); // in minutes
+        $otc_expired_after_in_minutes = OtcEnv::otcExpiredAfterInMinutes();
 
         $expireObject = ['otc_expired_after_in_seconds' => $otc_expired_after_in_minutes * 60, 'mobile' => $mobile];
 
@@ -178,7 +176,7 @@ class OtcManager
             ->orderBy("created_at", "DESC")
             ->first();
 
-        $otc_expired_after_in_minutes = config('app.otc_expired_after_in_minutes'); // in minutes
+        $otc_expired_after_in_minutes = OtcEnv::otcExpiredAfterInMinutes();
 
         $expireObject = ['otc_expired_after_in_seconds' => $otc_expired_after_in_minutes * 60, 'email' => $email];
 
@@ -230,8 +228,7 @@ class OtcManager
 
         $otc = Otc::where(function ($query) use ($username) {
                 $query->where('mobile', $username)
-                ->orWhere('email', $username)
-                ->orWhere('username', $username);
+                ->orWhere('email', $username);
             }) ->whereHas("otcType", function ($query) use ($otcTypeName) {
                 $query->where("otc_types.name", $otcTypeName);
             })
@@ -263,7 +260,6 @@ class OtcManager
             // Generate token if user exists else return true
             $user = User::where('mobile', $username)
             ->orWhere('email', $username)
-            ->orWhere('username', $username)
             ->first();
 
             if ($user) {
@@ -406,7 +402,7 @@ class OtcManager
 
     public function sendSms(Otc $otc)
     {
-        $disabled_otc_sms = config('app.disabled_otc_sms');
+        $disabled_otc_sms = OtcEnv::disabledOtcSms();
 
         if ($disabled_otc_sms) {
             return true;

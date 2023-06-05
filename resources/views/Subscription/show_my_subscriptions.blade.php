@@ -16,11 +16,9 @@
 
 
 
-        <p class="">
-            @if (!empty($message))
-                <div class=""> {{ $message }}</div>
-            @endif
-        </p>
+        @if (!empty($message))
+            <div class=""> {{ $message }}</div>
+        @endif
 
 
 
@@ -29,14 +27,27 @@
             @csrf
 
             <!-- Payer -->
-            <div class="flex mt-4">
+            <div class="mt-4">
 
                 <x-input class="w-full mt-1" type="tel" name="payer" value="{{ $payer }}" required
                     placeholder="bKash Wellet Number" />
 
 
-                <x-input class="w-full mt-1" type="number" name="ot_code" value="{{ $ot_code }}"
-                    placeholder="Type One time code here" />
+                {{-- @if ($show_otc_dialog) --}}
+
+                @if ($otcObject)
+                    @if ($otcObject->status == 'OTC_GENERATED')
+                        <div class=""> {{ $otcObject->message }}</div>
+                    @elseif($otcObject->status == 'OTC_REJECTED')
+                        <div class=""> {{ $otcObject->message }}</div>
+                    @endif
+
+                    <x-input class="w-full mt-1" type="number" name="ot_code" value="{{ $ot_code }}"
+                        placeholder="Type One time code here" />
+                @endif
+
+
+
 
                 <x-button class="ml-4">
                     {{ __('Submit') }}
