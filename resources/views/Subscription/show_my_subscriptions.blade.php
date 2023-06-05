@@ -42,8 +42,11 @@
                         <div class=""> {{ $otcObject->message }}</div>
                     @endif
 
-                    <x-input class="w-full mt-1" type="number" name="ot_code" value="{{ $ot_code }}"
-                        placeholder="Type One time code here" />
+                    @if ($show_otc_dialog)
+                        <x-input class="w-full mt-1" type="number" name="ot_code" value="{{ $ot_code }}"
+                            placeholder="Type One time code here" />
+                    @endif
+
                 @endif
 
 

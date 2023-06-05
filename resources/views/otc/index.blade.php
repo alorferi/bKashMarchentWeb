@@ -14,24 +14,8 @@
         <div class="row">
             <div class="col-sm-2">
 
-                @php
-                    $user = $item->user;
-                @endphp
-
-                @if ($user && $user->photo_url)
-                    <img class="rounded-circle" src="{{ asset("$user->photo_url") }}" width="64" height="64" />
-                @else
-                    Not Available
-                @endif
-                <br>
-
-                @if ($user)
-                    <a href="{{ route('users.show', $user->id) }}"> {{ $item->user->first_name . ' ' . $item->user->surname }}
-                    </a>
-                @endif
-
-                <br> {{ $item->username }}
-
+                <br> {{ $item->email }}
+                <br> {{ $item->mobile }}
                 <br>
                 {{ $item->otcType->name }}
             </div>

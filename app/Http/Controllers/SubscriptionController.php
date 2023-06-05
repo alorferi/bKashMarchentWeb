@@ -205,7 +205,7 @@ class SubscriptionController extends Controller
 
               $otcObject = json_decode($otcResponse->content());
 
-              dump(__LINE__,$otcObject);
+              dump(__LINE__, $otcObject);
 
 
           }
@@ -217,34 +217,35 @@ class SubscriptionController extends Controller
 
           $otcObject = json_decode(json_encode($otcVerifyResult));
 
-          dump(__LINE__,$otcVerifyResult );
+          dump(__LINE__, $otcVerifyResult);
 
-        //   $otcObject = json_decode($otcVerifyResult->content());
 
-        //   dd($otcVerifyResult);
 
           switch ($otcVerifyResult['status']) {
               case ResponseUtils::MSG_STATUS_OK:
-                dump(__LINE__,$otcVerifyResult );
-                //   return ResponseUtils::ok(['token' => $otcVerifyResult['data']], "Verification Success.", $otcVerifyResult['status']);
+                  dump(__LINE__, $otcVerifyResult);
+                  $show_otc_dialog = false;
+                  $subscriptions =  Subscription::where('payer', $request->payer)->paginate();
+
+                  //   return ResponseUtils::ok(['token' => $otcVerifyResult['data']], "Verification Success.", $otcVerifyResult['status']);
                   break;
 
               case ResponseUtils::MSG_STATUS_OTC_REJECTED:
-                dump(__LINE__,$otcVerifyResult );
-                $show_otc_dialog = true;
-                //   return ResponseUtils::ok($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
+                  dump(__LINE__, $otcVerifyResult);
+                  $show_otc_dialog = true;
+                  //   return ResponseUtils::ok($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
                   break;
 
               case ResponseUtils::MSG_STATUS_FAILED:
-                dump(__LINE__,$otcVerifyResult );
-                $show_otc_dialog = true;
-                //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
+                  dump(__LINE__, $otcVerifyResult);
+                  $show_otc_dialog = true;
+                  //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
                   break;
 
               default:
-              dump(__LINE__,$otcVerifyResult );
-              $show_otc_dialog = true;
-                //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status'], );
+                  dump(__LINE__, $otcVerifyResult);
+                  $show_otc_dialog = true;
+                  //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status'], );
                   break;
           }
       } else {

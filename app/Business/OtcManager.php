@@ -45,10 +45,8 @@ class OtcManager
 
         if (MobileNumberUtils::isValidMobileNumber($username, "BD")) {
             $expireObject = array_merge($expireObject, ['mobile' => $username]);
-            $expireObject = array_merge($expireObject, ['username' => $username]);
         } else {
             $expireObject = array_merge($expireObject, ['email' => $username]);
-            $expireObject = array_merge($expireObject, ['username' => $username]);
         }
 
         if ($otc == null) {
@@ -227,14 +225,15 @@ class OtcManager
         }
 
         $otc = Otc::where(function ($query) use ($username) {
-                $query->where('mobile', $username)
-                ->orWhere('email', $username);
-            }) ->whereHas("otcType", function ($query) use ($otcTypeName) {
-                $query->where("otc_types.name", $otcTypeName);
-            })
+            $query->where('mobile', $username)
+            ->orWhere('email', $username);
+        }) ->whereHas("otcType", function ($query) use ($otcTypeName) {
+            $query->where("otc_types.name", $otcTypeName);
+        })
             ->whereNull('verified_at')
             ->orderBy('created_at', "DESC")
             ->first();
+
 
         if ($otc) {
             if ($otc->expired_at->lt(Carbon::now())) {
@@ -257,35 +256,23 @@ class OtcManager
                 return ResponseUtils::result($expireObject, "Wrong OTC, Please type correct OTC", ResponseUtils::MSG_STATUS_OTC_REJECTED);
             }
 
-            // Generate token if user exists else return true
-            $user = User::where('mobile', $username)
-            ->orWhere('email', $username)
-            ->first();
+            switch ($otcTypeName) {
 
-            if ($user) {
-                $otc->verified_at = Carbon::now();
-                $otc->save();
+                case OtcType::K_SHOW_MY_SUBSCRIPTIONS:
 
-                if (MobileNumberUtils::isValidMobileNumber($username, "BD")) {
-                    $user->mobile_verified_at = Carbon::now();
-                } else {
-                    $user->email_verified_at = Carbon::now();
-                }
-                $user->save();
+                case OtcType::K_REGISTER_USER:
+                    $otc->verified_at = Carbon::now();
+                    $otc->save();
+                    return ResponseUtils::result(null, "OTC Verified", ResponseUtils::MSG_STATUS_OK);
+                    break;
 
-                $token = $user->createToken('verified-otc', [$otcTypeName])->accessToken;
-
-                return ResponseUtils::result($token, "OTC Verified & Token generated", ResponseUtils::MSG_STATUS_OK);
-            } elseif ($otcTypeName == OtcType::K_REGISTER_USER) {
-                $otc->verified_at = Carbon::now();
-                $otc->save();
-                return ResponseUtils::result(null, "OTC Verified", ResponseUtils::MSG_STATUS_OK);
-            } else {
-                return ResponseUtils::result(null, "Invalid Attempt", ResponseUtils::MSG_STATUS_FAILED, );
+                default:
+                    return ResponseUtils::result(null, "Invalid Attempt", ResponseUtils::MSG_STATUS_FAILED, );
+                    break;
             }
-        } else {
-            return ResponseUtils::result(null, "Invalid Attempt", ResponseUtils::MSG_STATUS_FAILED);
+
         }
+
     }
 
     public function verifyOtcForMobile($mobile, $otCode, $otcTypeName)
