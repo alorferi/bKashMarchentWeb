@@ -4,17 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Business\BkashSubscriptionManager;
 use App\Business\OtcManager;
-use App\Models\ActivityLog;
-use App\Models\PaymentAmount;
-use App\Models\PaymentFrequency;
-use App\Models\DonationSector;
 use App\Models\Subscription;
-use App\Models\SubscriptionRequest;
 use App\Utils\ResponseUtils;
-use Carbon\Carbon;
-use Exception;
 use Illuminate\Support\Facades\Session;
 
 class MySubscriptionController extends Controller
@@ -68,7 +60,7 @@ class MySubscriptionController extends Controller
 
                   $otcObject = json_decode($otcResponse->content());
 
-                  dump(__LINE__, $otcObject);
+                //   dump(__LINE__, $otcObject);
 
 
               }
@@ -80,35 +72,37 @@ class MySubscriptionController extends Controller
 
               $otcObject = json_decode(json_encode($otcVerifyResult));
 
-              dump(__LINE__, $otcVerifyResult);
+            //   dump(__LINE__, $otcVerifyResult);
 
 
 
               switch ($otcVerifyResult['status']) {
                   case ResponseUtils::MSG_STATUS_OK:
-                      dump(__LINE__, $otcVerifyResult);
+                    //   dump(__LINE__, $otcVerifyResult);
                       $show_otc_dialog = false;
 
 
                       Session::put('payer', $payer);
 
+                      $subscriptions =  Subscription::where('payer', $payer)->paginate();
+
                       //   return ResponseUtils::ok(['token' => $otcVerifyResult['data']], "Verification Success.", $otcVerifyResult['status']);
                       break;
 
                   case ResponseUtils::MSG_STATUS_OTC_REJECTED:
-                      dump(__LINE__, $otcVerifyResult);
+                    //   dump(__LINE__, $otcVerifyResult);
                       $show_otc_dialog = true;
                       //   return ResponseUtils::ok($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
                       break;
 
                   case ResponseUtils::MSG_STATUS_FAILED:
-                      dump(__LINE__, $otcVerifyResult);
+                    //   dump(__LINE__, $otcVerifyResult);
                       $show_otc_dialog = true;
                       //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
                       break;
 
                   default:
-                      dump(__LINE__, $otcVerifyResult);
+                    //   dump(__LINE__, $otcVerifyResult);
                       $show_otc_dialog = true;
                       //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status'], );
                       break;
@@ -190,5 +184,14 @@ class MySubscriptionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function logout()
+    {
+        Session::forget('payer');
+
+        return redirect()->to(route("my-subscriptions.index"));
+
     }
 }

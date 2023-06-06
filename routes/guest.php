@@ -24,6 +24,9 @@ Route::post('subscriptions', [SubscriptionController::class,'store'])->name('sub
 Route::get('my-subscriptions', [MySubscriptionController::class,'index'])
 ->name('my-subscriptions.index');
 
+Route::post('my-subscriptions/logout', [MySubscriptionController::class,'logout'])
+->name('my-subscriptions.logout');
+
 
 Route::get('subscriptions/finish', [SubscriptionController::class,'finish'])->name('subscriptions.finish');
 
