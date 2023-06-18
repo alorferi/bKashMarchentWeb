@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
     ])
     ->middleware(['auth']);
 
+    // Route::get('subscriptions/{subscription}/fetch', [SubscriptionController::class,'fetch'])->name("subscriptions.fetch");
+
     Route::resource('payments', PaymentController::class)
     ->except([
        // 'index', 'show'

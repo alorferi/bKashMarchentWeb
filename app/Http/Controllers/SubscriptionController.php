@@ -138,37 +138,33 @@ class SubscriptionController extends Controller
 
         $subscription = Subscription::with("payments")->find($id);
 
-        if($subscription==null) {
+        try {
 
-            try {
+            $bKashSubscriptionMgr = new BkashSubscriptionManager();
 
-                $bKashSubscriptionMgr = new BkashSubscriptionManager();
+            $responseObject = $bKashSubscriptionMgr->fetchBySubscriptionId($id, true);
 
-                $responseObject = $bKashSubscriptionMgr->fetchBySubscriptionId($id, true);
+            if($responseObject) {
 
-                if($responseObject) {
-
-                    if($responseObject['extraParams']) {
-                        $responseObject['extraParams'] = json_encode($responseObject['extraParams']);
-                    }
-
-                    $subscription =  Subscription::create($responseObject);
+                if($responseObject['extraParams']) {
+                    $responseObject['extraParams'] = json_encode($responseObject['extraParams']);
                 }
 
-            } catch(Exception $e) {
-                //  dd($e->getMessage());
-                ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+                if($subscription) {
+                    $subscription->update($responseObject);
+                } else {
+                    $subscription = Subscription::create($responseObject);
+                }
+
             }
 
-
-
-
+        } catch(Exception $e) {
+            //  dd($e->getMessage());
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
         }
 
         return view('Subscription.show', compact('subscription'));
     }
-
-
 
     /**
    * Show the form for editing the specified resource.

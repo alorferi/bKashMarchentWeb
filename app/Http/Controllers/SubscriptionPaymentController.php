@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Business\BKashPaymentManager;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 class SubscriptionPaymentController extends Controller
@@ -14,12 +15,15 @@ class SubscriptionPaymentController extends Controller
      */
     public function index($subscriptionId)
     {
+
+        $subscription = Subscription::find($subscriptionId);
+
         $manager = new BKashPaymentManager();
 
         $payments = $manager->fetchPaymentListBySubscriptionId($subscriptionId);
 
         // dd($responseObject);
-        return view("SubscriptionPayment.index", compact('payments'));
+        return view("SubscriptionPayment.index", compact("subscription",'payments'));
     }
 
     public function showMyPaymentsBySubscriptionId($subscriptionId)

@@ -80,10 +80,19 @@
 
                 <x-slot name="footer">
 
-                    <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Show</a>
-                    |
-                    <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a>
+                    {{-- <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Show</a> --}}
 
+                    @if (\App\Models\Subscription::find($subscription->id))
+                        <span class="text-green-600 "> ✔️ </span>
+                    @else
+                        <span class="text-danger"> ❌ </span>
+                    @endif
+
+                    |
+                    <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Fetch</a>
+
+                    {{-- |
+                    <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a> --}}
                 </x-slot>
 
             </x-list-item-card>
