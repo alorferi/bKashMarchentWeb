@@ -6,7 +6,7 @@
 
 
         <x-slot name="title">
-            <h2 class="">Become a Regular Donor</h2>
+            <h2 class=""></h2>
             <p class=""></p>
         </x-slot>
 
