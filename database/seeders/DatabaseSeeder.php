@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentFrequencySeeder::class);
         $this->call(MojarSchoolSeeder::class);
 
-        Subscription::factory(5)->create();
+        // Subscription::factory(5)->create();
         // Payment::factory(5)->create();
 
         // Subscription::factory()->create(['payer'=>"01717983473"]);

@@ -76,8 +76,8 @@
             <div>
                 <x-label for="name" :value="__('Name')" />
 
-                <x-input  class="block w-full mt-1" type="text" name="name" :value="old('name')" required
-                    value="Md Babul Mirdha" />
+                <x-input class="block w-full mt-1" type="text" name="name" :value="old('name')" required
+                    placeholder="Type your Name here" />
             </div>
 
 
@@ -85,18 +85,18 @@
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input  class="block w-full mt-1" type="email" name="email" :value="old('email')"
-                    value="babul.mirdha@gmail.com" required />
+                <x-input class="block w-full mt-1" type="email" name="email" :value="old('email')"
+                placeholder="Type your E-Mail here"
+                required
+                     />
             </div>
 
-            <div class="" aria-atomic="true" aria-live="polite" data-js-reload="field_1_9"><label class=""
+            <div class="" aria-atomic="true" aria-live="polite" ><label class=""
                     for="">Amount</label>
                 <div class="">
 
-                    {{-- <input type="text" readonly value="৳ 0.00" class="selected_amount"> --}}
-
-                    <x-input  class="block w-full mt-1 selected_amount" type="text" readonly disabled name="email" :value="old('email')"
-                    value="৳ 0.00" required />
+                    <x-input class="block w-full mt-1 selected_amount" type="text" readonly disabled
+                         value="৳ 0.00" required />
 
                 </div>
             </div>

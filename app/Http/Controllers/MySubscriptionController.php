@@ -113,10 +113,6 @@ class MySubscriptionController extends Controller
       }
 
 
-
-
-
-
       return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', "message", 'show_otc_dialog', "otcObject", "ot_code"));
   }
 

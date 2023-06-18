@@ -42,8 +42,7 @@
         <!-- Page Heading -->
         <header class="bg-red-400 shadow">
             <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
-                {{-- {{ $header }} --}}
-                <h1>{{ $blogname->option_value }} - {{ $blogdescription->option_value }} </h1>
+                <h1 class="text-white"> {{env("APP_NAME")}} </h1>
             </div>
         </header>
 
