@@ -26,11 +26,37 @@
 
             @csrf
 
-            <!-- Payer -->
+
+
+
+
+
             <div class="mt-4">
 
-                <x-input class="w-full mt-1" type="tel" name="payer" value="{{ $payer }}" required
-                    placeholder="bKash Wellet Number" />
+
+                @if ($show_otc_dialog)
+                    <x-input class="mt-1 w-96" type="tel" name="payer" value="{{ $payer }}" readonly />
+
+                    <x-input class="w-full mt-1" type="number" name="ot_code" value="{{ $ot_code }}"
+                        placeholder="Type One time code here" />
+
+                    <x-button class="ml-4">
+                        {{ __('Submit') }}
+                    </x-button>
+                @else
+                    <div class="flex justify-center">
+
+                        <x-input class="mt-1 w-96" type="tel" name="payer" value="{{ $payer }}" required
+                            placeholder="Type bKash Wellet Number here" />
+
+                        <x-button class="ml-4">
+                            {{ __('Submit') }}
+                        </x-button>
+                    </div>
+                @endif
+
+
+
 
 
                 {{-- @if ($show_otc_dialog) --}}
@@ -42,19 +68,12 @@
                         <div class=""> {{ $otcObject->message }}</div>
                     @endif
 
-                    @if ($show_otc_dialog)
-                        <x-input class="w-full mt-1" type="number" name="ot_code" value="{{ $ot_code }}"
-                            placeholder="Type One time code here" />
-                    @endif
-
                 @endif
 
 
 
 
-                <x-button class="ml-4">
-                    {{ __('Submit') }}
-                </x-button>
+
 
             </div>
 

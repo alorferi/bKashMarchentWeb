@@ -18,109 +18,111 @@ class MySubscriptionController extends Controller
      */
 
     public function index(Request $request)
-  {
+    {
 
-      $message = null;
-      $show_otc_dialog = false;
-      $ot_code = null;
+        $message = null;
+        $show_otc_dialog = false;
+        $ot_code = null;
 
-      $otcObject = null;
-      $subscriptions = null;
+        $otcObject = null;
+        $subscriptions = null;
 
-      $payer = Session::get('payer');
+        $payer = Session::get('payer');
 
-      if($payer) {
-          $subscriptions =  Subscription::where('payer', $payer)->paginate();
-      } else {
+        if($payer) {
+            $subscriptions =  Subscription::where('payer', $payer)->paginate();
+        } else {
 
-          $payer =  $request->payer;
-          $ot_code =  $request->ot_code;
+            $payer =  $request->payer;
+            $ot_code =  $request->ot_code;
 
-          $otcTypeName = "SHOW_MY_SUBSCRIPTIONS";
+            $otcTypeName = "SHOW_MY_SUBSCRIPTIONS";
 
-          $otcManager = new OtcManager();
-          if($payer && !$ot_code) {
+            $otcManager = new OtcManager();
+            if($payer && !$ot_code) {
 
-              $cnt = Subscription::where('payer', $request->payer)->count();
+                $cnt = Subscription::where('payer', $request->payer)->count();
 
-              if($cnt==0) {
-                  $message = "You have no subscription";
-              } else {
+                if($cnt==0) {
+                    $message = "You have no subscription";
+                } else {
 
-                  //Generate OTP
-                  $otcResponse = $otcManager->generateOtc($payer, $otcTypeName);
+                    //Generate OTP
+                    $otcResponse = $otcManager->generateOtc($payer, $otcTypeName);
 
-                  // $responseContent = $otcResponse->getContents();
-                  // $responseContent = json_decode($responseContent, $responseContent);
+                    // $responseContent = $otcResponse->getContents();
+                    // $responseContent = json_decode($responseContent, $responseContent);
 
-                  // dd( json_decode($otcResponse->content()) ,$otcResponse->status(),$otcResponse->statusText());
-                  // dd( $otcResponse['content'] );
+                    // dd( json_decode($otcResponse->content()) ,$otcResponse->status(),$otcResponse->statusText());
+                    // dd( $otcResponse['content'] );
 
-                  $show_otc_dialog = true;
+                    $show_otc_dialog = true;
 
-                  $otcObject = json_decode($otcResponse->content());
+                    $otcObject = json_decode($otcResponse->content());
 
-                //   dump(__LINE__, $otcObject);
-
-
-              }
-
-          } elseif($payer && $ot_code) {
-              //Verify Otc here
-
-              $otcVerifyResult = $otcManager->verifyOtc($payer, $ot_code, $otcTypeName);
-
-              $otcObject = json_decode(json_encode($otcVerifyResult));
-
-            //   dump(__LINE__, $otcVerifyResult);
+                    dump(__LINE__, $otcObject);
 
 
+                }
 
-              switch ($otcVerifyResult['status']) {
-                  case ResponseUtils::MSG_STATUS_OK:
-                    //   dump(__LINE__, $otcVerifyResult);
-                      $show_otc_dialog = false;
+            } elseif($payer && $ot_code) {
+                //Verify Otc here
 
+                $otcVerifyResult = $otcManager->verifyOtc($payer, $ot_code, $otcTypeName);
 
-                      Session::put('payer', $payer);
+                $otcObject = json_decode(json_encode($otcVerifyResult));
 
-                      $subscriptions =  Subscription::where('payer', $payer)->paginate();
-
-                      //   return ResponseUtils::ok(['token' => $otcVerifyResult['data']], "Verification Success.", $otcVerifyResult['status']);
-                      break;
-
-                  case ResponseUtils::MSG_STATUS_OTC_REJECTED:
-                    //   dump(__LINE__, $otcVerifyResult);
-                      $show_otc_dialog = true;
-                      //   return ResponseUtils::ok($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
-                      break;
-
-                  case ResponseUtils::MSG_STATUS_FAILED:
-                    //   dump(__LINE__, $otcVerifyResult);
-                      $show_otc_dialog = true;
-                      //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
-                      break;
-
-                  default:
-                    //   dump(__LINE__, $otcVerifyResult);
-                      $show_otc_dialog = true;
-                      //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status'], );
-                      break;
-              }
-          }
+                //   dump(__LINE__, $otcVerifyResult);
 
 
-      }
+
+                switch ($otcVerifyResult['status']) {
+                    case ResponseUtils::MSG_STATUS_OK:
+                        //   dump(__LINE__, $otcVerifyResult);
+                        $show_otc_dialog = false;
 
 
-      return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', "message", 'show_otc_dialog', "otcObject", "ot_code"));
-  }
+                        Session::put('payer', $payer);
+
+                        $subscriptions =  Subscription::where('payer', $payer)->paginate();
+
+                        //   return ResponseUtils::ok(['token' => $otcVerifyResult['data']], "Verification Success.", $otcVerifyResult['status']);
+                        break;
+
+                    case ResponseUtils::MSG_STATUS_OTC_REJECTED:
+                        //   dump(__LINE__, $otcVerifyResult);
+                        $show_otc_dialog = true;
+                        //   return ResponseUtils::ok($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
+                        break;
+
+                    case ResponseUtils::MSG_STATUS_FAILED:
+                        //   dump(__LINE__, $otcVerifyResult);
+                        $show_otc_dialog = true;
+                        //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status']);
+                        break;
+
+                    default:
+                        //   dump(__LINE__, $otcVerifyResult);
+                        $show_otc_dialog = true;
+                        //   return ResponseUtils::unProcessableEntity($otcVerifyResult['data'], $otcVerifyResult['message'], $otcVerifyResult['status'], );
+                        break;
+                }
+            }
+
+
+        }
+
+
+        // dump(__LINE__, $otcObject);
+
+        return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', "message", 'show_otc_dialog', "otcObject", "ot_code"));
+    }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+       * Show the form for creating a new resource.
+       *
+       * @return \Illuminate\Http\Response
+       */
     public function create()
     {
         //
