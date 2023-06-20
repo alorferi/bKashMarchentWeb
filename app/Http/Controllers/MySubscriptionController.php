@@ -60,7 +60,7 @@ class MySubscriptionController extends Controller
 
                     $otcObject = json_decode($otcResponse->content());
 
-                    dump(__LINE__, $otcObject);
+                    // dump(__LINE__, $otcObject);
 
 
                 }
