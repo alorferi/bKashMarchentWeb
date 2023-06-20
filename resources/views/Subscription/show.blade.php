@@ -101,7 +101,7 @@
 
         <x-slot name="footer">
 
-            <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a>
+            <x-a-success href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</x-a-success>
 
         </x-slot>
 

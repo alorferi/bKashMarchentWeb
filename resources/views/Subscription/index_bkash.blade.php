@@ -89,7 +89,7 @@
                     @endif
 
                     |
-                    <a href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Fetch</a>
+                    <x-a-primary href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Fetch</x-a-primary>
 
                     {{-- |
                     <a href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</a> --}}

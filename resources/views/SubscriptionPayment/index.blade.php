@@ -7,7 +7,7 @@
 
 
 
-    <a href="{{route("admin.subscriptions.index")}}"> &lt; Back </a>
+    <x-a-primary href="{{route("admin.subscriptions.index")}}"> &lt; Back </x-a-primary>
 
     @if ($subscription)
 

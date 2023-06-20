@@ -3,7 +3,7 @@
     <x-form-card>
 
         <x-slot name="title">
-            <h2 class="">Become a Regular Donor</h2>
+            <h2 class="text-lg text-bold">Become a Regular Donor</h2>
             <p class="">
                 @if (!empty($message))
                     <div class="alert alert-success"> {{ $message }}</div>
@@ -102,11 +102,12 @@
             </div>
 
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-center mt-4">
 
-                <x-button-dark class="ml-4">
+                <x-button-primary class="justify-center w-full">
                     {{ __('Submit') }}
-                </x-button>
+                </x-button-primary>
+
             </div>
         </form>
 

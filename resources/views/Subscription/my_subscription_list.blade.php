@@ -74,8 +74,8 @@
         </x-list-item-prop>
 
         <x-slot name="footer">
-            <a href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}">
-                Payments</a>
+            <x-a-primary href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}">
+                Payments</x-a-primary>
         </x-slot>
 
     </x-list-item-card>
