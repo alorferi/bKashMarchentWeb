@@ -104,7 +104,7 @@
 
             <div class="flex items-center justify-end mt-4">
 
-                <x-button class="ml-4">
+                <x-button-dark class="ml-4">
                     {{ __('Submit') }}
                 </x-button>
             </div>

@@ -26,7 +26,7 @@
 
                         {{ Form::close() }}
 
-                        {{-- <x-button class="ml-4">
+                        {{-- <x-button-dark class="ml-4">
                                 {{ __('Save') }}
                             </x-button> --}}
                     </div>

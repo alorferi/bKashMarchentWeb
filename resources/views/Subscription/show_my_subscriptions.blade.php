@@ -17,7 +17,7 @@
 
 
         @if (!empty($message))
-            <div class=""> {{ $message }}</div>
+            <div class="content-center justify-center w-full"> {{ $message }}</div>
         @endif
 
         @csrf
@@ -53,9 +53,9 @@
                         <x-input class="mt-3 w-96 " type="number" name="ot_code" value="{{ $ot_code }}"
                             placeholder="Type One time code here" />
 
-                        <x-button class="justify-center mt-3">
+                        <x-button-primary class="justify-center mt-3">
                             {{ __('Submit') }}
-                        </x-button>
+                        </x-button-primary>
 
                     </div>
 
@@ -87,9 +87,9 @@
                         <x-input class="mt-3 w-96" type="tel" name="payer" value="{{ $payer }}" required
                             placeholder="Type bKash Wellet Number here" />
 
-                        <x-button class="justify-center mt-3">
+                        <x-button-primary class="justify-center mt-3">
                             {{ __('Next') }}
-                        </x-button>
+                        </x-button-primary>
                     </div>
 
                 </form>
