@@ -24,7 +24,7 @@ Route::get('subscriptions/finish', [SubscriptionController::class,'finish'])->na
 Route::get('my-subscriptions/login', [MySubscriptionController::class,'login'])
 ->name('my-subscriptions.login');
 
-Route::group(['prefix' => 'donor',  'middleware' => ['auth.donor']], function () {
+Route::group(['middleware' => ['auth.donor']], function () {
 
     Route::get('my-subscriptions', [MySubscriptionController::class,'index'])->name('my-subscriptions.index');
 
