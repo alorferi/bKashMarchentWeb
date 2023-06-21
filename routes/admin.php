@@ -21,77 +21,66 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
 
     Route::get('/', function () {
         return view('dashboard');
-    })->middleware(['auth'])->name('dashboard');
+    })->name('dashboard');
 
     Route::resource('payment-cycles', PaymentFrequencyController::class)
     ->except([
        // 'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]);
 
     Route::resource('payment-amounts', PaymentAmountController::class)
     ->except([
        // 'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]);
 
     Route::resource('payment-sectors', DonationSectorController::class)
     ->except([
        // 'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]) ;
 
 
     Route::resource('subscriptions', SubscriptionController::class)
     ->except([
        // 'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]) ;
 
     // Route::get('subscriptions/{subscription}/fetch', [SubscriptionController::class,'fetch'])->name("subscriptions.fetch");
 
     Route::resource('payments', PaymentController::class)
     ->except([
        // 'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]) ;
 
     Route::resource('subscription-requests', SubscriptionRequestController::class)
     ->except([
       //  'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ])  ;
 
     Route::resource('users', UserController::class)
     ->except([
        // 'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]) ;
 
     Route::resource('terms', TermController::class)
     ->except([
        // 'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]) ;
 
     Route::resource('options', OptionController::class)
     ->except([
       //  'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]) ;
 
 
     Route::resource('roles', RoleController::class)
     ->except([
       //  'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]) ;
 
     Route::resource('permissions', PermissionController::class)
     ->except([
       //  'index', 'show'
-    ])
-    ->middleware(['auth']);
+    ]) ;
 
 
     Route::get('otcs', [OtcController::class,'index'])->name("otcs.index");
