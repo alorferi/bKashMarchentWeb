@@ -48,7 +48,7 @@
 
         <x-list-item-prop>
             <x-slot name="label">
-                ExpiryDate Date
+                Expiry Date
             </x-slot>
 
             {{ $subscription->expiryDate->format('d-m-Y') }}
@@ -74,8 +74,15 @@
         </x-list-item-prop>
 
         <x-slot name="footer">
+
+
             <x-a-primary href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}">
                 Payments</x-a-primary>
+
+                |
+                <x-a-danger href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}">
+                    Cancel</x-a-danger>
+
         </x-slot>
 
     </x-list-item-card>
