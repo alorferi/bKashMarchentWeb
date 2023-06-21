@@ -26,16 +26,6 @@ class SubscriptionPaymentController extends Controller
         return view("SubscriptionPayment.index", compact("subscription",'payments'));
     }
 
-    public function showMyPaymentsBySubscriptionId($subscriptionId)
-    {
-        $manager = new BKashPaymentManager();
-
-        $payments = $manager->fetchPaymentListBySubscriptionId($subscriptionId);
-
-        // dd($responseObject);
-        return view("SubscriptionPayment.show_by_payments", compact('payments'));
-    }
-
 
     /**
      * Show the form for creating a new resource.

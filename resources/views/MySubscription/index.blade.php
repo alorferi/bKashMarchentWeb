@@ -11,7 +11,7 @@
 
 
         <x-slot name="title">
-
+                <div class="py-2 text-xl font-bold text-center text-white bg-blue-600 rounded-sm">My Subscriptions</div>
         </x-slot>
 
 
@@ -102,7 +102,7 @@
 
 
         @if ($subscriptions)
-            @include('Subscription.my_subscription_list', ['subscriptions' => $subscriptions])
+            @include('MySubscription.my_subscription_list', ['subscriptions' => $subscriptions])
         @endif
 
     </x-list-card>

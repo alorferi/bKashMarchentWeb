@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Business\BkashPaymentManager;
 use Illuminate\Http\Request;
 
 use App\Business\OtcManager;
@@ -115,7 +116,7 @@ class MySubscriptionController extends Controller
 
         // dump(__LINE__, $otcObject);
 
-        return view('Subscription.show_my_subscriptions', compact('subscriptions', 'payer', "message", 'show_otc_dialog', "otcObject", "ot_code"));
+        return view('MySubscription.index', compact('subscriptions', 'payer', "message", 'show_otc_dialog', "otcObject", "ot_code"));
     }
 
     /**
@@ -148,6 +149,21 @@ class MySubscriptionController extends Controller
     public function show($id)
     {
         //
+    }
+
+
+    public function showPaymentsBySubscriptionId($subscriptionId)
+    {
+
+
+        $subscription = Subscription::find($subscriptionId);
+
+        $manager = new BkashPaymentManager();
+
+        $payments = $manager->fetchPaymentListBySubscriptionId($subscriptionId);
+
+        // dd($responseObject);
+        return view("MySubscription.show_by_payments", compact("subscription",'payments'));
     }
 
     /**

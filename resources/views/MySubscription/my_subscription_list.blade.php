@@ -2,7 +2,12 @@
     <x-list-item-card>
 
         <x-slot name="title">
-            {{ $subscription->payer }}
+
+            <div class="px-2 py-1 text-left text-white bg-gray-400 rounded">
+                bKash Wallet:
+                {{ $subscription->payer }}
+            </div>
+
         </x-slot>
 
         @if ($subscription->subscriptionRequest)
@@ -76,11 +81,11 @@
         <x-slot name="footer">
 
 
-            <x-a-primary href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}">
+            <x-a-primary href="{{ route('my-subscriptions.payments', $subscription->id) }}">
                 Payments</x-a-primary>
 
                 |
-                <x-a-danger href="{{ route('subscription-payments.my-payments-by-subscription-id', $subscription->id) }}">
+                <x-a-danger href="">
                     Cancel</x-a-danger>
 
         </x-slot>
