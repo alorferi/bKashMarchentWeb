@@ -97,8 +97,13 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                {{ __('Dashboard') }}
+
+            <x-responsive-nav-link :href="route('/')" :active="request()->routeIs('/')">
+                {{ __('Home') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('my-subscriptions.index')" :active="request()->routeIs('my-subscriptions.index')">
+                {{ __('My Subscriptions') }}
             </x-responsive-nav-link>
         </div>
 
