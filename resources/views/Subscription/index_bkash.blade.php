@@ -15,10 +15,17 @@
 
 
         @forelse($subscriptions->content as $subscription)
+            @php
+                $textColor = $subscription->status == 'CANCELLED' ? 'text-red-600' : 'text-gray-600';
+                $bgColor = $subscription->status == 'CANCELLED' ? 'bg-red-600' : 'bg-green-600';
+            @endphp
+
             <x-list-item-card>
 
                 <x-slot name="title">
-                    {{ $subscription->payer }}
+                    <div class="{{ $bgColor }} px-2 py-1 text-white">
+                        {{ $subscription->payer }}
+                    </div>
                 </x-slot>
 
                 <x-list-item-prop>

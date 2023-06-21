@@ -13,10 +13,19 @@
     </div>
 
     @forelse($subscriptions as $subscription)
+        @php
+            $textColor = $subscription->status == 'CANCELLED' ? 'text-red-600' : 'text-gray-600';
+            $bgColor = $subscription->status == 'CANCELLED' ? 'bg-red-600' : 'bg-green-600';
+        @endphp
+
         <x-list-item-card>
 
             <x-slot name="title">
-                {{ $subscription->payer }}
+
+                <div class="{{ $bgColor }} px-2 py-1 text-white">
+                    {{ $subscription->payer }}
+                </div>
+
             </x-slot>
             @if ($subscription->subscriptionRequest)
                 <x-list-item-prop>
@@ -51,7 +60,6 @@
                     {{ $subscription->subscriptionRequest->donationSector->name }}
 
                 </x-list-item-prop>
-
             @endif
             <x-list-item-prop>
                 <x-slot name="label">
@@ -104,7 +112,8 @@
 
                 <x-a-primary href="{{ route('admin.subscriptions.show', $subscription->id) }}"> Update</x-a-primary>
                 |
-                <x-a-success href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments</x-a-success>
+                <x-a-success href="{{ route('admin.subscription-payments.index', $subscription->id) }}"> Payments
+                </x-a-success>
 
             </x-slot>
 
