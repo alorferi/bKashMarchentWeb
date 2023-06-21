@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Business\BKashPaymentManager;
+use App\Business\BkashPaymentManager;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 
@@ -18,7 +18,7 @@ class SubscriptionPaymentController extends Controller
 
         $subscription = Subscription::find($subscriptionId);
 
-        $manager = new BKashPaymentManager();
+        $manager = new BkashPaymentManager();
 
         $payments = $manager->fetchPaymentListBySubscriptionId($subscriptionId);
 

@@ -7,103 +7,102 @@
 
 
 
-    <x-a-primary href="{{route("admin.subscriptions.index")}}"> &lt; Back </x-a-primary>
+    <x-a-primary href="{{ route('admin.subscriptions.index') }}"> &lt; Back </x-a-primary>
 
     @if ($subscription)
 
 
-    <x-list-item-card>
+        <x-list-item-card>
 
-        <x-slot name="title">
-            {{ $subscription->payer }}
-        </x-slot>
-        @if ($subscription->subscriptionRequest)
+            <x-slot name="title">
+                {{ $subscription->payer }}
+            </x-slot>
+            @if ($subscription->subscriptionRequest)
+                <x-list-item-prop>
+
+                    <x-slot name="label">
+                        Name
+                    </x-slot>
+
+
+                    {{ $subscription->subscriptionRequest->name }}
+
+
+
+                </x-list-item-prop>
+
+                <x-list-item-prop>
+
+                    <x-slot name="label">
+                        Email
+                    </x-slot>
+
+                    {{ $subscription->subscriptionRequest->email }}
+
+                </x-list-item-prop>
+
+                <x-list-item-prop>
+
+                    <x-slot name="label">
+                        Donaion Sector
+                    </x-slot>
+
+                    {{ $subscription->subscriptionRequest->donationSector->name }}
+
+                </x-list-item-prop>
+            @endif
             <x-list-item-prop>
-
                 <x-slot name="label">
-                    Name
+                    Amount
                 </x-slot>
 
+                {{ $subscription->amount }}
+            </x-list-item-prop>
 
-                {{ $subscription->subscriptionRequest->name }}
 
 
+            <x-list-item-prop>
+                <x-slot name="label">
+                    Start Date
+                </x-slot>
+
+                {{ $subscription->startDate->format('d-m-Y') }}
+
+            </x-list-item-prop>
+
+
+            <x-list-item-prop>
+                <x-slot name="label">
+                    End Date
+                </x-slot>
+
+                {{ $subscription->expiryDate->format('d-m-Y') }}
+                ({{ $subscription->expiryDate->diffForHumans() }})
+            </x-list-item-prop>
+
+            <x-list-item-prop>
+                <x-slot name="label">
+                    Frequency
+                </x-slot>
+
+                {{ $subscription->frequency }}
 
             </x-list-item-prop>
 
             <x-list-item-prop>
-
                 <x-slot name="label">
-                    Email
+                    Status
                 </x-slot>
 
-                {{ $subscription->subscriptionRequest->email }}
+                {{ $subscription->status }}
 
             </x-list-item-prop>
 
-            <x-list-item-prop>
+            <x-slot name="footer">
 
-                <x-slot name="label">
-                    Donaion Sector
-                </x-slot>
-
-                {{ $subscription->subscriptionRequest->donationSector->name }}
-
-            </x-list-item-prop>
-
-        @endif
-        <x-list-item-prop>
-            <x-slot name="label">
-                Amount
             </x-slot>
 
-            {{ $subscription->amount }}
-        </x-list-item-prop>
-
-
-
-        <x-list-item-prop>
-            <x-slot name="label">
-                Start Date
-            </x-slot>
-
-            {{ $subscription->startDate->format('d-m-Y') }}
-
-        </x-list-item-prop>
-
-
-        <x-list-item-prop>
-            <x-slot name="label">
-                End Date
-            </x-slot>
-
-            {{ $subscription->expiryDate->format('d-m-Y') }}
-            ({{ $subscription->expiryDate->diffForHumans() }})
-        </x-list-item-prop>
-
-        <x-list-item-prop>
-            <x-slot name="label">
-                Frequency
-            </x-slot>
-
-            {{ $subscription->frequency }}
-
-        </x-list-item-prop>
-
-        <x-list-item-prop>
-            <x-slot name="label">
-                Status
-            </x-slot>
-
-            {{ $subscription->status }}
-
-        </x-list-item-prop>
-
-        <x-slot name="footer">
-
-        </x-slot>
-
-    </x-list-item-card>
+        </x-list-item-card>
 
 
         {{-- @include('Payment.payment_list', ['payments' => $subscription->payments]) --}}
@@ -111,54 +110,55 @@
     @endif
 
 
-    @foreach ($payments as $payment)
-        <div>
-            Id : {{ $payment->id }}
-        </div>
+    @if ($payments)
+        @foreach ($payments as $payment)
+            <div>
+                Id : {{ $payment->id }}
+            </div>
 
-        <div>
-            subscriptionId : {{ $payment->subscriptionId }}
-        </div>
+            <div>
+                subscriptionId : {{ $payment->subscriptionId }}
+            </div>
 
-        <div>
-            subscriptionRequestId : {{ $payment->subscriptionRequestId }}
-        </div>
+            <div>
+                subscriptionRequestId : {{ $payment->subscriptionRequestId }}
+            </div>
 
-        <div>
-            dueDate : {{ $payment->dueDate }}
-        </div>
+            <div>
+                dueDate : {{ $payment->dueDate }}
+            </div>
 
-        <div>
-            status : {{ $payment->status }}
-        </div>
+            <div>
+                status : {{ $payment->status }}
+            </div>
 
-        <div>
-            trxId : {{ $payment->trxId }}
-        </div>
+            <div>
+                trxId : {{ $payment->trxId }}
+            </div>
 
-        <div>
-            trxTime : {{ $payment->trxTime }}
-        </div>
+            <div>
+                trxTime : {{ $payment->trxTime }}
+            </div>
 
-        <div>
-            subscriptionId : {{ $payment->subscriptionId }}
-        </div>
+            <div>
+                subscriptionId : {{ $payment->subscriptionId }}
+            </div>
 
-        <div>
-            amount : {{ $payment->amount }}
-        </div>
-        <div>
-            reverseTrxAmount : {{ $payment->reverseTrxAmount }}
-        </div>
-        <div>
-            reverseTrxId : {{ $payment->reverseTrxId }}
-        </div>
-        <div>
-            reverseTrxTime : {{ $payment->reverseTrxTime }}
-        </div>
+            <div>
+                amount : {{ $payment->amount }}
+            </div>
+            <div>
+                reverseTrxAmount : {{ $payment->reverseTrxAmount }}
+            </div>
+            <div>
+                reverseTrxId : {{ $payment->reverseTrxId }}
+            </div>
+            <div>
+                reverseTrxTime : {{ $payment->reverseTrxTime }}
+            </div>
 
-        <br>
-    @endforeach
-
+            <br>
+        @endforeach
+    @endif
 
 </x-admin-layout>
