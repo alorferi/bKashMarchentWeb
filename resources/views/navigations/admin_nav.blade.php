@@ -43,19 +43,19 @@
 
 
 
-                @permission('option_create')
+                {{-- @permission('option_create')
                     <x-nav-link :href="route('admin.options.index')" :active="request()->routeIs('admin.options.index')">
                         {{ __('Options') }}
                     </x-nav-link>
-                @endpermission
+                @endpermission --}}
 
 
 
-                @permission('term_create')
+                {{-- @permission('term_create')
                     <x-nav-link :href="route('admin.terms.index')" :active="request()->routeIs('terms.index')">
                         {{ __('Terms') }}
                     </x-nav-link>
-                @endpermission
+                @endpermission --}}
 
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <x-dropdown align="right" width="48">
@@ -78,11 +78,11 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('admin.payment-amounts.index')">
-                                    {{ __('Payment Amoounts') }}
+                                    {{ __('Payment Amounts') }}
                                 </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('admin.payment-cycles.index')">
-                                    {{ __('Payment Cycles') }}
+                                <x-dropdown-link :href="route('admin.payment-frequencies.index')">
+                                    {{ __('Payment Frequencies') }}
                                 </x-dropdown-link>
 
                                 <x-dropdown-link :href="route('admin.payment-sectors.index')">

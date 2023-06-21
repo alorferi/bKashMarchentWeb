@@ -14,9 +14,9 @@ class PaymentFrequencyController extends Controller
      */
     public function index()
     {
-        $PaymentFrequencies = PaymentFrequency::paginate();
+        $paymentFrequencies = PaymentFrequency::paginate();
 
-        return view('PaymentFrequency.index', compact('PaymentFrequencies'));
+        return view('PaymentFrequency.index', compact('paymentFrequencies'));
 
     }
 

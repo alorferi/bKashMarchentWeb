@@ -23,7 +23,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as'=>"admin."], f
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('payment-cycles', PaymentFrequencyController::class)
+    Route::resource('payment-frequencies', PaymentFrequencyController::class)
     ->except([
        // 'index', 'show'
     ]);
