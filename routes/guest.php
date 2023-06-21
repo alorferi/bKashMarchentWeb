@@ -27,7 +27,10 @@ Route::get('my-subscriptions', [MySubscriptionController::class,'index'])
 Route::post('my-subscriptions/logout', [MySubscriptionController::class,'logout'])
 ->name('my-subscriptions.logout');
 
-Route::get('my-subscriptions/{subscriptionId}/payments', [MySubscriptionController::class,'showPaymentsBySubscriptionId'])->name('my-subscriptions.payments');
+Route::get('my-subscriptions/{subscription}', [MySubscriptionController::class,'show'])->name('my-subscriptions.show');
+Route::get('my-subscriptions/{subscription}/payments', [MySubscriptionController::class,'showPaymentsBySubscriptionId'])->name('my-subscriptions.payments');
+Route::get('my-subscriptions/{subscription}/cancel', [MySubscriptionController::class,'createCancel'])->name('my-subscriptions.cancel');
+Route::post('my-subscriptions/{subscription}/cancel', [MySubscriptionController::class,'confirmCancel'])->name('my-subscriptions.confirm-cancel');
 
 
 Route::get('subscriptions/finish', [SubscriptionController::class,'finish'])->name('subscriptions.finish');

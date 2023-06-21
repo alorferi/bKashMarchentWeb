@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Business\BkashPaymentManager;
+use App\Business\BkashSubscriptionManager;
 use Illuminate\Http\Request;
 
 use App\Business\OtcManager;
@@ -140,6 +141,8 @@ class MySubscriptionController extends Controller
         //
     }
 
+
+
     /**
      * Display the specified resource.
      *
@@ -148,22 +151,23 @@ class MySubscriptionController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $bKashSubscriptionManager = new BkashSubscriptionManager();
+
+        $subscription = $bKashSubscriptionManager->fetchAndUpdateBySubscriptionId($id);
+
+        $bKashPaymentManager = new BkashPaymentManager();
+
+        $payments = $bKashPaymentManager->fetchPaymentListBySubscriptionId($id);
+
+        // dd($responseObject);
+        return view("MySubscription.show", compact("subscription", 'payments'));
     }
 
 
-    public function showPaymentsBySubscriptionId($subscriptionId)
+    public function showPaymentsBySubscriptionId($id)
     {
-
-
-        $subscription = Subscription::find($subscriptionId);
-
-        $manager = new BkashPaymentManager();
-
-        $payments = $manager->fetchPaymentListBySubscriptionId($subscriptionId);
-
-        // dd($responseObject);
-        return view("MySubscription.show_by_payments", compact("subscription",'payments'));
+        return $this->show($id);
     }
 
     /**
@@ -187,6 +191,43 @@ class MySubscriptionController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+
+    public function createCancel(Subscription $subscription)
+    {
+        return view('MySubscription.create_cancel', compact('subscription'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmCancel(Subscription $subscription, Request $request)
+    {
+
+        $request->validate([
+            'reason' => ['required', 'string', 'max:30'],
+        ]);
+
+        dump($request->all());
+
+        $manager = new BkashSubscriptionManager();
+
+        $response = $manager->cancelSubscription($subscription->id, $request->reason);
+
+        if($response->subscriptionStatus=="CANCELLED") {
+
+            $bKashSubscriptionMgr = new BkashSubscriptionManager();
+
+            $subscription = $bKashSubscriptionMgr->fetchAndUpdateBySubscriptionId($subscription->id);
+
+        }
+
+        return redirect(route("my-subscriptions.show",$subscription->id));
+
     }
 
     /**

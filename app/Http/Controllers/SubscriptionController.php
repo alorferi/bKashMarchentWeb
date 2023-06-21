@@ -136,32 +136,9 @@ class SubscriptionController extends Controller
     public function show($id)
     {
 
-        $subscription = Subscription::with("payments")->find($id);
+        $bKashSubscriptionMgr = new BkashSubscriptionManager();
 
-        try {
-
-            $bKashSubscriptionMgr = new BkashSubscriptionManager();
-
-            $responseObject = $bKashSubscriptionMgr->fetchBySubscriptionId($id, true);
-
-            if($responseObject) {
-
-                if($responseObject['extraParams']) {
-                    $responseObject['extraParams'] = json_encode($responseObject['extraParams']);
-                }
-
-                if($subscription) {
-                    $subscription->update($responseObject);
-                } else {
-                    $subscription = Subscription::create($responseObject);
-                }
-
-            }
-
-        } catch(Exception $e) {
-            //  dd($e->getMessage());
-            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
-        }
+        $subscription = $bKashSubscriptionMgr->fetchAndUpdateBySubscriptionId($id);
 
         return view('Subscription.show', compact('subscription'));
     }

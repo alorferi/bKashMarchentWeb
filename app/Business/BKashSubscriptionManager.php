@@ -3,6 +3,7 @@
 namespace App\Business;
 
 use App\Models\ActivityLog;
+use App\Models\Subscription;
 use App\Utils\bKashEnv;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -271,6 +272,38 @@ class BkashSubscriptionManager extends BkashManager
             ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
             return false;
         }
+    }
+
+
+    public function fetchAndUpdateBySubscriptionId($id)
+    {
+
+        $subscription = Subscription::find($id);
+
+        try {
+
+            $responseObject = $this->fetchBySubscriptionId($id, true);
+
+            if($responseObject) {
+
+                if($responseObject['extraParams']) {
+                    $responseObject['extraParams'] = json_encode($responseObject['extraParams']);
+                }
+
+                if($subscription) {
+                    $subscription->update($responseObject);
+                } else {
+                    $subscription = Subscription::create($responseObject);
+                }
+
+            }
+
+        } catch(Exception $e) {
+            ActivityLog::addToLog(__CLASS__, __FUNCTION__, __LINE__, null, $e->getMessage());
+        }
+
+       return $subscription;
+
     }
 
 }

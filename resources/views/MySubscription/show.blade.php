@@ -18,7 +18,14 @@
 
                 <x-slot name="title">
 
-                    <div class="py-2 text-center text-white bg-green-600 rounded">
+
+                    @php
+                        $textColor = $subscription->status == 'CANCELLED' ? 'text-red-600' : 'text-gray-600';
+                        $bgColor = $subscription->status == 'CANCELLED' ? 'bg-red-600' : 'bg-green-600';
+                    @endphp
+
+
+                    <div class="py-2 text-center text-white {{ $bgColor }} rounded">
                         bKash Wallet: {{ $subscription->payer }}
                     </div>
 
@@ -88,13 +95,18 @@
                         Status
                     </x-slot>
 
-                    {{ $subscription->status }}
+
+
+                    <div class="{{ $textColor }}">
+                        {{ $subscription->status }}
+                    </div>
+
 
                 </x-list-item-prop>
 
                 <x-slot name="footer">
 
-                    <x-a-danger href="">
+                    <x-a-danger href="{{ route('my-subscriptions.cancel', $subscription->id) }}" :visibility="$subscription->status != 'CANCELLED'">
                         Cancel</x-a-danger>
 
                 </x-slot>
